@@ -19,6 +19,10 @@
     <!-- SweetAlert2 -->
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     
+    <?php
+    $pub_primary = function_exists('get_setting') ? get_setting($pdo ?? null, 'primary_color', '#0B132B') : '#0B132B';
+    $pub_secondary = function_exists('get_setting') ? get_setting($pdo ?? null, 'secondary_color', '#D4AF37') : '#D4AF37';
+    ?>
     <!-- Tailwind CSS (CDN) -->
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
@@ -27,13 +31,13 @@
                 extend: {
                     colors: {
                         navy: {
-                            DEFAULT: '#0B132B',
+                            DEFAULT: '<?= $pub_primary ?>',
                             dark: '#050A18',
                             light: '#1C2541',
                             subtle: '#243257'
                         },
                         gold: {
-                            DEFAULT: '#D4AF37',
+                            DEFAULT: '<?= $pub_secondary ?>',
                             light: '#F5E6AB',
                             dark: '#A6821C',
                             accent: '#F59E0B'
@@ -133,14 +137,26 @@
             box-shadow: 0 15px 35px -10px rgba(0, 0, 0, 0.35);
         }
 
+        /* Dynamic Brand Overrides from Database Settings */
+        :root {
+            --theme-primary: <?= $pub_primary ?>;
+            --theme-secondary: <?= $pub_secondary ?>;
+        }
+        .bg-navy { background-color: var(--theme-primary) !important; }
+        .text-navy { color: var(--theme-primary) !important; }
+        .border-navy { border-color: var(--theme-primary) !important; }
+        .bg-gold { background-color: var(--theme-secondary) !important; }
+        .text-gold { color: var(--theme-secondary) !important; }
+        .border-gold { border-color: var(--theme-secondary) !important; }
+
         /* Gold Gradient Text */
         .gold-gradient-text {
-            background: linear-gradient(135deg, #F5E6AB 0%, #D4AF37 50%, #A6821C 100%);
+            background: linear-gradient(135deg, #F5E6AB 0%, var(--theme-secondary) 50%, #A6821C 100%);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
         }
         .gold-gradient-bg {
-            background: linear-gradient(135deg, #F3E5AB 0%, #D4AF37 60%, #B89025 100%);
+            background: linear-gradient(135deg, #F3E5AB 0%, var(--theme-secondary) 60%, #B89025 100%);
         }
 
         /* 3D Dynamic Hover Lift */

@@ -10,24 +10,37 @@
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
+<?php
+// Load dynamic theme settings
+$site_primary_hex = function_exists('get_setting') ? get_setting($pdo ?? null, 'primary_color', '#0B132B') : '#0B132B';
+$site_secondary_hex = function_exists('get_setting') ? get_setting($pdo ?? null, 'secondary_color', '#D4AF37') : '#D4AF37';
+$site_accent_hex = function_exists('get_setting') ? get_setting($pdo ?? null, 'accent_color', '#10B981') : '#10B981';
+
+$site_primary_rgb = function_exists('hex_to_rgb_triplet') ? hex_to_rgb_triplet($site_primary_hex) : '11 19 43';
+$site_secondary_rgb = function_exists('hex_to_rgb_triplet') ? hex_to_rgb_triplet($site_secondary_hex) : '212 175 55';
+?>
 <style>
     /* CSS Variables for Light & Dark Mode */
     :root {
-        --color-primary: 37 99 235;                /* Royal Blue */
+        --color-primary: <?= $site_primary_rgb ?>;
         --color-primary-container: 219 234 254;    /* Light Blue */
         --color-on-primary: 255 255 255;           /* White */
         --color-on-primary-container: 30 58 138;   /* Deep Blue */
         --color-on-primary-fixed: 30 58 138;
-        --color-on-primary-fixed-variant: 37 99 235;
+        --color-on-primary-fixed-variant: <?= $site_primary_rgb ?>;
 
-        --color-secondary: 249 115 22;             /* Vibrant Orange */
+        --color-secondary: <?= $site_secondary_rgb ?>;
         --color-secondary-container: 255 237 213;  /* Light Orange */
         --color-on-secondary: 255 255 255;         /* White */
         --color-on-secondary-container: 154 52 18; /* Deep Orange */
         --color-on-secondary-fixed: 154 52 18;
-        --color-on-secondary-fixed-variant: 249 115 22;
+        --color-on-secondary-fixed-variant: <?= $site_secondary_rgb ?>;
         --color-secondary-fixed: 255 237 213;
         --color-secondary-fixed-dim: 253 186 116;
+
+        --theme-primary: <?= $site_primary_hex ?>;
+        --theme-secondary: <?= $site_secondary_hex ?>;
+        --theme-accent: <?= $site_accent_hex ?>;
 
         --color-tertiary: 0 0 0;                   /* Pure Black */
         --color-tertiary-container: 243 244 246;   /* Light Gray */
@@ -138,6 +151,17 @@
     .custom-scrollbar::-webkit-scrollbar { width: 6px; height: 6px; }
     .custom-scrollbar::-webkit-scrollbar-track { background: transparent; }
     .custom-scrollbar::-webkit-scrollbar-thumb { background: rgb(var(--color-outline-variant)); border-radius: 10px; }
+    
+    /* Dynamic Brand Utilities Across All Pages */
+    .bg-navy { background-color: var(--theme-primary) !important; }
+    .text-navy { color: var(--theme-primary) !important; }
+    .border-navy { border-color: var(--theme-primary) !important; }
+    .bg-gold { background-color: var(--theme-secondary) !important; }
+    .text-gold { color: var(--theme-secondary) !important; }
+    .border-gold { border-color: var(--theme-secondary) !important; }
+    .gold-gradient-bg {
+        background: linear-gradient(135deg, var(--theme-secondary) 0%, var(--theme-secondary)CC 50%, var(--theme-secondary)99 100%) !important;
+    }
 </style>
 
 <script id="tailwind-config">

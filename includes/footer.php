@@ -2,11 +2,11 @@
     <div class="flex flex-col md:flex-row items-center gap-2 md:gap-4">
         <img src="../assets/images/SkopeStay logo.png" alt="SkopeStay Logo"
              style="width:28px; height:28px; border-radius:50px; object-fit:cover;">
-        <span class="font-bold text-on-surface font-label-md text-label-md">SkopeStay</span>
-        <span>&copy; <span id="current-year"></span> SkopeStay v2.1.0</span>
+        <span class="font-bold text-on-surface font-label-md text-label-md"><?= htmlspecialchars(function_exists('get_setting') ? get_setting($pdo ?? null, 'hotel_name', 'SkopeStay') : 'SkopeStay') ?></span>
+        <span>&copy; <span id="current-year"></span> <?= htmlspecialchars(function_exists('get_setting') ? get_setting($pdo ?? null, 'hotel_name', 'SkopeStay') : 'SkopeStay') ?> v2.5.0</span>
     </div>
     <div class="flex flex-wrap justify-center gap-4 md:gap-lg">
-        <a class="text-on-surface-variant hover:text-primary transition-colors" href="mailto:support@skopestay.com">Support</a>
+        <a class="text-on-surface-variant hover:text-primary transition-colors" href="mailto:<?= htmlspecialchars(function_exists('get_setting') ? get_setting($pdo ?? null, 'support_email', 'support@skopestay.com') : 'support@skopestay.com') ?>">Support</a>
         <a class="text-on-surface-variant hover:text-primary transition-colors" href="../privacy.php">Privacy Policy</a>
         <a class="text-on-surface-variant hover:text-primary transition-colors" href="../terms.php">Terms of Service</a>
     </div>

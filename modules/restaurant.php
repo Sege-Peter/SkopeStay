@@ -2,6 +2,92 @@
 $page_title = "Restaurant POS | SkopeStay";
 require_once '../includes/config.php';
 
+// Handle POS PIN Login
+$pos_auth_error = '';
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['pin_code'])) {
+    $pin = trim($_POST['pin_code']);
+    $stmt = $pdo->prepare("SELECT * FROM users WHERE pin = ? AND role IN ('Waiter', 'Manager', 'Super Admin', 'Chef', 'Cashier')");
+    $stmt->execute([$pin]);
+    $user = $stmt->fetch();
+    
+    if ($user) {
+        $_SESSION['pos_logged_in'] = true;
+        $_SESSION['pos_user_id'] = $user['id'];
+        $_SESSION['pos_username'] = $user['username'];
+        $_SESSION['pos_role'] = $user['role'];
+        header("Location: restaurant.php");
+        exit;
+    } else {
+        $pos_auth_error = 'Invalid PIN code.';
+    }
+}
+
+$is_logged_in = isset($_SESSION['user_id']) || isset($_SESSION['pos_logged_in']);
+if (!$is_logged_in) {
+    include '../includes/head.php';
+    ?>
+    <!DOCTYPE html>
+    <html lang="en">
+    <body class="bg-gray-900 text-white min-h-screen flex items-center justify-center font-sans-ui">
+        <div class="max-w-sm w-full px-6">
+            <div class="text-center mb-8">
+                <div class="w-16 h-16 bg-gold/20 text-gold rounded-full flex items-center justify-center mx-auto mb-4">
+                    <span class="material-symbols-outlined text-3xl">restaurant</span>
+                </div>
+                <h1 class="text-2xl font-bold font-luxury">Restaurant POS</h1>
+                <p class="text-gray-400 mt-1 text-sm">Enter Staff PIN to Unlock</p>
+            </div>
+            
+            <?php if ($pos_auth_error): ?>
+                <div class="bg-red-500/10 border border-red-500/50 text-red-400 px-4 py-3 rounded-xl mb-6 text-center text-sm font-bold">
+                    <?= htmlspecialchars($pos_auth_error) ?>
+                </div>
+            <?php endif; ?>
+
+            <form method="POST" action="restaurant.php" id="pinForm">
+                <input type="password" name="pin_code" id="pinDisplay" readonly
+                       class="w-full bg-gray-800 border-2 border-gray-700 rounded-2xl text-center text-4xl tracking-[0.5em] py-4 mb-6 focus:border-gold outline-none transition-colors shadow-inner font-bold text-white h-20"
+                       placeholder="••••">
+                
+                <div class="grid grid-cols-3 gap-3 mb-6">
+                    <?php for($i=1; $i<=9; $i++): ?>
+                    <button type="button" onclick="addPin('<?= $i ?>')" class="h-16 rounded-2xl bg-gray-800 hover:bg-gray-700 active:bg-gray-600 transition-colors text-2xl font-bold border border-gray-700/50 shadow-sm"><?= $i ?></button>
+                    <?php endfor; ?>
+                    <button type="button" onclick="clearPin()" class="h-16 rounded-2xl bg-red-500/10 hover:bg-red-500/20 text-red-400 transition-colors flex items-center justify-center border border-red-500/20 shadow-sm">
+                        <span class="material-symbols-outlined text-2xl">backspace</span>
+                    </button>
+                    <button type="button" onclick="addPin('0')" class="h-16 rounded-2xl bg-gray-800 hover:bg-gray-700 active:bg-gray-600 transition-colors text-2xl font-bold border border-gray-700/50 shadow-sm">0</button>
+                    <button type="submit" class="h-16 rounded-2xl bg-gold hover:bg-yellow-500 text-navy transition-colors flex items-center justify-center shadow-lg font-bold">
+                        <span class="material-symbols-outlined text-3xl">login</span>
+                    </button>
+                </div>
+                <div class="text-center">
+                    <a href="../auth/login.php" class="text-xs text-gray-500 hover:text-white transition-colors">Standard Dashboard Login</a>
+                </div>
+            </form>
+        </div>
+        <script>
+            function addPin(num) {
+                const el = document.getElementById('pinDisplay');
+                if(el.value.length < 8) el.value += num;
+            }
+            function clearPin() {
+                const el = document.getElementById('pinDisplay');
+                el.value = el.value.slice(0, -1);
+            }
+        </script>
+    </body>
+    </html>
+    <?php
+    exit;
+}
+
+// Ensure session variables are set if logged in via POS
+if (isset($_SESSION['pos_logged_in'])) {
+    $_SESSION['username'] = $_SESSION['pos_username'];
+    $_SESSION['user_id'] = $_SESSION['pos_user_id'];
+}
+
 // Get today's orders stats
 $today_orders   = $pdo->query("SELECT COUNT(*) FROM restaurant_orders WHERE DATE(created_at)=CURDATE()")->fetchColumn();
 $today_revenue  = $pdo->query("SELECT COALESCE(SUM(total_amount),0) FROM restaurant_orders WHERE DATE(created_at)=CURDATE()")->fetchColumn();
