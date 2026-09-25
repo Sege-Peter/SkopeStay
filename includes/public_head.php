@@ -119,11 +119,11 @@
 
         /* Luxury Glassmorphism Styles */
         .glass-luxury {
-            background: rgba(255, 255, 255, 0.88);
-            backdrop-filter: blur(18px);
-            -webkit-backdrop-filter: blur(18px);
-            border: 1px solid rgba(255, 255, 255, 0.65);
-            box-shadow: 0 10px 30px -10px rgba(11, 19, 43, 0.08);
+            background: rgba(255, 255, 255, 0.75);
+            backdrop-filter: blur(24px);
+            -webkit-backdrop-filter: blur(24px);
+            border: 1px solid rgba(255, 255, 255, 0.4);
+            box-shadow: 0 10px 30px -10px rgba(11, 19, 43, 0.15);
         }
         .glass-dark-luxury {
             background: rgba(11, 19, 43, 0.85);

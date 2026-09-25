@@ -59,7 +59,7 @@ $hall_imagery = [
     <!-- =========================================================================
          1. CINEMATIC HERO SECTION
          ========================================================================= -->
-    <section class="relative min-h-[92vh] lg:min-h-screen w-full overflow-hidden flex items-center justify-center bg-navy pt-24 pb-20 lg:py-0">
+    <section class="relative min-h-[92vh] lg:min-h-screen w-full overflow-hidden flex items-center justify-center bg-navy pt-24 pb-20 lg:pt-32 lg:pb-24">
         <!-- Parallax Background Layer -->
         <div class="absolute inset-0 z-0">
             <img src="https://images.unsplash.com/photo-1542314831-c53cd3816002?q=80&w=2070&auto=format&fit=crop" 

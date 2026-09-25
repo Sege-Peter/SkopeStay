@@ -1,115 +1,62 @@
 <!DOCTYPE html>
+<html lang="en">
+<?php $page_title = "Login | SkopeStay"; include '../includes/head.php'; ?>
+<body class="bg-gray-50 min-h-screen flex items-center justify-center font-sans antialiased selection:bg-gray-200">
 
-<html class="light" lang="en"><?php $page_title = "Login | SkopeStay"; include '../includes/head.php'; ?>
-<body class="bg-background text-on-background font-body-md min-h-screen flex items-center justify-center overflow-hidden">
-<main class="w-full h-screen flex flex-col md:flex-row">
-<!-- Left Side: Image Slider -->
-<section class="hidden md:flex relative w-1/2 h-full bg-primary-container overflow-hidden">
-<div class="absolute inset-0" id="slider">
-<div class="slider-image absolute inset-0 opacity-100 bg-cover bg-center" data-alt="A sprawling luxury resort at sunset featuring a glowing infinity pool." style="background-image: url('https://images.unsplash.com/photo-1566073771259-6a8506099945?q=80&w=2070&auto=format&fit=crop')"></div>
-<div class="slider-image absolute inset-0 opacity-0 bg-cover bg-center" data-alt="The interior of a premium hotel lobby designed with high ceilings." style="background-image: url('https://images.unsplash.com/photo-1551882547-ff40c0dfe09c?q=80&w=2070&auto=format&fit=crop')"></div>
-<div class="slider-image absolute inset-0 opacity-0 bg-cover bg-center" data-alt="An overhead view of a serene spa retreat nestled within a dense forest." style="background-image: url('https://images.unsplash.com/photo-1522798514-97ceb8c4f1c8?q=80&w=2070&auto=format&fit=crop')"></div>
-</div>
-<!-- Branding Overlay -->
-<div class="absolute inset-0 bg-gradient-to-t from-primary-container/80 via-transparent to-transparent z-10"></div>
-<div class="absolute bottom-12 left-12 z-20 max-w-md">
-<h2 class="font-display-lg text-display-lg text-white mb-4">Redefining Stay.</h2>
-<p class="font-body-lg text-body-lg text-primary-fixed-dim">Integrated facility and hospitality management solutions for the modern property owner.</p>
-</div>
-<!-- Slider Controls (Visual Only) -->
-<div class="absolute bottom-12 right-12 z-20 flex gap-2">
-<div class="w-12 h-1 bg-white rounded-full"></div>
-<div class="w-8 h-1 bg-white/30 rounded-full"></div>
-<div class="w-8 h-1 bg-white/30 rounded-full"></div>
-</div>
-</section>
-<!-- Right Side: Login Form -->
-<section class="w-full md:w-1/2 h-full flex flex-col justify-center items-center p-8 bg-surface-container-lowest">
-<div class="w-full max-w-md space-y-8">
-<!-- Back to Homepage -->
-<a href="../index.php" class="inline-flex items-center gap-2 text-sm font-semibold text-on-surface-variant hover:text-primary transition-colors group">
-    <span class="material-symbols-outlined text-[18px] group-hover:-translate-x-1 transition-transform">arrow_back</span>
-    Back to Homepage
-</a>
-<!-- Logo & Heading -->
-<div class="flex flex-col items-start space-y-4">
-<div class="flex items-center gap-3">
-<img src="../assets/images/SkopeStay logo.png" alt="SkopeStay Logo"
-     style="width:40px; height:40px; border-radius:50px; object-fit:cover;">
-<span class="font-headline-md text-headline-md font-bold text-primary">SkopeStay</span>
-</div>
-<div class="space-y-1">
-<h1 class="font-title-lg text-title-lg text-on-surface">Welcome Back</h1>
-<p class="font-body-md text-on-surface-variant">Please enter your credentials to access the management portal.</p>
-</div>
-</div>
-<!-- Form -->
-<form action="../modules/dashboard.php" method="GET" class="space-y-6" id="loginForm">
-<div class="space-y-2">
-<label class="font-label-md text-label-md text-on-surface-variant block" for="username">USERNAME OR EMAIL</label>
-<div class="relative group">
-<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-outline-variant group-focus-within:text-primary transition-colors">person</span>
-<input class="w-full pl-10 pr-4 py-3 bg-white border border-outline-variant rounded-lg font-body-md text-on-surface focus:ring-2 focus:ring-primary focus:border-primary transition-all outline-none" id="username" name="username" placeholder="manager@skopestay.com" type="text"/>
-</div>
-</div>
-<div class="space-y-2">
-<div class="flex justify-between items-center">
-<label class="font-label-md text-label-md text-on-surface-variant block" for="password">PASSWORD</label>
-<a class="font-label-md text-label-md text-secondary hover:underline transition-all" href="#">Forgot Password?</a>
-</div>
-<div class="relative group">
-<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-outline-variant group-focus-within:text-primary transition-colors">lock</span>
-<input class="w-full pl-10 pr-12 py-3 bg-white border border-outline-variant rounded-lg font-body-md text-on-surface focus:ring-2 focus:ring-primary focus:border-primary transition-all outline-none" id="password" name="password" placeholder="••••••••" type="password"/>
-<button class="absolute right-3 top-1/2 -translate-y-1/2 text-outline-variant hover:text-on-surface-variant" type="button">
-<span class="material-symbols-outlined">visibility</span>
-</button>
-</div>
-</div>
-<div class="flex items-center">
-<input class="w-4 h-4 text-primary bg-white border-outline-variant rounded focus:ring-primary" id="remember" name="remember" type="checkbox"/>
-<label class="ml-2 font-body-md text-body-md text-on-surface-variant cursor-pointer" for="remember">Remember me on this device</label>
-</div>
-<button class="w-full py-4 bg-primary text-white font-title-lg rounded-lg shadow-lg hover:shadow-xl hover:scale-[1.01] active:scale-[0.99] transition-all flex items-center justify-center gap-2" type="submit">
-                        Login to Dashboard
-                        <span class="material-symbols-outlined">arrow_forward</span>
-</button>
-<div class="mt-6 text-center text-on-surface-variant font-body-md">
-    Don't have an account? <a href="signup.php" class="text-primary font-bold hover:underline transition-all">Sign Up</a>
-</div>
-</form>
-<!-- Footer Info -->
-<div class="pt-12 border-t border-outline-variant/30 flex flex-col sm:flex-row justify-between items-center gap-4">
-<div class="flex items-center gap-4 text-outline">
-<a class="font-caption text-caption hover:text-primary transition-colors" href="mailto:support@skopestay.com">Support</a>
-<a class="font-caption text-caption hover:text-primary transition-colors" href="../privacy.php">Privacy Policy</a>
-</div>
-<div class="font-caption text-caption text-outline">
-                        SkopeStay v2.1.0
-                    </div>
-</div>
-</div>
-</section>
-</main>
-<script>
-        // Simple Image Slider Logic
-        const slides = document.querySelectorAll('.slider-image');
-        let currentSlide = 0;
+    <div class="w-full max-w-sm px-6">
+        <!-- Minimalistic Header -->
+        <div class="text-center mb-12">
+            <a href="../index.php" class="inline-block mb-6 text-gray-400 hover:text-gray-900 transition-colors">
+                <span class="material-symbols-outlined text-2xl">arrow_back</span>
+            </a>
+            <h1 class="text-3xl font-light text-gray-900 tracking-tight">SkopeStay</h1>
+            <p class="text-sm text-gray-500 mt-3 font-light">Sign in to your account</p>
+        </div>
 
-        function nextSlide() {
-            slides[currentSlide].style.opacity = '0';
-            currentSlide = (currentSlide + 1) % slides.length;
-            slides[currentSlide].style.opacity = '1';
-        }
+        <!-- Form -->
+        <form action="../modules/dashboard.php" method="GET" id="loginForm" class="space-y-6">
+            
+            <div class="space-y-1">
+                <input class="w-full px-0 py-3 bg-transparent border-0 border-b border-gray-300 focus:ring-0 focus:border-gray-900 text-sm text-gray-900 placeholder-gray-400 transition-colors outline-none" 
+                       id="username" name="username" placeholder="Username or Email" type="text" autocomplete="username" required/>
+            </div>
+            
+            <div class="space-y-1 relative">
+                <input class="w-full px-0 py-3 bg-transparent border-0 border-b border-gray-300 focus:ring-0 focus:border-gray-900 text-sm text-gray-900 placeholder-gray-400 transition-colors outline-none pr-10" 
+                       id="password" name="password" placeholder="Password" type="password" autocomplete="current-password" required/>
+                <button type="button" class="absolute right-0 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-900 transition-colors">
+                    <span class="material-symbols-outlined text-[20px]">visibility</span>
+                </button>
+            </div>
 
-        setInterval(nextSlide, 6000);
+            <div class="flex items-center justify-between pt-2">
+                <div class="flex items-center gap-2">
+                    <input class="w-3.5 h-3.5 text-gray-900 bg-transparent border-gray-300 rounded-sm focus:ring-gray-900 focus:ring-offset-gray-50 cursor-pointer" 
+                           id="remember" name="remember" type="checkbox"/>
+                    <label class="text-xs text-gray-500 cursor-pointer hover:text-gray-900 transition-colors" for="remember">Remember me</label>
+                </div>
+                <a class="text-xs text-gray-500 hover:text-gray-900 transition-colors" href="#">Forgot Password?</a>
+            </div>
 
-        // Form Submission Micro-interaction
+            <button class="w-full py-3.5 mt-6 bg-gray-900 text-white text-sm tracking-wide rounded hover:bg-black active:scale-[0.98] transition-all flex justify-center items-center gap-2" type="submit">
+                <span>Sign In</span>
+                <span class="material-symbols-outlined text-[16px]">arrow_forward</span>
+            </button>
+            
+            <div class="text-center pt-8">
+                <a href="signup.php" class="text-xs text-gray-500 hover:text-gray-900 transition-colors">Create an account</a>
+            </div>
+        </form>
+    </div>
+
+    <script>
         document.getElementById('loginForm').addEventListener('submit', async function(e) {
             e.preventDefault();
             const btn = this.querySelector('button[type="submit"]');
             const originalText = btn.innerHTML;
-            btn.innerHTML = '<span class="material-symbols-outlined animate-spin">sync</span> Validating...';
-            btn.classList.add('opacity-80', 'cursor-not-allowed');
+            btn.innerHTML = '<span class="material-symbols-outlined animate-spin text-[16px]">sync</span><span class="ml-2">Signing In...</span>';
+            btn.classList.add('opacity-80', 'cursor-wait');
+            btn.disabled = true;
             
             const formData = new FormData(this);
             const data = Object.fromEntries(formData.entries());
@@ -123,19 +70,37 @@
                 const json = await res.json();
                 
                 if (json.success) {
-                    btn.innerHTML = '<span class="material-symbols-outlined">check_circle</span> Success';
-                    btn.classList.remove('bg-primary');
-                    btn.classList.add('bg-green-600');
+                    btn.innerHTML = '<span class="material-symbols-outlined text-[16px]">check</span><span class="ml-2">Success</span>';
                     setTimeout(() => window.location.href = '../modules/dashboard.php', 500);
                 } else {
-                    Swal.fire('Error', json.message, 'error');
+                    if(window.Swal) {
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Authentication Failed',
+                            text: json.message,
+                            confirmButtonColor: '#111827'
+                        });
+                    } else {
+                        alert(json.message);
+                    }
                     btn.innerHTML = originalText;
-                    btn.classList.remove('opacity-80', 'cursor-not-allowed');
+                    btn.classList.remove('opacity-80', 'cursor-wait');
+                    btn.disabled = false;
                 }
             } catch (err) {
-                Swal.fire('Error', 'Network connection failed.', 'error');
+                if(window.Swal) {
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Network Error',
+                        text: 'Unable to reach the server. Please check your connection.',
+                        confirmButtonColor: '#111827'
+                    });
+                } else {
+                    alert('Network Error');
+                }
                 btn.innerHTML = originalText;
-                btn.classList.remove('opacity-80', 'cursor-not-allowed');
+                btn.classList.remove('opacity-80', 'cursor-wait');
+                btn.disabled = false;
             }
         });
 
@@ -148,4 +113,5 @@
             togglePass.querySelector('span').textContent = type === 'password' ? 'visibility' : 'visibility_off';
         });
     </script>
-</body></html>
+</body>
+</html>
