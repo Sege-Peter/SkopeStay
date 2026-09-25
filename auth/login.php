@@ -55,9 +55,9 @@ $page_title = "Sign In | SkopeStay Luxury Resort & ERP";
                         sans: ['Inter', 'sans-serif']
                     },
                     boxShadow: {
-                        'luxury': '0 25px 50px -12px rgba(11, 19, 43, 0.25)',
-                        'gold-glow': '0 0 30px rgba(212, 175, 55, 0.35)',
-                        'gold-sm': '0 4px 15px rgba(212, 175, 55, 0.25)'
+                        'luxury': '0 20px 40px -15px rgba(11, 19, 43, 0.25)',
+                        'gold-glow': '0 0 25px rgba(212, 175, 55, 0.35)',
+                        'gold-sm': '0 4px 14px rgba(212, 175, 55, 0.25)'
                     },
                     animation: {
                         'slow-zoom': 'slowZoom 28s ease-in-out infinite alternate',
@@ -66,7 +66,7 @@ $page_title = "Sign In | SkopeStay Luxury Resort & ERP";
                     keyframes: {
                         slowZoom: {
                             '0%': { transform: 'scale(1)' },
-                            '100%': { transform: 'scale(1.10)' }
+                            '100%': { transform: 'scale(1.08)' }
                         },
                         pulseGlow: {
                             '0%, 100%': { opacity: '0.4', transform: 'scale(1)' },
@@ -79,9 +79,16 @@ $page_title = "Sign In | SkopeStay Luxury Resort & ERP";
     </script>
 
     <style>
-        body {
-            font-family: 'Inter', sans-serif;
+        html, body {
+            height: 100%;
+            margin: 0;
+            padding: 0;
             background-color: #0B132B;
+        }
+        @media (min-width: 1024px) {
+            html, body {
+                overflow: hidden !important;
+            }
         }
         .font-luxury {
             font-family: 'Playfair Display', serif;
@@ -100,13 +107,7 @@ $page_title = "Sign In | SkopeStay Luxury Resort & ERP";
         }
         .gold-gradient-btn:hover {
             background: linear-gradient(135deg, #F5E6AB 0%, #D4AF37 70%, #A6821C 100%);
-            box-shadow: 0 10px 25px -5px rgba(212, 175, 55, 0.45);
-        }
-        .glass-luxury {
-            background: rgba(255, 255, 255, 0.94);
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
-            border: 1px solid rgba(255, 255, 255, 0.6);
+            box-shadow: 0 8px 20px -4px rgba(212, 175, 55, 0.4);
         }
         .glass-dark-badge {
             background: rgba(11, 19, 43, 0.75);
@@ -116,20 +117,21 @@ $page_title = "Sign In | SkopeStay Luxury Resort & ERP";
         }
     </style>
 </head>
-<body class="h-full flex antialiased text-gray-800 selection:bg-gold/30 selection:text-navy">
+<body class="h-full w-full flex antialiased text-gray-800 selection:bg-gold/30 selection:text-navy">
 
-    <div class="w-full h-full min-h-screen flex flex-col lg:flex-row overflow-y-auto lg:overflow-hidden">
+    <!-- Main Viewport Wrapper: Exactly 100vh on Desktop, scrollable on mobile if needed -->
+    <div class="w-full h-full min-h-screen lg:min-h-0 lg:h-screen flex flex-col lg:flex-row overflow-y-auto lg:overflow-hidden">
 
         <!-- =========================================================================
              LEFT PANEL: CINEMATIC RESORT SHOWCASE (Desktop & Large Screens)
              ========================================================================= -->
-        <div class="hidden lg:flex lg:w-7/12 relative flex-col justify-between p-12 xl:p-16 overflow-hidden bg-navy select-none">
+        <div class="hidden lg:flex lg:w-7/12 h-full relative flex-col justify-between p-8 xl:p-12 overflow-hidden bg-navy select-none">
             
             <!-- High-Res Luxury Background Imagery -->
             <div class="absolute inset-0 z-0">
                 <img src="https://images.unsplash.com/photo-1542314831-c53cd3816002?q=80&w=2070&auto=format&fit=crop" 
                      alt="SkopeStay Luxury Resort Exterior" 
-                     class="w-full h-full object-cover animate-slow-zoom opacity-60">
+                     class="w-full h-full object-cover animate-slow-zoom opacity-55">
                 <!-- Multi-layer cinematic vignette -->
                 <div class="absolute inset-0 bg-gradient-to-t from-navy via-navy/60 to-navy/40"></div>
                 <div class="absolute inset-0 bg-[radial-gradient(circle_at_bottom_left,rgba(212,175,55,0.15),transparent_70%)]"></div>
@@ -137,79 +139,79 @@ $page_title = "Sign In | SkopeStay Luxury Resort & ERP";
 
             <!-- Top Left: Brand Header with Logo -->
             <div class="relative z-10 flex items-center justify-between">
-                <a href="../index.php" class="inline-flex items-center gap-3.5 group">
-                    <div class="w-12 h-12 rounded-2xl bg-white/95 p-1.5 shadow-xl border border-gold/40 flex items-center justify-center group-hover:scale-105 transition-transform duration-300">
+                <a href="../index.php" class="inline-flex items-center gap-3 group">
+                    <div class="w-10 h-10 xl:w-11 xl:h-11 rounded-xl bg-white/95 p-1 shadow-lg border border-gold/40 flex items-center justify-center group-hover:scale-105 transition-transform duration-300">
                         <img src="../assets/images/SkopeStay logo.png" alt="SkopeStay Logo" class="w-full h-full object-contain">
                     </div>
                     <div>
-                        <div class="font-display font-bold text-2xl text-white tracking-tight leading-none">
+                        <div class="font-display font-bold text-xl xl:text-2xl text-white tracking-tight leading-none">
                             Skope<span class="text-gold">Stay</span>
                         </div>
-                        <div class="text-[10px] font-brand font-semibold text-gray-300 tracking-[0.25em] uppercase mt-1">
+                        <div class="text-[9px] xl:text-[10px] font-brand font-semibold text-gray-300 tracking-[0.25em] uppercase mt-0.5">
                             Resort & Enterprise ERP
                         </div>
                     </div>
                 </a>
 
-                <div class="glass-dark-badge px-4 py-1.5 rounded-full flex items-center gap-2 border border-gold/30">
+                <div class="glass-dark-badge px-3.5 py-1 rounded-full flex items-center gap-2 border border-gold/30">
                     <span class="w-2 h-2 rounded-full bg-emerald-400 animate-ping"></span>
-                    <span class="text-xs font-brand tracking-wider uppercase text-gold font-bold">5-Star Verified</span>
+                    <span class="text-[11px] font-brand tracking-wider uppercase text-gold font-bold">5-Star Verified</span>
                 </div>
             </div>
 
             <!-- Middle Left: Editorial Luxury Quote & Vision -->
-            <div class="relative z-10 max-w-xl my-auto py-12">
-                <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white/10 backdrop-blur-md border border-white/15 text-gold text-xs font-brand font-semibold tracking-widest uppercase mb-6 shadow-sm">
-                    <span class="material-symbols-outlined text-[16px]">stars</span>
+            <div class="relative z-10 max-w-lg xl:max-w-xl my-auto py-4">
+                <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/10 backdrop-blur-md border border-white/15 text-gold text-[11px] font-brand font-semibold tracking-widest uppercase mb-4 shadow-sm">
+                    <span class="material-symbols-outlined text-[15px]">stars</span>
                     Forbes Hospitality Standards
                 </div>
                 
-                <h2 class="text-4xl xl:text-5xl font-luxury font-bold text-white leading-tight mb-6">
+                <h2 class="text-3xl xl:text-4xl font-luxury font-bold text-white leading-snug mb-3">
                     Where Pure Luxury Meets <span class="gold-gradient-text italic font-normal">Intelligent Operations.</span>
                 </h2>
                 
-                <p class="text-gray-300 text-base xl:text-lg font-light leading-relaxed mb-8">
+                <p class="text-gray-300 text-xs xl:text-sm font-light leading-relaxed mb-6">
                     Seamlessly orchestrate guest reservations, banquets, housekeeping turnover, procurement lifecycles, and double-entry financial ledgers through one unified enterprise ecosystem.
                 </p>
 
                 <!-- Value Highlights Grid -->
-                <div class="grid grid-cols-3 gap-4 pt-4 border-t border-white/15">
-                    <div class="flex items-center gap-3">
-                        <div class="w-9 h-9 rounded-xl bg-gold/15 text-gold flex items-center justify-center shrink-0">
-                            <span class="material-symbols-outlined text-[20px]">room_service</span>
+                <div class="grid grid-cols-3 gap-3 pt-3 border-t border-white/15">
+                    <div class="flex items-center gap-2.5">
+                        <div class="w-8 h-8 rounded-lg bg-gold/15 text-gold flex items-center justify-center shrink-0">
+                            <span class="material-symbols-outlined text-[18px]">room_service</span>
                         </div>
                         <div>
-                            <div class="text-white font-bold text-sm">Real-time</div>
-                            <div class="text-gray-400 text-xs">Guest Folios</div>
+                            <div class="text-white font-bold text-xs">Real-time</div>
+                            <div class="text-gray-400 text-[10px]">Guest Folios</div>
                         </div>
                     </div>
 
-                    <div class="flex items-center gap-3">
-                        <div class="w-9 h-9 rounded-xl bg-gold/15 text-gold flex items-center justify-center shrink-0">
-                            <span class="material-symbols-outlined text-[20px]">cleaning_services</span>
+                    <div class="flex items-center gap-2.5">
+                        <div class="w-8 h-8 rounded-lg bg-gold/15 text-gold flex items-center justify-center shrink-0">
+                            <span class="material-symbols-outlined text-[18px]">cleaning_services</span>
                         </div>
                         <div>
-                            <div class="text-white font-bold text-sm">Smart CMMS</div>
-                            <div class="text-gray-400 text-xs">Auto Turnover</div>
+                            <div class="text-white font-bold text-xs">Smart CMMS</div>
+                            <div class="text-gray-400 text-[10px]">Auto Turnover</div>
                         </div>
                     </div>
 
-                    <div class="flex items-center gap-3">
-                        <div class="w-9 h-9 rounded-xl bg-gold/15 text-gold flex items-center justify-center shrink-0">
-                            <span class="material-symbols-outlined text-[20px]">account_balance</span>
+                    <div class="flex items-center gap-2.5">
+                        <div class="w-8 h-8 rounded-lg bg-gold/15 text-gold flex items-center justify-center shrink-0">
+                            <span class="material-symbols-outlined text-[18px]">account_balance</span>
                         </div>
                         <div>
-                            <div class="text-white font-bold text-sm">Audited GL</div>
-                            <div class="text-gray-400 text-xs">P&L Analytics</div>
+                            <div class="text-white font-bold text-xs">Audited GL</div>
+                            <div class="text-gray-400 text-[10px]">P&L Analytics</div>
                         </div>
                     </div>
                 </div>
             </div>
 
             <!-- Bottom Left: Security Assurance Footer -->
-            <div class="relative z-10 flex items-center justify-between text-xs text-gray-400 pt-6 border-t border-white/10 font-sans">
-                <div class="flex items-center gap-2">
-                    <span class="material-symbols-outlined text-[18px] text-emerald-400">lock</span>
+            <div class="relative z-10 flex items-center justify-between text-[11px] text-gray-400 pt-3 border-t border-white/10 font-sans">
+                <div class="flex items-center gap-1.5">
+                    <span class="material-symbols-outlined text-[16px] text-emerald-400">lock</span>
                     <span>256-Bit TLS Encryption & Role-Based RBAC Protection</span>
                 </div>
                 <span>SkopeStay Core v2.5.0</span>
@@ -217,100 +219,100 @@ $page_title = "Sign In | SkopeStay Luxury Resort & ERP";
         </div>
 
         <!-- =========================================================================
-             RIGHT PANEL: MODERN LUXURY LOGIN CARD
+             RIGHT PANEL: MODERN LUXURY LOGIN CARD (Strictly Viewport Fitted)
              ========================================================================= -->
-        <div class="w-full lg:w-5/12 flex flex-col justify-between p-6 sm:p-10 xl:p-14 bg-[#FDFBF7] relative min-h-screen">
+        <div class="w-full lg:w-5/12 h-full flex flex-col justify-between p-5 sm:p-7 xl:p-9 bg-[#FDFBF7] relative overflow-y-auto lg:overflow-hidden">
             
             <!-- Top Controls (Back Link & Brand Pill) -->
-            <div class="flex items-center justify-between mb-8 sm:mb-12">
-                <a href="../index.php" class="inline-flex items-center gap-2 text-xs sm:text-sm font-semibold text-gray-500 hover:text-navy transition-all duration-200 group">
-                    <div class="w-8 h-8 rounded-lg bg-gray-100 flex items-center justify-center group-hover:bg-navy group-hover:text-gold transition-colors shadow-sm">
-                        <span class="material-symbols-outlined text-[18px] group-hover:-translate-x-0.5 transition-transform">arrow_back</span>
+            <div class="flex items-center justify-between shrink-0 mb-2">
+                <a href="../index.php" class="inline-flex items-center gap-1.5 text-xs font-semibold text-gray-500 hover:text-navy transition-all duration-200 group">
+                    <div class="w-7 h-7 rounded-lg bg-gray-100 flex items-center justify-center group-hover:bg-navy group-hover:text-gold transition-colors shadow-sm">
+                        <span class="material-symbols-outlined text-[16px] group-hover:-translate-x-0.5 transition-transform">arrow_back</span>
                     </div>
                     <span>Back to Website</span>
                 </a>
 
-                <div class="flex items-center gap-1.5 px-3 py-1 rounded-full bg-emerald-50 border border-emerald-200 text-emerald-700 text-xs font-semibold">
+                <div class="flex items-center gap-1 px-2.5 py-0.5 rounded-full bg-emerald-50 border border-emerald-200 text-emerald-700 text-[11px] font-semibold">
                     <span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span>
                     <span>System Active</span>
                 </div>
             </div>
 
-            <!-- Main Authentication Card Form Container -->
-            <div class="max-w-md w-full mx-auto my-auto py-4">
+            <!-- Main Authentication Card Form Container (Centered, proportional) -->
+            <div class="max-w-sm w-full mx-auto my-auto shrink-0 py-1">
 
                 <!-- Logo & Heading Section -->
-                <div class="text-center mb-8">
+                <div class="text-center mb-3 xl:mb-4">
                     <!-- Brand Logo Showcase with Luxury Halo -->
-                    <div class="relative inline-block mb-4">
-                        <div class="w-20 h-20 sm:w-24 sm:h-24 rounded-3xl bg-white shadow-luxury p-3 border border-amber-200/60 flex items-center justify-center mx-auto transition-transform duration-300 hover:scale-105">
+                    <div class="relative inline-block mb-2">
+                        <div class="w-14 h-14 sm:w-16 sm:h-16 rounded-2xl bg-white shadow-luxury p-2 border border-amber-200/60 flex items-center justify-center mx-auto transition-transform duration-300 hover:scale-105">
                             <img src="../assets/images/SkopeStay logo.png" 
                                  alt="SkopeStay Official Logo" 
                                  class="w-full h-full object-contain filter drop-shadow-sm">
                         </div>
-                        <div class="absolute -bottom-1 -right-1 w-7 h-7 rounded-full bg-navy text-gold flex items-center justify-center shadow-md ring-2 ring-white">
-                            <span class="material-symbols-outlined text-[15px]">verified</span>
+                        <div class="absolute -bottom-1 -right-1 w-5 h-5 rounded-full bg-navy text-gold flex items-center justify-center shadow-md ring-2 ring-white">
+                            <span class="material-symbols-outlined text-[12px]">verified</span>
                         </div>
                     </div>
 
-                    <h1 class="text-2xl sm:text-3xl font-luxury font-bold text-navy tracking-tight">
+                    <h1 class="text-xl sm:text-2xl font-luxury font-bold text-navy tracking-tight leading-tight">
                         Welcome to <span class="text-navy">Skope<span class="text-gold">Stay</span></span>
                     </h1>
-                    <p class="text-sm text-gray-500 mt-2 font-sans font-normal">
+                    <p class="text-xs text-gray-500 mt-1 font-sans font-normal">
                         Sign in to access your administrative suite & guest portal
                     </p>
                 </div>
 
                 <!-- Quick Demo 1-Click Autofill Pill -->
-                <div class="mb-6">
+                <div class="mb-3">
                     <button type="button" 
                             id="demoAdminBtn" 
-                            class="w-full py-2.5 px-4 rounded-xl bg-amber-50/80 hover:bg-amber-100 border border-amber-200/80 text-amber-900 text-xs font-semibold flex items-center justify-between transition-all duration-200 shadow-sm group">
-                        <div class="flex items-center gap-2">
-                            <span class="material-symbols-outlined text-[18px] text-amber-600 group-hover:scale-110 transition-transform">key</span>
-                            <span>Quick Demo Fill: <strong class="text-navy">admin</strong> / <strong class="text-navy">admin123</strong></span>
+                            class="w-full py-1.5 px-3 rounded-lg bg-amber-50/80 hover:bg-amber-100 border border-amber-200/80 text-amber-900 text-[11px] font-semibold flex items-center justify-between transition-all duration-200 shadow-sm group">
+                        <div class="flex items-center gap-1.5">
+                            <span class="material-symbols-outlined text-[15px] text-amber-600 group-hover:scale-110 transition-transform">key</span>
+                            <span>Demo: <strong class="text-navy">admin</strong> / <strong class="text-navy">admin123</strong></span>
                         </div>
-                        <span class="text-[11px] uppercase tracking-wider text-amber-700 bg-white px-2 py-0.5 rounded-md border border-amber-200 group-hover:bg-amber-600 group-hover:text-white transition-colors">
+                        <span class="text-[10px] uppercase tracking-wider text-amber-700 bg-white px-1.5 py-0.5 rounded border border-amber-200 group-hover:bg-amber-600 group-hover:text-white transition-colors">
                             Autofill
                         </span>
                     </button>
                 </div>
 
                 <!-- Login Form -->
-                <form id="loginForm" class="space-y-5" autocomplete="on">
+                <form id="loginForm" class="space-y-3" autocomplete="on">
                     
                     <!-- Username or Email Field -->
                     <div>
-                        <label for="username" class="block text-xs font-bold uppercase tracking-wider text-gray-700 mb-1.5">
-                            Username or Email Address
+                        <label for="username" class="block text-[11px] font-bold uppercase tracking-wider text-gray-700 mb-1">
+                            Username or Email
                         </label>
                         <div class="relative group">
-                            <div class="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-gray-400 group-focus-within:text-gold transition-colors">
-                                <span class="material-symbols-outlined text-[20px]">person</span>
+                            <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-gray-400 group-focus-within:text-gold transition-colors">
+                                <span class="material-symbols-outlined text-[18px]">person</span>
                             </div>
                             <input type="text" 
                                    id="username" 
                                    name="username" 
                                    required 
                                    autocomplete="username"
-                                   placeholder="e.g. admin or admin@skopestay.com" 
-                                   class="w-full pl-11 pr-4 py-3 bg-white border border-gray-200 rounded-xl text-sm font-medium text-navy placeholder-gray-400 focus:outline-none focus:border-gold focus:ring-2 focus:ring-gold/20 transition-all shadow-sm">
+                                   placeholder="admin or admin@skopestay.com" 
+                                   class="w-full pl-9 pr-3 py-2 bg-white border border-gray-200 rounded-lg text-xs font-medium text-navy placeholder-gray-400 focus:outline-none focus:border-gold focus:ring-2 focus:ring-gold/20 transition-all shadow-sm">
                         </div>
                     </div>
 
                     <!-- Password Field -->
                     <div>
-                        <div class="flex items-center justify-between mb-1.5">
-                            <label for="password" class="block text-xs font-bold uppercase tracking-wider text-gray-700">
+                        <div class="flex items-center justify-between mb-1">
+                            <label for="password" class="block text-[11px] font-bold uppercase tracking-wider text-gray-700">
                                 Password
                             </label>
-                            <a href="#" id="forgotPassBtn" class="text-xs font-medium text-gold hover:text-gold-dark hover:underline transition-colors">
-                                Forgot password?
+                            <a href="#" id="forgotPassBtn" class="text-[11px] font-medium text-gold hover:text-gold-dark hover:underline transition-colors">
+                                Forgot?
                             </a>
                         </div>
                         <div class="relative group">
-                            <div class="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-gray-400 group-focus-within:text-gold transition-colors">
-                                <span class="material-symbols-outlined text-[20px]">lock</span>
+                            <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-gray-400 group-focus-within:text-gold transition-colors">
+                                <span class="material-symbols-outlined text-[18px]">lock</span>
                             </div>
                             <input type="password" 
                                    id="password" 
@@ -318,25 +320,25 @@ $page_title = "Sign In | SkopeStay Luxury Resort & ERP";
                                    required 
                                    autocomplete="current-password"
                                    placeholder="••••••••••••" 
-                                   class="w-full pl-11 pr-12 py-3 bg-white border border-gray-200 rounded-xl text-sm font-medium text-navy placeholder-gray-400 focus:outline-none focus:border-gold focus:ring-2 focus:ring-gold/20 transition-all shadow-sm">
+                                   class="w-full pl-9 pr-10 py-2 bg-white border border-gray-200 rounded-lg text-xs font-medium text-navy placeholder-gray-400 focus:outline-none focus:border-gold focus:ring-2 focus:ring-gold/20 transition-all shadow-sm">
                             
                             <!-- Toggle Password Visibility -->
                             <button type="button" 
                                     id="togglePassword" 
                                     aria-label="Toggle password visibility"
-                                    class="absolute inset-y-0 right-0 pr-3.5 flex items-center text-gray-400 hover:text-navy transition-colors focus:outline-none">
-                                <span class="material-symbols-outlined text-[20px]">visibility</span>
+                                    class="absolute inset-y-0 right-0 pr-3 flex items-center text-gray-400 hover:text-navy transition-colors focus:outline-none">
+                                <span class="material-symbols-outlined text-[18px]">visibility</span>
                             </button>
                         </div>
                     </div>
 
                     <!-- Remember Me Option -->
-                    <div class="flex items-center justify-between pt-1">
-                        <label class="flex items-center gap-2 cursor-pointer select-none">
+                    <div class="flex items-center justify-between pt-0.5">
+                        <label class="flex items-center gap-1.5 cursor-pointer select-none">
                             <input type="checkbox" 
                                    id="remember" 
                                    name="remember" 
-                                   class="w-4 h-4 rounded text-navy border-gray-300 focus:ring-gold/40 focus:ring-offset-0 cursor-pointer">
+                                   class="w-3.5 h-3.5 rounded text-navy border-gray-300 focus:ring-gold/40 focus:ring-offset-0 cursor-pointer">
                             <span class="text-xs text-gray-600 font-medium">Keep me signed in</span>
                         </label>
                     </div>
@@ -344,29 +346,29 @@ $page_title = "Sign In | SkopeStay Luxury Resort & ERP";
                     <!-- Submit CTA Button -->
                     <button type="submit" 
                             id="submitBtn" 
-                            class="w-full py-3.5 px-6 rounded-xl gold-gradient-btn text-navy font-bold text-sm tracking-wide shadow-gold-sm hover:scale-[1.01] active:scale-[0.99] flex items-center justify-center gap-2 mt-6 cursor-pointer">
-                        <span class="material-symbols-outlined text-[20px]">login</span>
+                            class="w-full py-2.5 px-4 rounded-lg gold-gradient-btn text-navy font-bold text-xs tracking-wide shadow-gold-sm hover:scale-[1.01] active:scale-[0.99] flex items-center justify-center gap-1.5 mt-4 cursor-pointer">
+                        <span class="material-symbols-outlined text-[18px]">login</span>
                         <span>Sign In to Portal</span>
                     </button>
                 </form>
 
                 <!-- Create Account Link -->
-                <div class="text-center pt-8 mt-6 border-t border-gray-200/80">
-                    <p class="text-xs text-gray-500 font-medium">
+                <div class="text-center pt-3 mt-3 border-t border-gray-200/80">
+                    <p class="text-[11px] text-gray-500 font-medium">
                         Don't have an enterprise account? 
-                        <a href="signup.php" class="text-navy font-bold hover:text-gold transition-colors inline-flex items-center gap-1">
+                        <a href="signup.php" class="text-navy font-bold hover:text-gold transition-colors inline-flex items-center gap-0.5">
                             <span>Create an Account</span>
-                            <span class="material-symbols-outlined text-[14px]">arrow_forward</span>
+                            <span class="material-symbols-outlined text-[13px]">arrow_forward</span>
                         </a>
                     </p>
                 </div>
             </div>
 
-            <!-- Footer / Copyright -->
-            <div class="text-center pt-8 text-xs text-gray-400 font-sans">
-                <p>&copy; <?= date('Y') ?> SkopeStay Luxury Resort & Enterprise Suite. All rights reserved.</p>
-                <div class="flex justify-center items-center gap-4 mt-2 text-gray-400 text-[11px]">
-                    <a href="../terms.php" class="hover:text-gray-600 transition-colors">Terms of Service</a>
+            <!-- Footer / Copyright (Compact, strictly anchored) -->
+            <div class="text-center pt-2 shrink-0 text-[11px] text-gray-400 font-sans">
+                <p>&copy; <?= date('Y') ?> SkopeStay Luxury Resort & Enterprise Suite.</p>
+                <div class="flex justify-center items-center gap-3 mt-1 text-gray-400 text-[10px]">
+                    <a href="../terms.php" class="hover:text-gray-600 transition-colors">Terms</a>
                     <span>•</span>
                     <a href="mailto:support@skopestay.com" class="hover:text-gray-600 transition-colors">IT Support</a>
                     <span>•</span>
@@ -445,7 +447,7 @@ $page_title = "Sign In | SkopeStay Luxury Resort & ERP";
 
             // Loading state
             btn.innerHTML = `
-                <span class="material-symbols-outlined animate-spin text-[20px]">sync</span>
+                <span class="material-symbols-outlined animate-spin text-[18px]">sync</span>
                 <span>Authenticating...</span>
             `;
             btn.classList.add('opacity-80', 'cursor-wait');
@@ -464,7 +466,7 @@ $page_title = "Sign In | SkopeStay Luxury Resort & ERP";
 
                 if (json.success) {
                     btn.innerHTML = `
-                        <span class="material-symbols-outlined text-[20px]">check_circle</span>
+                        <span class="material-symbols-outlined text-[18px]">check_circle</span>
                         <span>Authorized! Redirecting...</span>
                     `;
                     btn.classList.remove('gold-gradient-btn', 'text-navy');
