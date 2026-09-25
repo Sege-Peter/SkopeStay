@@ -1,113 +1,245 @@
-    <!-- Desktop Navigation -->
-    <header id="main-nav" class="fixed top-0 w-full z-[100] transition-all duration-300 py-4">
-        <div class="max-w-7xl mx-auto px-6">
-            <div class="glass rounded-2xl px-6 py-3 flex justify-between items-center shadow-lg transition-all duration-300">
-                <!-- Logo -->
-                <a href="index.php" class="flex items-center gap-3">
-                    <img src="assets/images/skopestay logo.png" alt="SkopeStay Logo" class="h-10 w-auto mix-blend-multiply" onerror="this.outerHTML='<span class=\'material-symbols-outlined text-gold text-4xl\'>apartment</span>'">
-                    <span class="font-poppins font-bold text-xl text-navy tracking-tight menu-text">SkopeStay</span>
+    <!-- Desktop & Tablet Header Navigation -->
+    <header id="main-nav" class="fixed top-0 left-0 w-full z-[100] transition-all duration-300 py-3 sm:py-4">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6">
+            <div id="nav-inner-container" class="glass-luxury rounded-2xl px-4 sm:px-6 py-2.5 sm:py-3 flex justify-between items-center shadow-luxury border border-white/60 transition-all duration-300">
+                <!-- Brand Logo & Identity -->
+                <a href="index.php" class="flex items-center gap-3 group focus:outline-none">
+                    <div class="w-10 h-10 rounded-xl bg-navy flex items-center justify-center text-gold shadow-md group-hover:scale-105 transition-transform">
+                        <span class="material-symbols-outlined text-2xl">apartment</span>
+                    </div>
+                    <div>
+                        <span class="font-display font-bold text-xl sm:text-2xl text-navy tracking-tight block leading-tight">Skope<span class="text-gold">Stay</span></span>
+                        <span class="text-[10px] uppercase font-brand tracking-[0.25em] text-gray-400 font-bold block">Resort & Suites</span>
+                    </div>
                 </a>
 
-                <!-- Desktop Links (Hidden on mobile) -->
-                <nav class="hidden lg:flex items-center gap-8 font-inter font-medium text-sm text-navy menu-text">
-                    <a href="index.php" class="hover:text-gold transition-colors">Home</a>
+                <!-- Desktop Navigation Links (Large Screens) -->
+                <nav class="hidden lg:flex items-center gap-7 font-ui font-medium text-sm text-navy">
+                    <a href="index.php" class="hover:text-gold transition-colors py-2 flex items-center gap-1 font-semibold">Home</a>
                     
-                    <!-- Rooms Mega Menu -->
-                    <div class="nav-item relative py-4">
-                        <a href="index.php#rooms" class="hover:text-gold transition-colors flex items-center gap-1">Accommodations <span class="material-symbols-outlined text-[16px]">expand_more</span></a>
-                        <div class="mega-menu absolute top-full left-1/2 -translate-x-1/2 w-[600px] glass p-6 rounded-2xl shadow-2xl border border-white/50 text-navy">
-                            <div class="grid grid-cols-2 gap-6">
-                                <div>
-                                    <h4 class="font-poppins font-bold text-gold mb-4 border-b border-gray-200 pb-2">Suites & Rooms</h4>
-                                    <ul class="space-y-3">
-                                        <li><a href="index.php#rooms" class="hover:text-gold flex items-center gap-2"><span class="material-symbols-outlined text-[18px]">king_bed</span> Executive Suite</a></li>
-                                        <li><a href="index.php#rooms" class="hover:text-gold flex items-center gap-2"><span class="material-symbols-outlined text-[18px]">bed</span> Deluxe Room</a></li>
-                                        <li><a href="index.php#rooms" class="hover:text-gold flex items-center gap-2"><span class="material-symbols-outlined text-[18px]">single_bed</span> Standard Twin</a></li>
-                                    </ul>
+                    <!-- Accommodations Dropdown -->
+                    <div class="nav-item relative py-2">
+                        <a href="index.php#rooms" class="hover:text-gold transition-colors flex items-center gap-1 py-1">
+                            Accommodations 
+                            <span class="material-symbols-outlined text-[16px] text-gray-400 transition-transform duration-200">expand_more</span>
+                        </a>
+                        <div class="mega-menu absolute top-full left-1/2 -translate-x-1/2 w-[540px] glass-luxury p-5 rounded-2xl shadow-2xl border border-white/70 text-navy mt-1">
+                            <div class="grid grid-cols-2 gap-4">
+                                <div class="space-y-1">
+                                    <h4 class="font-brand font-bold text-xs uppercase tracking-wider text-gold pb-2 border-b border-gray-100">Suites & Sanctuaries</h4>
+                                    <a href="index.php#rooms" class="flex items-center gap-3 p-2 rounded-xl hover:bg-navy/5 transition-colors">
+                                        <div class="w-8 h-8 rounded-lg bg-gold/10 text-gold flex items-center justify-center"><span class="material-symbols-outlined text-[18px]">workspace_premium</span></div>
+                                        <div>
+                                            <span class="font-semibold text-xs block text-navy">Presidential Penthouse</span>
+                                            <span class="text-[11px] text-gray-400">Panoramic views & private chef</span>
+                                        </div>
+                                    </a>
+                                    <a href="index.php#rooms" class="flex items-center gap-3 p-2 rounded-xl hover:bg-navy/5 transition-colors">
+                                        <div class="w-8 h-8 rounded-lg bg-navy/5 text-navy flex items-center justify-center"><span class="material-symbols-outlined text-[18px]">king_bed</span></div>
+                                        <div>
+                                            <span class="font-semibold text-xs block text-navy">Deluxe King Suites</span>
+                                            <span class="text-[11px] text-gray-400">Balcony & spa rainforest bath</span>
+                                        </div>
+                                    </a>
+                                    <a href="index.php#rooms" class="flex items-center gap-3 p-2 rounded-xl hover:bg-navy/5 transition-colors">
+                                        <div class="w-8 h-8 rounded-lg bg-navy/5 text-navy flex items-center justify-center"><span class="material-symbols-outlined text-[18px]">family_restroom</span></div>
+                                        <div>
+                                            <span class="font-semibold text-xs block text-navy">Family Garden Retreat</span>
+                                            <span class="text-[11px] text-gray-400">Connecting suites & lounge</span>
+                                        </div>
+                                    </a>
                                 </div>
-                                <div class="relative rounded-xl overflow-hidden img-zoom-container h-40">
-                                    <img src="https://images.unsplash.com/photo-1590490360182-c33d57733427?q=80&w=1974&auto=format&fit=crop" class="w-full h-full object-cover" alt="Featured Room">
-                                    <div class="absolute inset-0 bg-gradient-to-t from-navy to-transparent flex items-end p-4">
-                                        <span class="text-white font-bold">Book Direct & Save 15%</span>
+                                <div class="relative rounded-xl overflow-hidden img-zoom-container h-full min-h-[160px]">
+                                    <img src="https://images.unsplash.com/photo-1590490360182-c33d57733427?q=80&w=1200&auto=format&fit=crop" class="w-full h-full object-cover" alt="Featured Suite">
+                                    <div class="absolute inset-0 bg-gradient-to-t from-navy via-navy/40 to-transparent flex flex-col justify-end p-4">
+                                        <span class="text-[10px] uppercase tracking-wider font-brand text-gold font-bold">Direct Booking Privilege</span>
+                                        <span class="text-white text-xs font-bold">Complimentary Breakfast Included</span>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
 
-                    <!-- Venues Mega Menu -->
-                    <div class="nav-item relative py-4">
-                        <a href="index.php#halls" class="hover:text-gold transition-colors flex items-center gap-1">Venues & Events <span class="material-symbols-outlined text-[16px]">expand_more</span></a>
-                        <div class="mega-menu absolute top-full left-1/2 -translate-x-1/2 w-[400px] glass p-6 rounded-2xl shadow-2xl border border-white/50 text-navy">
-                            <h4 class="font-poppins font-bold text-gold mb-4 border-b border-gray-200 pb-2">Event Spaces</h4>
-                            <ul class="space-y-3">
-                                <li><a href="index.php#halls" class="hover:text-gold flex items-center gap-2"><span class="material-symbols-outlined text-[18px]">celebration</span> Grand Ballroom</a></li>
-                                <li><a href="index.php#halls" class="hover:text-gold flex items-center gap-2"><span class="material-symbols-outlined text-[18px]">meeting_room</span> Corporate Boardroom</a></li>
-                                <li><a href="index.php#halls" class="hover:text-gold flex items-center gap-2"><span class="material-symbols-outlined text-[18px]">park</span> Outdoor Garden</a></li>
-                            </ul>
+                    <!-- Venues Dropdown -->
+                    <div class="nav-item relative py-2">
+                        <a href="index.php#halls" class="hover:text-gold transition-colors flex items-center gap-1 py-1">
+                            Venues 
+                            <span class="material-symbols-outlined text-[16px] text-gray-400 transition-transform duration-200">expand_more</span>
+                        </a>
+                        <div class="mega-menu absolute top-full left-1/2 -translate-x-1/2 w-[340px] glass-luxury p-4 rounded-2xl shadow-2xl border border-white/70 text-navy mt-1">
+                            <h4 class="font-brand font-bold text-xs uppercase tracking-wider text-gold pb-2 border-b border-gray-100 mb-2">Banquet & Meetings</h4>
+                            <div class="space-y-1">
+                                <a href="index.php#halls" class="flex items-center gap-3 p-2 rounded-xl hover:bg-navy/5 transition-colors">
+                                    <div class="w-8 h-8 rounded-lg bg-gold/10 text-gold flex items-center justify-center"><span class="material-symbols-outlined text-[18px]">celebration</span></div>
+                                    <div>
+                                        <span class="font-semibold text-xs block text-navy">The Grand Ballroom</span>
+                                        <span class="text-[11px] text-gray-400">Up to 500 Guests • Crystal Chandeliers</span>
+                                    </div>
+                                </a>
+                                <a href="index.php#halls" class="flex items-center gap-3 p-2 rounded-xl hover:bg-navy/5 transition-colors">
+                                    <div class="w-8 h-8 rounded-lg bg-navy/5 text-navy flex items-center justify-center"><span class="material-symbols-outlined text-[18px]">groups</span></div>
+                                    <div>
+                                        <span class="font-semibold text-xs block text-navy">Executive Boardrooms</span>
+                                        <span class="text-[11px] text-gray-400">4K Telepresence & High-Speed Fiber</span>
+                                    </div>
+                                </a>
+                                <a href="index.php#halls" class="flex items-center gap-3 p-2 rounded-xl hover:bg-navy/5 transition-colors">
+                                    <div class="w-8 h-8 rounded-lg bg-navy/5 text-navy flex items-center justify-center"><span class="material-symbols-outlined text-[18px]">yard</span></div>
+                                    <div>
+                                        <span class="font-semibold text-xs block text-navy">Oasis Garden Grounds</span>
+                                        <span class="text-[11px] text-gray-400">Outdoor Receptions up to 1,000</span>
+                                    </div>
+                                </a>
+                            </div>
                         </div>
                     </div>
 
-                    <a href="index.php#pool" class="hover:text-gold transition-colors">Pool & Spa</a>
-                    <a href="index.php#restaurant" class="hover:text-gold transition-colors">Dining</a>
-                    <a href="about.php" class="hover:text-gold transition-colors">About Us</a>
+                    <a href="index.php#pool" class="hover:text-gold transition-colors py-2">Pool & Spa</a>
+                    <a href="index.php#restaurant" class="hover:text-gold transition-colors py-2">Fine Dining</a>
+                    <a href="about.php" class="hover:text-gold transition-colors py-2">About</a>
                 </nav>
 
-                <!-- Action Buttons -->
-                <div class="hidden lg:flex items-center gap-4">
-                    <a href="auth/login.php" class="text-navy font-semibold hover:text-gold transition-colors text-sm menu-text">Guest Portal</a>
-                    <button onclick="window.location.href='index.php?book=true'" class="bg-navy text-white px-6 py-2.5 rounded-xl font-poppins font-semibold hover:bg-gold transition-colors shadow-lg hover:shadow-gold/50 flex items-center gap-2">
-                        <span class="material-symbols-outlined text-[18px]">calendar_month</span> Book Now
+                <!-- Desktop Actions -->
+                <div class="hidden lg:flex items-center gap-3.5">
+                    <a href="auth/login.php" class="text-navy font-semibold text-xs tracking-wide hover:text-gold transition-colors px-3 py-2 flex items-center gap-1.5">
+                        <span class="material-symbols-outlined text-[18px]">lock</span>
+                        <span>Portal</span>
+                    </a>
+                    <button onclick="if(typeof openBookingWizard==='function'){openBookingWizard();}else{window.location.href='index.php?book=true';}" class="bg-navy hover:bg-gold text-white hover:text-navy px-5 py-2.5 rounded-xl font-ui font-semibold text-xs tracking-wide transition-all duration-300 shadow-md hover:shadow-gold-sm flex items-center gap-2">
+                        <span class="material-symbols-outlined text-[17px]">calendar_month</span>
+                        <span>Reserve</span>
                     </button>
                 </div>
 
-                <!-- Mobile Hamburger -->
-                <button onclick="toggleMobileMenu()" class="lg:hidden text-navy hover:text-gold transition-colors menu-text">
-                    <span class="material-symbols-outlined text-3xl">menu</span>
-                </button>
+                <!-- Mobile Action & Hamburger Button -->
+                <div class="flex items-center gap-2 lg:hidden">
+                    <button onclick="if(typeof openBookingWizard==='function'){openBookingWizard();}else{window.location.href='index.php?book=true';}" class="bg-gold text-white font-ui font-bold text-xs px-3.5 py-1.5 rounded-lg shadow-sm hover:bg-yellow-600 transition-colors flex items-center gap-1">
+                        <span class="material-symbols-outlined text-[16px]">calendar_month</span>
+                        <span>Book</span>
+                    </button>
+                    <button onclick="toggleMobileMenu()" class="w-9 h-9 rounded-lg bg-navy/5 text-navy hover:bg-gold hover:text-white transition-colors flex items-center justify-center focus:outline-none" aria-label="Toggle Navigation">
+                        <span class="material-symbols-outlined text-2xl">menu</span>
+                    </button>
+                </div>
             </div>
         </div>
     </header>
 
-    <!-- Mobile Slide-in Menu & Overlay -->
-    <div id="mobile-overlay" onclick="toggleMobileMenu()" class="fixed inset-0 bg-navy/60 backdrop-blur-sm z-[110]"></div>
-    <div id="mobile-menu" class="fixed top-0 left-0 h-full w-[300px] bg-white z-[120] shadow-2xl overflow-y-auto flex flex-col">
-        <div class="p-6 border-b border-gray-100 flex justify-between items-center">
-            <img src="assets/images/skopestay logo.png" alt="Logo" class="h-8 w-auto" onerror="this.outerHTML='<span class=\'font-poppins font-bold text-xl text-navy\'>SkopeStay</span>'">
-            <button onclick="toggleMobileMenu()" class="text-gray-500 hover:text-navy">
-                <span class="material-symbols-outlined">close</span>
+    <!-- Mobile Slide-In Navigation Drawer -->
+    <div id="mobile-overlay" onclick="toggleMobileMenu()" class="fixed inset-0 bg-navy-dark/70 backdrop-blur-sm z-[110]"></div>
+    <div id="mobile-menu" class="fixed top-0 left-0 h-full w-[85%] max-w-[320px] bg-white z-[120] shadow-2xl flex flex-col justify-between overflow-y-auto">
+        <div>
+            <!-- Mobile Drawer Header -->
+            <div class="p-5 border-b border-gray-100 flex justify-between items-center bg-gray-50/70">
+                <a href="index.php" class="flex items-center gap-2.5">
+                    <div class="w-8 h-8 rounded-lg bg-navy text-gold flex items-center justify-center">
+                        <span class="material-symbols-outlined text-xl">apartment</span>
+                    </div>
+                    <span class="font-display font-bold text-xl text-navy">Skope<span class="text-gold">Stay</span></span>
+                </a>
+                <button onclick="toggleMobileMenu()" class="w-8 h-8 rounded-full bg-gray-200/70 text-gray-600 hover:text-navy flex items-center justify-center">
+                    <span class="material-symbols-outlined text-xl">close</span>
+                </button>
+            </div>
+
+            <!-- Mobile Drawer Links -->
+            <nav class="p-5 space-y-1 font-ui text-base text-navy">
+                <a href="index.php" onclick="toggleMobileMenu()" class="flex items-center gap-3.5 p-3 rounded-xl hover:bg-navy/5 hover:text-gold transition-colors font-medium">
+                    <span class="material-symbols-outlined text-xl text-gold">home</span>
+                    <span>Home</span>
+                </a>
+                <a href="index.php#rooms" onclick="toggleMobileMenu()" class="flex items-center gap-3.5 p-3 rounded-xl hover:bg-navy/5 hover:text-gold transition-colors font-medium">
+                    <span class="material-symbols-outlined text-xl text-gold">king_bed</span>
+                    <span>Suites & Rooms</span>
+                </a>
+                <a href="index.php#halls" onclick="toggleMobileMenu()" class="flex items-center gap-3.5 p-3 rounded-xl hover:bg-navy/5 hover:text-gold transition-colors font-medium">
+                    <span class="material-symbols-outlined text-xl text-gold">event_seat</span>
+                    <span>Venues & Events</span>
+                </a>
+                <a href="index.php#pool" onclick="toggleMobileMenu()" class="flex items-center gap-3.5 p-3 rounded-xl hover:bg-navy/5 hover:text-gold transition-colors font-medium">
+                    <span class="material-symbols-outlined text-xl text-gold">pool</span>
+                    <span>Infinity Pool & Spa</span>
+                </a>
+                <a href="index.php#restaurant" onclick="toggleMobileMenu()" class="flex items-center gap-3.5 p-3 rounded-xl hover:bg-navy/5 hover:text-gold transition-colors font-medium">
+                    <span class="material-symbols-outlined text-xl text-gold">restaurant</span>
+                    <span>Fine Dining Menu</span>
+                </a>
+                <a href="about.php" onclick="toggleMobileMenu()" class="flex items-center gap-3.5 p-3 rounded-xl hover:bg-navy/5 hover:text-gold transition-colors font-medium">
+                    <span class="material-symbols-outlined text-xl text-gold">info</span>
+                    <span>About Resort</span>
+                </a>
+                <a href="careers.php" onclick="toggleMobileMenu()" class="flex items-center gap-3.5 p-3 rounded-xl hover:bg-navy/5 hover:text-gold transition-colors font-medium">
+                    <span class="material-symbols-outlined text-xl text-gold">work</span>
+                    <span>Careers</span>
+                </a>
+            </nav>
+        </div>
+
+        <!-- Mobile Drawer Bottom CTA -->
+        <div class="p-5 border-t border-gray-100 bg-gray-50/80 space-y-3">
+            <button onclick="toggleMobileMenu(); if(typeof openBookingWizard==='function'){openBookingWizard();}else{window.location.href='index.php?book=true';}" class="w-full bg-gold text-white font-ui font-bold py-3 rounded-xl shadow-md hover:bg-yellow-600 transition-colors flex items-center justify-center gap-2">
+                <span class="material-symbols-outlined text-xl">calendar_month</span>
+                <span>Check Availability</span>
             </button>
-        </div>
-        <div class="flex-1 p-6 flex flex-col gap-6 font-poppins text-lg text-navy">
-            <a href="index.php" onclick="toggleMobileMenu()" class="hover:text-gold flex items-center gap-3"><span class="material-symbols-outlined">home</span> Home</a>
-            <a href="index.php#rooms" onclick="toggleMobileMenu()" class="hover:text-gold flex items-center gap-3"><span class="material-symbols-outlined">king_bed</span> Accommodations</a>
-            <a href="index.php#halls" onclick="toggleMobileMenu()" class="hover:text-gold flex items-center gap-3"><span class="material-symbols-outlined">event_seat</span> Venues</a>
-            <a href="index.php#pool" onclick="toggleMobileMenu()" class="hover:text-gold flex items-center gap-3"><span class="material-symbols-outlined">pool</span> Pool & Spa</a>
-            <a href="index.php#restaurant" onclick="toggleMobileMenu()" class="hover:text-gold flex items-center gap-3"><span class="material-symbols-outlined">restaurant</span> Dining</a>
-            <a href="about.php" onclick="toggleMobileMenu()" class="hover:text-gold flex items-center gap-3"><span class="material-symbols-outlined">info</span> About Us</a>
-        </div>
-        <div class="p-6 border-t border-gray-100 bg-lightgray">
-            <a href="auth/login.php" class="block w-full text-center py-3 mb-3 border-2 border-navy text-navy rounded-xl font-bold hover:bg-navy hover:text-white transition-colors">Login / Register</a>
-            <button onclick="window.location.href='index.php?book=true'" class="w-full bg-gold text-white py-3 rounded-xl font-bold shadow-lg shadow-gold/30 hover:bg-yellow-600 transition-colors">Book Now</button>
+            <a href="auth/login.php" class="w-full block text-center py-2.5 border border-navy/20 text-navy rounded-xl font-ui font-semibold text-sm hover:bg-navy hover:text-white transition-colors">
+                Staff / Guest Portal
+            </a>
+            <div class="pt-2 flex justify-center gap-4 text-gray-400 text-xs font-brand">
+                <span>Reception: +254 742 380 183</span>
+            </div>
         </div>
     </div>
-    
+
+    <!-- Mobile Persistent Bottom Navigation Dock (Native App Style) -->
+    <div class="md:hidden fixed bottom-0 left-0 right-0 z-50 mobile-bottom-dock px-3 py-2 flex items-center justify-around safe-bottom">
+        <a href="index.php" class="flex flex-col items-center text-gray-300 hover:text-gold transition-colors text-[10px] font-medium py-1">
+            <span class="material-symbols-outlined text-xl">home</span>
+            <span>Home</span>
+        </a>
+        <a href="index.php#rooms" class="flex flex-col items-center text-gray-300 hover:text-gold transition-colors text-[10px] font-medium py-1">
+            <span class="material-symbols-outlined text-xl">bed</span>
+            <span>Suites</span>
+        </a>
+        
+        <!-- Highlighted Floating Center Button -->
+        <button onclick="if(typeof openBookingWizard==='function'){openBookingWizard();}else{window.location.href='index.php?book=true';}" class="-mt-5 w-12 h-12 rounded-full gold-gradient-bg text-navy flex items-center justify-center shadow-gold-glow hover:scale-105 active:scale-95 transition-transform" aria-label="Book Reservation">
+            <span class="material-symbols-outlined text-2xl font-bold">calendar_month</span>
+        </button>
+
+        <a href="index.php#halls" class="flex flex-col items-center text-gray-300 hover:text-gold transition-colors text-[10px] font-medium py-1">
+            <span class="material-symbols-outlined text-xl">event_seat</span>
+            <span>Venues</span>
+        </a>
+        <a href="index.php#restaurant" class="flex flex-col items-center text-gray-300 hover:text-gold transition-colors text-[10px] font-medium py-1">
+            <span class="material-symbols-outlined text-xl">restaurant</span>
+            <span>Dining</span>
+        </a>
+    </div>
+
+    <!-- Navigation Scroll & Mobile Toggle Script -->
     <script>
         function toggleMobileMenu() {
             const menu = document.getElementById('mobile-menu');
             const overlay = document.getElementById('mobile-overlay');
-            if(menu) menu.classList.toggle('open');
-            if(overlay) overlay.classList.toggle('open');
+            if (menu) menu.classList.toggle('open');
+            if (overlay) overlay.classList.toggle('open');
         }
-        
-        // Handle navbar scroll effect
+
         window.addEventListener('scroll', function() {
             const nav = document.getElementById('main-nav');
-            const texts = document.querySelectorAll('.menu-text');
-            if (window.scrollY > 50) {
-                nav.classList.add('bg-white/95', 'backdrop-blur-md', 'shadow-md');
+            const inner = document.getElementById('nav-inner-container');
+            if (!nav || !inner) return;
+
+            if (window.scrollY > 40) {
+                nav.classList.add('py-2');
+                nav.classList.remove('py-3', 'sm:py-4');
+                inner.classList.add('shadow-xl', 'bg-white/95');
+                inner.classList.remove('bg-white/88');
             } else {
-                nav.classList.remove('bg-white/95', 'backdrop-blur-md', 'shadow-md');
+                nav.classList.remove('py-2');
+                nav.classList.add('py-3', 'sm:py-4');
+                inner.classList.remove('shadow-xl', 'bg-white/95');
+                inner.classList.add('bg-white/88');
             }
         });
     </script>
