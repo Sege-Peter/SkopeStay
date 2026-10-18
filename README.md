@@ -6,23 +6,35 @@ A modern hotel and resort management system with seamless online booking, room r
 
 - **Guest Facing Experience**:
   - Live room availability and luxury suite showcase
+  - Online booking with server-side pricing and double-booking protection (bookings arrive as *Pending* for staff to confirm)
   - Event hall reservations and conference booking
   - Pool pass ticketing and visitor tracking
   - Restaurant dining menu and walk-in ordering
-  - Contact and customer inquiry handling
+  - Contact form, newsletter sign-up and WhatsApp concierge button
 
 - **Management & Administration**:
-  - Role-Based Access Control (RBAC): Super Admin, Hotel Manager, Receptionist, Guest
+  - Role-Based Access Control (RBAC) enforced on every admin page and API
   - Room status tracking (Available, Occupied, Cleaning, Maintenance)
-  - Booking lifecycle management (Check-in, Check-out, Folio/Billing)
-  - Inventory and restaurant order dispatch
-  - Expense tracking and financial summaries
+  - Booking lifecycle management (Confirm, Check-in, Check-out, Folio/Billing)
+  - Guest Inquiries inbox with reply by email/WhatsApp, staff notes and CSV export
+  - Live header notifications (pending bookings, arrivals, low stock, urgent work orders) and global search (Ctrl K)
+  - Inventory, procurement, HRMS, maintenance and multi-ledger accounting
+  - My Profile page with password change
+
+- **System Settings** (`modules/settings.php`):
+  - **Branding:** property name, two-part wordmark, captions, logo / favicon / sign-in background upload, icon-badge mode
+  - **Theme colours:** 8 presets or custom primary, accent, success and sidebar colours with live preview and contrast warning
+  - Property contacts, website & social links, SEO description, billing (currency, VAT, receipt footer, booking prefix)
+  - Maintenance mode with staff bypass link, alert rules, security (idle timeout, public sign-up, demo login), staff directory
+  - One-click full database backup (.sql download)
+
+All branding is read through `includes/branding.php` (`brand()`, `brand_logo_url()`, `brand_wordmark()`, `brand_palette()`), so the website, sign-in page, admin panel, maintenance screen and receipts all follow the settings.
 
 ## Requirements
 
-- PHP 8.0+ (PDO MySQL extension enabled)
+- PHP 8.0+ (PDO MySQL and fileinfo extensions enabled)
 - MySQL / MariaDB 10.4+
-- Web server (Apache via XAMPP / Laragon / Nginx)
+- Apache with `.htaccess` support (XAMPP / Laragon), or equivalent rules on Nginx
 
 ## Setup & Installation
 
@@ -34,11 +46,21 @@ A modern hotel and resort management system with seamless online booking, room r
    ```sql
    CREATE DATABASE skopestay;
    ```
-3. Import the schemas and run initial setup scripts:
-   - Import `schema.sql`, `schema_v2.sql`, `schema_patch.sql`, `schema_patch_rooms.sql`
-   - Run `setup_extended.php` and `setup_public.php` to populate halls, pool passes, and inquiry tables.
+3. Import the schemas and run the setup scripts **from the command line** (the `database/` folder is blocked from the web):
+   ```bash
+   mysql -u root skopestay < database/schema.sql
+   php database/setup_erp.php
+   php database/setup_rbac.php
+   ```
+   Later schema changes are applied automatically by `includes/migrations.php` on the first page load.
 4. Configure database connection credentials in `includes/config.php` if different from defaults.
-5. Launch your local server and open `http://localhost/SkopeStay` in your browser.
+5. Open `http://localhost/SkopeStay`, sign in, and set your name, logo and colours under **System Settings**.
+
+## Going live checklist
+
+- Settings → Security: turn off **Show demo credentials** and change the default admin password (My Profile).
+- Settings → Maintenance: generate a new bypass key.
+- Make sure `assets/uploads/` is writable by the web server.
 
 ## License
 MIT License

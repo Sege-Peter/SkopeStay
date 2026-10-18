@@ -1,5 +1,5 @@
 <?php
-require_once __DIR__ . '/includes/config.php';
+require_once __DIR__ . '/../includes/config.php';
 
 echo "Setting up RBAC Matrix...\n";
 

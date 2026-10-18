@@ -3,8 +3,6 @@ $page_title = "Add New Room | SkopeStay";
 require_once '../includes/config.php';
 include '../includes/head.php';
 ?>
-<!DOCTYPE html>
-<html class="light" lang="en">
 <body class="bg-background text-on-surface font-body-md min-h-screen">
 
 <?php include '../includes/sidebar.php'; ?>

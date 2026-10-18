@@ -6,14 +6,22 @@ if (isset($_SESSION['user_id'])) {
     header("Location: ../modules/dashboard.php");
     exit;
 }
-$page_title = "Sign In | SkopeStay Luxury Resort & ERP";
+$page_title = "Sign In | " . brand('hotel_name');
+$pal = brand_palette();
+// Only allow same-site relative redirects after sign-in
+$next = $_GET['next'] ?? '';
+if (!preg_match('#^/[A-Za-z0-9_\-./?=&%]*$#', $next) || strpos($next, '//') !== false) $next = '';
+$reason = $_GET['reason'] ?? '';
+$show_demo = get_setting($pdo, 'show_demo_login', '1') === '1';
+$allow_signup = get_setting($pdo, 'allow_public_signup', '0') === '1';
 ?>
 <!DOCTYPE html>
 <html lang="en" class="h-full">
 <head>
     <meta charset="utf-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-    <title><?= htmlspecialchars($page_title) ?></title>
+    <title><?= e($page_title) ?></title>
+    <?= brand_favicon_tags() ?>
 
     <!-- Google Fonts: Playfair Display, Montserrat, Inter -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -35,15 +43,15 @@ $page_title = "Sign In | SkopeStay Luxury Resort & ERP";
                 extend: {
                     colors: {
                         navy: {
-                            DEFAULT: '#0B132B',
-                            dark: '#050A18',
-                            light: '#1C2541',
-                            subtle: '#243257'
+                            DEFAULT: '<?= $pal['primary'] ?>',
+                            dark: '<?= $pal['primary_dark'] ?>',
+                            light: '<?= $pal['primary_light'] ?>',
+                            subtle: '<?= $pal['primary_subtle'] ?>'
                         },
                         gold: {
-                            DEFAULT: '#D4AF37',
-                            light: '#F5E6AB',
-                            dark: '#A6821C',
+                            DEFAULT: '<?= $pal['secondary'] ?>',
+                            light: '<?= $pal['secondary_light'] ?>',
+                            dark: '<?= $pal['secondary_dark'] ?>',
                             accent: '#F59E0B'
                         },
                         cream: '#FDFBF7'
@@ -57,7 +65,7 @@ $page_title = "Sign In | SkopeStay Luxury Resort & ERP";
                     boxShadow: {
                         'luxury': '0 20px 40px -15px rgba(11, 19, 43, 0.25)',
                         'gold-glow': '0 0 25px rgba(212, 175, 55, 0.35)',
-                        'gold-sm': '0 4px 14px rgba(212, 175, 55, 0.25)'
+                        'gold-sm': '0 4px 14px rgba(var(--theme-secondary-rgb), 0.25)'
                     },
                     animation: {
                         'slow-zoom': 'slowZoom 28s ease-in-out infinite alternate',
@@ -79,11 +87,12 @@ $page_title = "Sign In | SkopeStay Luxury Resort & ERP";
     </script>
 
     <style>
+        <?= brand_css_vars() ?>
         html, body {
             height: 100%;
             margin: 0;
             padding: 0;
-            background-color: #0B132B;
+            background-color: var(--theme-primary);
         }
         @media (min-width: 1024px) {
             html, body {
@@ -94,26 +103,27 @@ $page_title = "Sign In | SkopeStay Luxury Resort & ERP";
             font-family: 'Playfair Display', serif;
         }
         .gold-gradient-text {
-            background: linear-gradient(135deg, #F5E6AB 0%, #D4AF37 50%, #A6821C 100%);
+            background: linear-gradient(135deg, var(--theme-secondary-light) 0%, var(--theme-secondary) 50%, var(--theme-secondary-dark) 100%);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
         }
         .gold-gradient-bg {
-            background: linear-gradient(135deg, #F3E5AB 0%, #D4AF37 60%, #B89025 100%);
+            background: linear-gradient(135deg, var(--theme-secondary-light) 0%, var(--theme-secondary) 60%, var(--theme-secondary-dark) 100%);
         }
         .gold-gradient-btn {
-            background: linear-gradient(135deg, #D4AF37 0%, #C49826 50%, #B0851A 100%);
+            background: linear-gradient(135deg, var(--theme-secondary) 0%, var(--theme-secondary-dark) 100%);
+            color: var(--theme-on-secondary) !important;
             transition: all 0.3s ease;
         }
         .gold-gradient-btn:hover {
-            background: linear-gradient(135deg, #F5E6AB 0%, #D4AF37 70%, #A6821C 100%);
-            box-shadow: 0 8px 20px -4px rgba(212, 175, 55, 0.4);
+            background: linear-gradient(135deg, var(--theme-secondary-light) 0%, var(--theme-secondary) 70%, var(--theme-secondary-dark) 100%);
+            box-shadow: 0 8px 20px -4px rgba(var(--theme-secondary-rgb), 0.4);
         }
         .glass-dark-badge {
-            background: rgba(11, 19, 43, 0.75);
+            background: rgba(var(--theme-primary-rgb), 0.75);
             backdrop-filter: blur(12px);
             -webkit-backdrop-filter: blur(12px);
-            border: 1px solid rgba(212, 175, 55, 0.25);
+            border: 1px solid rgba(var(--theme-secondary-rgb), 0.25);
         }
     </style>
 </head>
@@ -129,26 +139,26 @@ $page_title = "Sign In | SkopeStay Luxury Resort & ERP";
             
             <!-- High-Res Luxury Background Imagery -->
             <div class="absolute inset-0 z-0">
-                <img src="https://images.unsplash.com/photo-1542314831-c53cd3816002?q=80&w=2070&auto=format&fit=crop" 
-                     alt="SkopeStay Luxury Resort Exterior" 
+                <img src="<?= e(get_setting($pdo, 'login_background', '') ? asset_url(get_setting($pdo, 'login_background', '')) : 'https://images.unsplash.com/photo-1566073771259-6a8506099945?q=80&w=2070&auto=format&fit=crop') ?>" 
+                     alt="<?= e(brand('hotel_name')) ?> exterior" 
                      class="w-full h-full object-cover animate-slow-zoom opacity-55">
                 <!-- Multi-layer cinematic vignette -->
                 <div class="absolute inset-0 bg-gradient-to-t from-navy via-navy/60 to-navy/40"></div>
-                <div class="absolute inset-0 bg-[radial-gradient(circle_at_bottom_left,rgba(212,175,55,0.15),transparent_70%)]"></div>
+                <div class="absolute inset-0 bg-[radial-gradient(circle_at_bottom_left,rgba(var(--theme-secondary-rgb),0.15),transparent_70%)]"></div>
             </div>
 
             <!-- Top Left: Brand Header with Logo -->
             <div class="relative z-10 flex items-center justify-between">
                 <a href="../index.php" class="inline-flex items-center gap-3 group">
                     <div class="w-10 h-10 xl:w-11 xl:h-11 rounded-xl bg-white/95 p-1 shadow-lg border border-gold/40 flex items-center justify-center group-hover:scale-105 transition-transform duration-300">
-                        <img src="../assets/images/SkopeStay logo.png" alt="SkopeStay Logo" class="w-full h-full object-contain">
+                        <img src="<?= e(brand_logo_url()) ?>" alt="<?= e(brand('hotel_name')) ?> logo" class="w-full h-full object-contain">
                     </div>
                     <div>
                         <div class="font-display font-bold text-xl xl:text-2xl text-white tracking-tight leading-none">
-                            Skope<span class="text-gold">Stay</span>
+                            <?= brand_wordmark() ?>
                         </div>
                         <div class="text-[9px] xl:text-[10px] font-brand font-semibold text-gray-300 tracking-[0.25em] uppercase mt-0.5">
-                            Resort & Enterprise ERP
+                            <?= e(brand('erp_subtitle')) ?>
                         </div>
                     </div>
                 </a>
@@ -167,7 +177,13 @@ $page_title = "Sign In | SkopeStay Luxury Resort & ERP";
                 </div>
                 
                 <h2 class="text-3xl xl:text-4xl font-luxury font-bold text-white leading-snug mb-3">
-                    Where Pure Luxury Meets <span class="gold-gradient-text italic font-normal">Intelligent Operations.</span>
+                    <?php
+                    // Second half of the tagline gets the accent treatment
+                    $tw = preg_split('/\s+/', trim(get_setting($pdo, 'hotel_tagline', 'Where Pure Luxury Meets Intelligent Operations')));
+                    $split = max(1, (int)ceil(count($tw) / 2));
+                    echo e(implode(' ', array_slice($tw, 0, $split)));
+                    if (count($tw) > $split) echo ' <span class="gold-gradient-text italic font-normal">' . e(implode(' ', array_slice($tw, $split))) . '</span>';
+                    ?>
                 </h2>
                 
                 <p class="text-gray-300 text-xs xl:text-sm font-light leading-relaxed mb-6">
@@ -214,7 +230,7 @@ $page_title = "Sign In | SkopeStay Luxury Resort & ERP";
                     <span class="material-symbols-outlined text-[16px] text-emerald-400">lock</span>
                     <span>256-Bit TLS Encryption & Role-Based RBAC Protection</span>
                 </div>
-                <span>SkopeStay Core v2.5.0</span>
+                <span><?= e(brand_short_name()) ?> Core v2.6.0</span>
             </div>
         </div>
 
@@ -246,8 +262,8 @@ $page_title = "Sign In | SkopeStay Luxury Resort & ERP";
                     <!-- Brand Logo Showcase with Luxury Halo -->
                     <div class="relative inline-block mb-2">
                         <div class="w-14 h-14 sm:w-16 sm:h-16 rounded-2xl bg-white shadow-luxury p-2 border border-amber-200/60 flex items-center justify-center mx-auto transition-transform duration-300 hover:scale-105">
-                            <img src="../assets/images/SkopeStay logo.png" 
-                                 alt="SkopeStay Official Logo" 
+                            <img src="<?= e(brand_logo_url()) ?>"
+                                 alt="<?= e(brand('hotel_name')) ?> logo"
                                  class="w-full h-full object-contain filter drop-shadow-sm">
                         </div>
                         <div class="absolute -bottom-1 -right-1 w-5 h-5 rounded-full bg-navy text-gold flex items-center justify-center shadow-md ring-2 ring-white">
@@ -256,13 +272,24 @@ $page_title = "Sign In | SkopeStay Luxury Resort & ERP";
                     </div>
 
                     <h1 class="text-xl sm:text-2xl font-luxury font-bold text-navy tracking-tight leading-tight">
-                        Welcome to <span class="text-navy">Skope<span class="text-gold">Stay</span></span>
+                        Welcome to <span class="text-navy"><?= brand_wordmark() ?></span>
                     </h1>
                     <p class="text-xs text-gray-500 mt-1 font-sans font-normal">
                         Sign in to access your administrative suite & guest portal
                     </p>
                 </div>
 
+                <?php if ($reason === 'timeout'): ?>
+                <div class="mb-3 px-3 py-2 rounded-lg bg-amber-50 border border-amber-200 text-amber-800 text-[11px] font-semibold flex items-center gap-1.5">
+                    <span class="material-symbols-outlined text-[16px]">schedule</span> You were signed out after a period of inactivity.
+                </div>
+                <?php elseif ($reason === 'disabled'): ?>
+                <div class="mb-3 px-3 py-2 rounded-lg bg-rose-50 border border-rose-200 text-rose-700 text-[11px] font-semibold flex items-center gap-1.5">
+                    <span class="material-symbols-outlined text-[16px]">block</span> This account has been deactivated. Contact your administrator.
+                </div>
+                <?php endif; ?>
+
+                <?php if ($show_demo): ?>
                 <!-- Quick Demo 1-Click Autofill Pill -->
                 <div class="mb-3">
                     <button type="button" 
@@ -277,6 +304,7 @@ $page_title = "Sign In | SkopeStay Luxury Resort & ERP";
                         </span>
                     </button>
                 </div>
+                <?php endif; ?>
 
                 <!-- Login Form -->
                 <form id="loginForm" class="space-y-3" autocomplete="on">
@@ -295,7 +323,7 @@ $page_title = "Sign In | SkopeStay Luxury Resort & ERP";
                                    name="username" 
                                    required 
                                    autocomplete="username"
-                                   placeholder="admin or admin@skopestay.com" 
+                                   placeholder="Username or email address" 
                                    class="w-full pl-9 pr-3 py-2 bg-white border border-gray-200 rounded-lg text-xs font-medium text-navy placeholder-gray-400 focus:outline-none focus:border-gold focus:ring-2 focus:ring-gold/20 transition-all shadow-sm">
                         </div>
                     </div>
@@ -352,6 +380,7 @@ $page_title = "Sign In | SkopeStay Luxury Resort & ERP";
                     </button>
                 </form>
 
+                <?php if ($allow_signup): ?>
                 <!-- Create Account Link -->
                 <div class="text-center pt-3 mt-3 border-t border-gray-200/80">
                     <p class="text-[11px] text-gray-500 font-medium">
@@ -362,15 +391,16 @@ $page_title = "Sign In | SkopeStay Luxury Resort & ERP";
                         </a>
                     </p>
                 </div>
+                <?php endif; ?>
             </div>
 
             <!-- Footer / Copyright (Compact, strictly anchored) -->
             <div class="text-center pt-2 shrink-0 text-[11px] text-gray-400 font-sans">
-                <p>&copy; <?= date('Y') ?> SkopeStay Luxury Resort & Enterprise Suite.</p>
+                <p>&copy; <?= date('Y') ?> <?= e(brand('hotel_name')) ?>.</p>
                 <div class="flex justify-center items-center gap-3 mt-1 text-gray-400 text-[10px]">
                     <a href="../terms.php" class="hover:text-gray-600 transition-colors">Terms</a>
                     <span>•</span>
-                    <a href="mailto:support@skopestay.com" class="hover:text-gray-600 transition-colors">IT Support</a>
+                    <a href="mailto:<?= e(get_setting($pdo, 'support_email', 'support@skopestay.com')) ?>" class="hover:text-gray-600 transition-colors">IT Support</a>
                     <span>•</span>
                     <a href="../index.php" class="hover:text-gray-600 transition-colors">Guest Portal</a>
                 </div>
@@ -393,7 +423,7 @@ $page_title = "Sign In | SkopeStay Luxury Resort & ERP";
 
         // Demo Admin 1-Click Autofill
         const demoBtn = document.getElementById('demoAdminBtn');
-        demoBtn.addEventListener('click', () => {
+        if (demoBtn) demoBtn.addEventListener('click', () => {
             const userInput = document.getElementById('username');
             userInput.value = 'admin';
             passInput.value = 'admin123';
@@ -429,13 +459,13 @@ $page_title = "Sign In | SkopeStay Luxury Resort & ERP";
                     <div class="text-left text-sm space-y-2 text-gray-600 mt-2">
                         <p>For security reasons, enterprise passwords must be reset via your Property Administrator or IT Operations.</p>
                         <div class="p-3 bg-gray-50 rounded-lg border border-gray-200 font-mono text-xs text-gray-800">
-                            <strong>IT Desk:</strong> support@skopestay.com<br>
-                            <strong>Ext:</strong> 108 / +254 742 380 183
+                            <strong>IT Desk:</strong> <?= e(get_setting($pdo, 'support_email', 'support@skopestay.com')) ?><br>
+                            <strong>Phone:</strong> <?= e(get_setting($pdo, 'contact_phone', '')) ?>
                         </div>
                     </div>
                 `,
                 confirmButtonText: 'Understood',
-                confirmButtonColor: '#0B132B'
+                confirmButtonColor: '<?= $pal['primary'] ?>'
             });
         });
 
@@ -480,7 +510,7 @@ $page_title = "Sign In | SkopeStay Luxury Resort & ERP";
                         timer: 1200,
                         timerProgressBar: true
                     }).then(() => {
-                        window.location.href = '../modules/dashboard.php';
+                        window.location.href = <?= json_encode($next ?: '../modules/dashboard.php') ?>;
                     });
                 } else {
                     Swal.fire({
@@ -488,7 +518,7 @@ $page_title = "Sign In | SkopeStay Luxury Resort & ERP";
                         title: 'Authentication Failed',
                         text: json.message || 'Invalid username or password.',
                         confirmButtonText: 'Try Again',
-                        confirmButtonColor: '#0B132B'
+                        confirmButtonColor: '<?= $pal['primary'] ?>'
                     });
                     btn.innerHTML = originalHTML;
                     btn.classList.remove('opacity-80', 'cursor-wait');
@@ -500,7 +530,7 @@ $page_title = "Sign In | SkopeStay Luxury Resort & ERP";
                     title: 'Connection Error',
                     text: 'Unable to reach the authentication server. Please check your connection.',
                     confirmButtonText: 'Retry',
-                    confirmButtonColor: '#0B132B'
+                    confirmButtonColor: '<?= $pal['primary'] ?>'
                 });
                 btn.innerHTML = originalHTML;
                 btn.classList.remove('opacity-80', 'cursor-wait');

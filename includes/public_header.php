@@ -3,13 +3,13 @@
         <div class="max-w-7xl mx-auto px-4 sm:px-6">
             <div id="nav-inner-container" class="glass-luxury rounded-2xl px-4 sm:px-6 py-2.5 sm:py-3 flex justify-between items-center shadow-luxury border border-white/60 transition-all duration-300">
                 <!-- Brand Logo & Identity -->
-                <a href="index.php" class="flex items-center gap-3 group focus:outline-none">
-                    <div class="w-10 h-10 rounded-xl bg-navy flex items-center justify-center text-gold shadow-md group-hover:scale-105 transition-transform">
-                        <span class="material-symbols-outlined text-2xl">apartment</span>
-                    </div>
-                    <div>
-                        <span class="font-display font-bold text-xl sm:text-2xl text-navy tracking-tight block leading-tight">Skope<span class="text-gold">Stay</span></span>
-                        <span class="text-[10px] uppercase font-brand tracking-[0.25em] text-gray-400 font-bold block">Resort & Suites</span>
+                <a href="index.php" class="flex items-center gap-3 group min-w-0" aria-label="<?= e(brand('hotel_name')) ?> home">
+                    <span class="group-hover:scale-105 transition-transform"><?= brand_mark('w-10 h-10 rounded-xl') ?></span>
+                    <div class="min-w-0">
+                        <span class="font-display font-bold text-xl sm:text-2xl text-navy tracking-tight block leading-tight truncate"><?= brand_wordmark() ?></span>
+                        <?php if (brand('brand_subtitle') !== ''): ?>
+                        <span class="text-[10px] uppercase font-brand tracking-[0.25em] text-gray-400 font-bold block truncate"><?= e(brand('brand_subtitle')) ?></span>
+                        <?php endif; ?>
                     </div>
                 </a>
 
@@ -131,11 +131,9 @@
         <div>
             <!-- Mobile Drawer Header -->
             <div class="p-5 border-b border-gray-100 flex justify-between items-center bg-gray-50/70">
-                <a href="index.php" class="flex items-center gap-2.5">
-                    <div class="w-8 h-8 rounded-lg bg-navy text-gold flex items-center justify-center">
-                        <span class="material-symbols-outlined text-xl">apartment</span>
-                    </div>
-                    <span class="font-display font-bold text-xl text-navy">Skope<span class="text-gold">Stay</span></span>
+                <a href="index.php" class="flex items-center gap-2.5 min-w-0">
+                    <?= brand_mark('w-8 h-8 rounded-lg', 'text-xl') ?>
+                    <span class="font-display font-bold text-xl text-navy truncate"><?= brand_wordmark() ?></span>
                 </a>
                 <button onclick="toggleMobileMenu()" class="w-8 h-8 rounded-full bg-gray-200/70 text-gray-600 hover:text-navy flex items-center justify-center">
                     <span class="material-symbols-outlined text-xl">close</span>
@@ -185,7 +183,7 @@
                 Staff / Guest Portal
             </a>
             <div class="pt-2 flex justify-center gap-4 text-gray-400 text-xs font-brand">
-                <span>Reception: +254 742 380 183</span>
+                <a href="tel:<?= e(preg_replace('/[^0-9+]/', '', get_setting($pdo, 'contact_phone', ''))) ?>">Reception: <?= e(get_setting($pdo, 'contact_phone', '')) ?></a>
             </div>
         </div>
     </div>

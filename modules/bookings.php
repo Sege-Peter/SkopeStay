@@ -6,14 +6,26 @@ require_once '../includes/config.php';
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['_action'])) {
     $id     = intval($_POST['id']);
     $action = $_POST['_action'];
-    if ($action === 'checkout') {
+    if ($action === 'confirm') {
+        // Online bookings arrive as Pending; confirming reserves the room
+        $pdo->prepare("UPDATE bookings SET status='Active' WHERE id=? AND status='Pending'")->execute([$id]);
+        $pdo->prepare("UPDATE rooms SET status='Occupied' WHERE id=(SELECT room_id FROM bookings WHERE id=? LIMIT 1) AND DATE((SELECT check_in FROM bookings WHERE id=? LIMIT 1)) <= CURDATE()")->execute([$id, $id]);
+        log_action($pdo, $_SESSION['user_id'], 'confirm_booking', 'Bookings', "Confirmed booking #$id", $id);
+        echo json_encode(['success'=>true,'message'=>'Booking confirmed.']);
+        exit;
+    } elseif ($action === 'checkout') {
         $pdo->prepare("UPDATE bookings SET status='CheckedOut' WHERE id=?")->execute([$id]);
         $pdo->prepare("UPDATE rooms SET status='Cleaning' WHERE id=(SELECT room_id FROM bookings WHERE id=? LIMIT 1)")->execute([$id]);
         echo json_encode(['success'=>true,'message'=>'Guest checked out successfully.']);
         exit;
     } elseif ($action === 'cancel') {
+        $was = $pdo->prepare("SELECT status FROM bookings WHERE id=?");
+        $was->execute([$id]);
         $pdo->prepare("UPDATE bookings SET status='Cancelled' WHERE id=?")->execute([$id]);
-        $pdo->prepare("UPDATE rooms SET status='Available' WHERE id=(SELECT room_id FROM bookings WHERE id=? LIMIT 1)")->execute([$id]);
+        if ($was->fetchColumn() === 'Active') {
+            $pdo->prepare("UPDATE rooms SET status='Available' WHERE id=(SELECT room_id FROM bookings WHERE id=? LIMIT 1)")->execute([$id]);
+        }
+        log_action($pdo, $_SESSION['user_id'], 'cancel_booking', 'Bookings', "Cancelled booking #$id", $id);
         echo json_encode(['success'=>true,'message'=>'Booking cancelled.']);
         exit;
     }
@@ -25,11 +37,12 @@ $arriving_today  = $pdo->query("SELECT COUNT(*) FROM bookings WHERE DATE(check_i
 $departing_today = $pdo->query("SELECT COUNT(*) FROM bookings WHERE DATE(check_out)=CURDATE() AND status='Active'")->fetchColumn();
 $new_requests    = $pdo->query("SELECT COUNT(*) FROM bookings WHERE DATE(created_at)=CURDATE()")->fetchColumn();
 $avail_rooms     = $pdo->query("SELECT id,room_number,type,price FROM rooms WHERE status='Available' ORDER BY room_number")->fetchAll();
+$pending_count   = count(array_filter($bookings, fn($b) => $b['status'] === 'Pending'));
+$bk_prefix       = get_setting($pdo, 'booking_prefix', 'BK');
+$cur             = get_setting($pdo, 'currency_symbol', 'KSh');
 
 include '../includes/head.php';
 ?>
-<!DOCTYPE html>
-<html class="light" lang="en">
 <body class="bg-background text-on-surface font-body-md min-h-screen">
 <?php include '../includes/sidebar.php'; ?>
 <div class="md:ml-64 flex flex-col min-h-screen">
@@ -75,9 +88,9 @@ include '../includes/head.php';
             <span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-outline text-[18px]">search</span>
             <input id="bk-search" oninput="filterBk()" type="text" placeholder="Search guest or booking ID..." class="w-full pl-9 pr-4 py-2.5 rounded-xl border border-outline-variant text-sm bg-white focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none transition-all"/>
         </div>
-        <div class="flex bg-surface-container-low rounded-xl border border-outline-variant p-1 gap-1">
-            <?php foreach (['All','Active','CheckedOut','Cancelled'] as $s): ?>
-            <button onclick="filterStatus('<?= $s ?>')" data-status="<?= $s ?>" class="status-btn px-3 py-1.5 rounded-lg text-xs font-bold transition-colors <?= $s==='All' ? 'bg-primary text-white shadow' : 'text-on-surface-variant hover:bg-surface-container' ?>">
+        <div class="flex bg-surface-container-low rounded-xl border border-outline-variant p-1 gap-1 max-w-full overflow-x-auto scrollbar-hide">
+            <?php foreach (['All','Pending','Active','CheckedOut','Cancelled'] as $s): ?>
+            <button onclick="filterStatus('<?= $s ?>')" data-status="<?= $s ?>" class="status-btn shrink-0 whitespace-nowrap px-3 py-1.5 rounded-lg text-xs font-bold transition-colors <?= $s==='All' ? 'bg-primary text-white shadow' : 'text-on-surface-variant hover:bg-surface-container' ?>">
                 <?= $s==='CheckedOut'?'Checked-out':$s ?>
             </button>
             <?php endforeach; ?>
@@ -101,7 +114,8 @@ include '../includes/head.php';
             <tr><td colspan="6" class="text-center py-16 text-on-surface-variant opacity-40">
                 <span class="material-symbols-outlined text-5xl block mb-2">event_busy</span>No bookings yet.</td></tr>
             <?php else: foreach($bookings as $b):
-                $badge = ['Active'=>'bg-green-100 border-green-200 text-green-700','CheckedOut'=>'bg-gray-100 border-gray-200 text-gray-500','Cancelled'=>'bg-red-100 border-red-200 text-red-600'][$b['status']] ?? 'bg-gray-100 text-gray-500';
+                $badge = ['Pending'=>'bg-amber-100 border-amber-200 text-amber-700','Active'=>'bg-green-100 border-green-200 text-green-700','CheckedOut'=>'bg-gray-100 border-gray-200 text-gray-500','Cancelled'=>'bg-red-100 border-red-200 text-red-600'][$b['status']] ?? 'bg-gray-100 text-gray-500';
+                $js_name = e(json_encode($b['guest_name']));
                 $nights = (!empty($b['check_out'])&&!empty($b['check_in'])) ? max(1,(int)((strtotime($b['check_out'])-strtotime($b['check_in']))/86400)) : 1;
                 $ini = strtoupper(substr($b['guest_name'],0,1)).(strpos($b['guest_name'],' ')!==false?strtoupper(substr(strrchr($b['guest_name'],' '),1,1)):'');
             ?>
@@ -109,7 +123,8 @@ include '../includes/head.php';
                 <td class="px-5 py-4"><div class="flex items-center gap-3">
                     <div class="w-9 h-9 rounded-full bg-primary/10 text-primary flex items-center justify-center font-bold text-sm"><?= $ini ?></div>
                     <div><p class="font-bold text-sm"><?= htmlspecialchars($b['guest_name']) ?></p>
-                    <p class="text-[11px] text-on-surface-variant">#BK-<?= str_pad($b['id'],5,'0',STR_PAD_LEFT) ?></p></div>
+                    <p class="text-[11px] text-on-surface-variant">#<?= e($bk_prefix) ?>-<?= str_pad($b['id'],5,'0',STR_PAD_LEFT) ?><?= !empty($b['booking_type']) && $b['booking_type'] !== 'Room' ? ' · ' . e($b['booking_type']) : '' ?></p>
+                    <?php if (!empty($b['guest_phone']) || !empty($b['guest_email'])): ?><p class="text-[11px] text-on-surface-variant"><?= e(trim(($b['guest_phone'] ?? '') . ' ' . ($b['guest_email'] ?? ''))) ?></p><?php endif; ?></div>
                 </div></td>
                 <td class="px-5 py-4 hidden md:table-cell">
                     <p class="text-sm font-medium"><?= htmlspecialchars($b['room_type']??'N/A') ?></p>
@@ -120,17 +135,21 @@ include '../includes/head.php';
                     <p class="text-[11px] text-on-surface-variant"><?= $nights ?> Night<?= $nights!==1?'s':'' ?></p>
                 </td>
                 <td class="px-5 py-4 text-right">
-                    <p class="font-extrabold text-sm">KSh <?= number_format((float)$b['total_amount']) ?></p>
-                    <p class="text-[11px] text-green-600 font-semibold"><?= $b['status']==='Active'?'Paid':($b['status']==='CheckedOut'?'Settled':'Refunded') ?></p>
+                    <p class="font-extrabold text-sm"><?= e($cur) ?> <?= number_format((float)$b['total_amount']) ?></p>
+                    <p class="text-[11px] font-semibold <?= $b['status']==='Pending' ? 'text-amber-600' : 'text-green-600' ?>"><?= ['Pending'=>'Awaiting confirmation','Active'=>'Paid','CheckedOut'=>'Settled','Cancelled'=>'Refunded'][$b['status']] ?? '' ?></p>
                 </td>
                 <td class="px-5 py-4 text-center">
-                    <span class="px-2.5 py-1 rounded-full border text-[11px] font-bold uppercase <?= $badge ?>"><?= $b['status']==='CheckedOut'?'Checked-out':$b['status'] ?></span>
+                    <span class="px-2.5 py-1 rounded-full border text-[11px] font-bold uppercase <?= $badge ?>"><?= $b['status']==='CheckedOut'?'Checked-out':e($b['status']) ?></span>
                 </td>
-                </div></td>
-                <td class="px-5 py-4 text-right"><div class="flex items-center justify-end gap-1 opacity-0 group-hover:opacity-100 transition-opacity">
+                <td class="px-5 py-4 text-right"><div class="flex items-center justify-end gap-1 lg:opacity-60 group-hover:opacity-100 transition-opacity">
+                    <?php if($b['status']==='Pending'): ?>
+                    <button onclick="doAction('confirm',<?= (int)$b['id'] ?>,<?= $js_name ?>)" class="px-3 py-1.5 bg-emerald-600 text-white text-xs font-bold rounded-xl hover:bg-emerald-700 active:scale-95">Confirm</button>
+                    <button onclick="doAction('cancel',<?= (int)$b['id'] ?>,<?= $js_name ?>)" class="p-1.5 text-on-surface-variant hover:text-error transition-colors" title="Reject" aria-label="Reject booking">
+                        <span class="material-symbols-outlined text-[18px]">cancel</span></button>
+                    <?php endif; ?>
                     <?php if($b['status']==='Active'): ?>
-                    <button onclick="doAction('checkout',<?= $b['id'] ?>,'<?= addslashes($b['guest_name']) ?>')" class="px-3 py-1.5 bg-secondary text-white text-xs font-bold rounded-xl hover:bg-secondary/90 active:scale-95">Check Out</button>
-                    <button onclick="doAction('cancel',<?= $b['id'] ?>,'<?= addslashes($b['guest_name']) ?>')" class="p-1.5 text-on-surface-variant hover:text-error transition-colors" title="Cancel">
+                    <button onclick="doAction('checkout',<?= (int)$b['id'] ?>,<?= $js_name ?>)" class="px-3 py-1.5 bg-secondary text-white text-xs font-bold rounded-xl hover:bg-secondary/90 active:scale-95">Check Out</button>
+                    <button onclick="doAction('cancel',<?= (int)$b['id'] ?>,<?= $js_name ?>)" class="p-1.5 text-on-surface-variant hover:text-error transition-colors" title="Cancel" aria-label="Cancel booking">
                         <span class="material-symbols-outlined text-[18px]">cancel</span></button>
                     <?php endif; ?>
                     <?php if(in_array($b['status'],['Active','CheckedOut'])): ?>
@@ -250,10 +269,12 @@ document.getElementById('bk-form').addEventListener('submit',async function(e){
 
 async function doAction(action,id,name){
     const cfg={
+        confirm:{title:`Confirm booking for ${name}?`,text:'The guest reservation becomes active.',color:'rgb(5,150,105)',label:'Confirm Booking'},
         checkout:{title:`Check out ${name}?`,text:'Room will be queued for cleaning.',color:'rgb(249,115,22)',label:'Check Out'},
         cancel:{title:`Cancel booking for ${name}?`,text:'Room will be made available.',color:'rgb(239,68,68)',label:'Cancel Booking'}
     }[action];
-    Swal.fire({title:cfg.title,text:cfg.text,icon:'question',showCancelButton:true,confirmButtonColor:cfg.color,confirmButtonText:cfg.label})
+    // titleText (not title) so guest-supplied names are never parsed as HTML
+    Swal.fire({titleText:cfg.title,text:cfg.text,icon:'question',showCancelButton:true,confirmButtonColor:cfg.color,confirmButtonText:cfg.label})
     .then(async r=>{
         if(!r.isConfirmed)return;
         const form=new FormData();form.append('id',id);form.append('_action',action);

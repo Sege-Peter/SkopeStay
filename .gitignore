@@ -14,3 +14,7 @@ temp/
 # Environment files
 .env
 .env.local
+
+# User-uploaded branding images (kept per install)
+assets/uploads/branding/*
+!assets/uploads/branding/.gitkeep

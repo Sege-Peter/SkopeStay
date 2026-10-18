@@ -41,8 +41,6 @@ $avail_rooms = $pdo->query("SELECT id,room_number,type,price FROM rooms WHERE st
 
 include '../includes/head.php';
 ?>
-<!DOCTYPE html>
-<html class="light" lang="en">
 <body class="bg-background text-on-surface font-body-md min-h-screen">
 <?php include '../includes/sidebar.php'; ?>
 <div class="md:ml-64 flex flex-col min-h-screen">

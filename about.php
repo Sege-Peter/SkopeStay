@@ -4,7 +4,7 @@ require_once 'includes/config.php';
 <!DOCTYPE html>
 <html lang="en" class="scroll-smooth overflow-x-hidden w-full">
 <head>
-    <title>About Us | SkopeStay</title>
+    <title>About Us | <?= e(brand('hotel_name')) ?></title>
 <?php include 'includes/public_head.php'; ?>
 </head>
 <body class="text-navy relative flex flex-col min-h-screen">
@@ -13,7 +13,7 @@ require_once 'includes/config.php';
     <!-- Cinematic Hero Section -->
     <section class="relative h-[60vh] w-full overflow-hidden flex items-center justify-center bg-navy mt-16 lg:mt-0">
         <div class="absolute inset-0 z-0">
-            <img src="https://images.unsplash.com/photo-1542314831-c53cd3816002?q=80&w=2070&auto=format&fit=crop" class="w-full h-full object-cover animate-slow-zoom opacity-60" alt="About SkopeStay">
+            <img src="https://images.unsplash.com/photo-1566073771259-6a8506099945?q=80&w=2070&auto=format&fit=crop" class="w-full h-full object-cover animate-slow-zoom opacity-60" alt="About <?= e(brand_short_name()) ?>">
             <div class="absolute inset-0 bg-gradient-to-t from-navy via-navy/50 to-transparent"></div>
         </div>
         <div class="relative z-10 text-center px-6 max-w-4xl mx-auto" data-aos="fade-up" data-aos-duration="1500">
@@ -22,7 +22,7 @@ require_once 'includes/config.php';
                 Redefining Hospitality Through <span class="text-transparent bg-clip-text bg-gradient-to-r from-gold to-yellow-300">Innovation</span>
             </h1>
             <p class="font-inter text-gray-300 text-lg md:text-xl max-w-2xl mx-auto">
-                SkopeStay bridges the gap between discerning guests and premier properties.
+                <?= e(brand_short_name()) ?> bridges the gap between discerning guests and premier properties.
             </p>
         </div>
     </section>
@@ -38,12 +38,12 @@ require_once 'includes/config.php';
                     <h2 class="font-poppins text-4xl font-bold text-navy">Innovating the Guest Journey</h2>
                 </div>
                 <div class="prose prose-lg text-gray-600">
-                    <p>SkopeStay is an all-in-one platform designed to revolutionize the way travelers and property managers interact. Our technology bridge connects guests with premier locations, offering a unified ecosystem for every hospitality need.</p>
+                    <p><?= e(brand_short_name()) ?> is an all-in-one platform designed to revolutionize the way travelers and property managers interact. Our technology bridge connects guests with premier locations, offering a unified ecosystem for every hospitality need.</p>
                     <p>From individual room reservations to large-scale event planning, we eliminate friction through data-driven precision and a commitment to elegant service.</p>
                 </div>
                 <div class="bg-lightgray p-8 rounded-3xl border border-gray-100 shadow-sm border-l-4 border-l-gold">
                     <h3 class="font-poppins text-xl font-bold text-navy mb-3">Who We Are</h3>
-                    <p class="text-gray-600 italic">"At our core, SkopeStay is a collective of hospitality veterans and tech innovators driven by the vision of transforming hospitality through technology. We believe that professional management should be as effortless as a luxury stay."</p>
+                    <p class="text-gray-600 italic">"At our core, <?= e(brand_short_name()) ?> is a collective of hospitality veterans and tech innovators driven by the vision of transforming hospitality through technology. We believe that professional management should be as effortless as a luxury stay."</p>
                 </div>
             </div>
             <div class="relative group h-[500px]" data-aos="fade-left">
@@ -75,7 +75,7 @@ require_once 'includes/config.php';
         <section class="text-center">
             <div class="mb-16" data-aos="fade-up">
                 <span class="font-montserrat text-gold tracking-widest text-sm font-bold uppercase block mb-2">Our Principles</span>
-                <h2 class="font-poppins text-4xl font-bold text-navy">The SkopeStay Values</h2>
+                <h2 class="font-poppins text-4xl font-bold text-navy">The <?= e(brand_short_name()) ?> Values</h2>
             </div>
             <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-6">
                 <div class="bg-white p-8 rounded-3xl shadow-lg border border-gray-100 hover-lift group" data-aos="fade-up" data-aos-delay="100">

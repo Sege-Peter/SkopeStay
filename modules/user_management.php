@@ -24,8 +24,6 @@ $all_roles = $pdo->query("SELECT * FROM roles ORDER BY type, name")->fetchAll();
 
 include '../includes/head.php';
 ?>
-<!DOCTYPE html>
-<html class="light" lang="en">
 <body class="bg-background text-on-surface font-body-md min-h-screen">
 <?php include '../includes/sidebar.php'; ?>
 

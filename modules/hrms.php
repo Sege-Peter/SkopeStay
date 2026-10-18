@@ -127,8 +127,6 @@ $leaves = $pdo->query("
 
 include __DIR__ . '/../includes/head.php';
 ?>
-<!DOCTYPE html>
-<html class="light" lang="en">
 <body class="bg-background text-on-surface font-body-md min-h-screen">
 
 <?php include __DIR__ . '/../includes/sidebar.php'; ?>
@@ -691,7 +689,7 @@ function previewPayslip(emp) {
         html: `
         <div style="text-align:left;font-family:sans-serif;font-size:13px;background:#f8fafc;padding:16px;border-radius:12px;border:1px solid #e2e8f0">
             <div style="border-bottom:1px solid #cbd5e1;padding-bottom:8px;margin-bottom:12px">
-                <h3 style="margin:0;font-size:16px;color:#0F172A">SkopeStay International Resort</h3>
+                <h3 style="margin:0;font-size:16px;color:#0F172A"><?= e(brand('hotel_name')) ?></h3>
                 <span style="font-size:11px;color:#64748b">Monthly Pay Advice — ${new Date().toLocaleString('default', { month: 'long', year: 'numeric' })}</span>
             </div>
             <p><strong>Employee:</strong> ${emp.first_name} ${emp.last_name} (${emp.employee_code})</p>

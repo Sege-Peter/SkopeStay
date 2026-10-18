@@ -4,7 +4,7 @@ require_once 'includes/config.php';
 <!DOCTYPE html>
 <html lang="en" class="scroll-smooth overflow-x-hidden w-full">
 <head>
-    <title>Terms of Service | SkopeStay</title>
+    <title>Terms of Service | <?= e(brand('hotel_name')) ?></title>
 <?php include 'includes/public_head.php'; ?>
 <style>
     section[id] {
@@ -69,7 +69,7 @@ require_once 'includes/config.php';
             <div class="space-y-12">
                 <section id="sec1">
                     <h2 class="font-poppins text-2xl font-bold text-navy mb-4">1. Definitions</h2>
-                    <p class="font-inter text-gray-600 leading-relaxed">In these Terms of Service, "SkopeStay," "we," "us," or "our" refers to SkopeStay Luxury Hospitality and its affiliates. "Services" refers to the booking platform, hotel accommodations, dining, and recreational facilities provided. "User," "Guest," or "you" refers to any individual accessing our platform or utilizing our physical premises.</p>
+                    <p class="font-inter text-gray-600 leading-relaxed">In these Terms of Service, "<?= e(brand_short_name()) ?>," "we," "us," or "our" refers to <?= e(brand('hotel_name')) ?> and its affiliates. "Services" refers to the booking platform, hotel accommodations, dining, and recreational facilities provided. "User," "Guest," or "you" refers to any individual accessing our platform or utilizing our physical premises.</p>
                 </section>
                 <section id="sec2">
                     <h2 class="font-poppins text-2xl font-bold text-navy mb-4">2. Eligibility</h2>
@@ -77,7 +77,7 @@ require_once 'includes/config.php';
                 </section>
                 <section id="sec3">
                     <h2 class="font-poppins text-2xl font-bold text-navy mb-4">3. User Accounts</h2>
-                    <p class="font-inter text-gray-600 leading-relaxed">To access certain features of the SkopeStay platform, you may be required to create an account. You are responsible for maintaining the confidentiality of your credentials and for all activities that occur under your account. SkopeStay reserves the right to disable any account at our discretion.</p>
+                    <p class="font-inter text-gray-600 leading-relaxed">To access certain features of the <?= e(brand_short_name()) ?> platform, you may be required to create an account. You are responsible for maintaining the confidentiality of your credentials and for all activities that occur under your account. <?= e(brand_short_name()) ?> reserves the right to disable any account at our discretion.</p>
                 </section>
                 <section id="sec4">
                     <h2 class="font-poppins text-2xl font-bold text-navy mb-4">4. Bookings</h2>
@@ -85,11 +85,11 @@ require_once 'includes/config.php';
                 </section>
                 <section id="sec5">
                     <h2 class="font-poppins text-2xl font-bold text-navy mb-4">5. Pricing</h2>
-                    <p class="font-inter text-gray-600 leading-relaxed">Prices for our services are displayed in the local currency and are inclusive of applicable taxes unless otherwise stated. SkopeStay reserves the right to adjust pricing based on seasonal demand, special events, or administrative errors. The price confirmed at the time of booking will be honored except in cases of obvious technical errors.</p>
+                    <p class="font-inter text-gray-600 leading-relaxed">Prices for our services are displayed in the local currency and are inclusive of applicable taxes unless otherwise stated. <?= e(brand_short_name()) ?> reserves the right to adjust pricing based on seasonal demand, special events, or administrative errors. The price confirmed at the time of booking will be honored except in cases of obvious technical errors.</p>
                 </section>
                 <section id="sec6">
                     <h2 class="font-poppins text-2xl font-bold text-navy mb-4">6. Payments</h2>
-                    <p class="font-inter text-gray-600 leading-relaxed">Payment must be made via the approved methods listed on our platform. For certain bookings, a deposit or full prepayment may be required. By providing payment information, you authorize SkopeStay to charge the specified amount for the selected services, including any additional incidentals incurred during your stay.</p>
+                    <p class="font-inter text-gray-600 leading-relaxed">Payment must be made via the approved methods listed on our platform. For certain bookings, a deposit or full prepayment may be required. By providing payment information, you authorize <?= e(brand_short_name()) ?> to charge the specified amount for the selected services, including any additional incidentals incurred during your stay.</p>
                 </section>
                 <section id="sec7">
                     <h2 class="font-poppins text-2xl font-bold text-navy mb-4">7. Cancellation and Refunds</h2>
@@ -101,7 +101,7 @@ require_once 'includes/config.php';
                 </section>
                 <section id="sec9">
                     <h2 class="font-poppins text-2xl font-bold text-navy mb-4">9. Restaurant Services</h2>
-                    <p class="font-inter text-gray-600 leading-relaxed">Dining reservations are recommended. Guests with specific dietary requirements or allergies must inform the staff prior to ordering. SkopeStay is not liable for any reactions if information was not disclosed. Outside food and beverages are generally prohibited in public dining areas.</p>
+                    <p class="font-inter text-gray-600 leading-relaxed">Dining reservations are recommended. Guests with specific dietary requirements or allergies must inform the staff prior to ordering. <?= e(brand_short_name()) ?> is not liable for any reactions if information was not disclosed. Outside food and beverages are generally prohibited in public dining areas.</p>
                 </section>
                 <section id="sec10">
                     <h2 class="font-poppins text-2xl font-bold text-navy mb-4">10. Hall and Event Bookings</h2>
@@ -109,7 +109,7 @@ require_once 'includes/config.php';
                 </section>
                 <section id="sec11">
                     <h2 class="font-poppins text-2xl font-bold text-navy mb-4">11. Swimming Pool and Recreation Facilities</h2>
-                    <p class="font-inter text-gray-600 leading-relaxed">Use of the swimming pool and fitness center is at the guest's own risk. Proper attire is required. Children must be supervised by an adult at all times. SkopeStay reserves the right to close facilities for maintenance or private events without prior notice.</p>
+                    <p class="font-inter text-gray-600 leading-relaxed">Use of the swimming pool and fitness center is at the guest's own risk. Proper attire is required. Children must be supervised by an adult at all times. <?= e(brand_short_name()) ?> reserves the right to close facilities for maintenance or private events without prior notice.</p>
                 </section>
                 <section id="sec12">
                     <h2 class="font-poppins text-2xl font-bold text-navy mb-4">12. User Responsibilities</h2>
@@ -117,7 +117,7 @@ require_once 'includes/config.php';
                 </section>
                 <section id="sec13">
                     <h2 class="font-poppins text-2xl font-bold text-navy mb-4">13. Intellectual Property</h2>
-                    <p class="font-inter text-gray-600 leading-relaxed">All content on the SkopeStay platform, including text, graphics, logos, and software, is the property of SkopeStay or its licensors and is protected by intellectual property laws. You may not reproduce or distribute any part of our services without prior written consent.</p>
+                    <p class="font-inter text-gray-600 leading-relaxed">All content on the <?= e(brand_short_name()) ?> platform, including text, graphics, logos, and software, is the property of <?= e(brand_short_name()) ?> or its licensors and is protected by intellectual property laws. You may not reproduce or distribute any part of our services without prior written consent.</p>
                 </section>
                 <section id="sec14">
                     <h2 class="font-poppins text-2xl font-bold text-navy mb-4">14. Privacy</h2>
@@ -125,7 +125,7 @@ require_once 'includes/config.php';
                 </section>
                 <section id="sec15">
                     <h2 class="font-poppins text-2xl font-bold text-navy mb-4">15. Limitation of Liability</h2>
-                    <p class="font-inter text-gray-600 leading-relaxed">To the maximum extent permitted by law, SkopeStay shall not be liable for any indirect, incidental, or consequential damages arising from your use of the services. Our total liability for any claim shall not exceed the amount paid by you for the specific booking in question.</p>
+                    <p class="font-inter text-gray-600 leading-relaxed">To the maximum extent permitted by law, <?= e(brand_short_name()) ?> shall not be liable for any indirect, incidental, or consequential damages arising from your use of the services. Our total liability for any claim shall not exceed the amount paid by you for the specific booking in question.</p>
                 </section>
                 <section id="sec16">
                     <h2 class="font-poppins text-2xl font-bold text-navy mb-4">16. Service Availability</h2>
@@ -133,7 +133,7 @@ require_once 'includes/config.php';
                 </section>
                 <section id="sec17">
                     <h2 class="font-poppins text-2xl font-bold text-navy mb-4">17. Suspension or Termination</h2>
-                    <p class="font-inter text-gray-600 leading-relaxed">SkopeStay reserves the right to suspend or terminate your access to our services if you violate these terms or engage in any fraudulent or harmful activity. Termination does not waive any accrued rights or liabilities under these terms.</p>
+                    <p class="font-inter text-gray-600 leading-relaxed"><?= e(brand_short_name()) ?> reserves the right to suspend or terminate your access to our services if you violate these terms or engage in any fraudulent or harmful activity. Termination does not waive any accrued rights or liabilities under these terms.</p>
                 </section>
                 <section id="sec18">
                     <h2 class="font-poppins text-2xl font-bold text-navy mb-4">18. Amendments</h2>
@@ -151,14 +151,14 @@ require_once 'includes/config.php';
                             <span class="material-symbols-outlined text-gold text-3xl">support_agent</span>
                             <div>
                                 <p class="font-montserrat text-xs text-gray-400 uppercase tracking-widest">Customer Support</p>
-                                <a class="font-poppins text-navy font-bold hover:text-gold transition-colors" href="mailto:support@skopestay.com">support@skopestay.com</a>
+                                <a class="font-poppins text-navy font-bold hover:text-gold transition-colors" href="mailto:<?= e(get_setting($pdo, 'support_email', 'support@skopestay.com')) ?>"><?= e(get_setting($pdo, 'support_email', 'support@skopestay.com')) ?></a>
                             </div>
                         </div>
                         <div class="flex items-center gap-4">
                             <span class="material-symbols-outlined text-gold text-3xl">gavel</span>
                             <div>
                                 <p class="font-montserrat text-xs text-gray-400 uppercase tracking-widest">Legal Department</p>
-                                <a class="font-poppins text-navy font-bold hover:text-gold transition-colors" href="mailto:legal@skopestay.com">legal@skopestay.com</a>
+                                <a class="font-poppins text-navy font-bold hover:text-gold transition-colors" href="mailto:<?= e(get_setting($pdo, 'contact_email', 'admin@skopestay.com')) ?>"><?= e(get_setting($pdo, 'contact_email', 'admin@skopestay.com')) ?></a>
                             </div>
                         </div>
                     </div>

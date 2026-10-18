@@ -94,8 +94,6 @@ $ledger_entries = $pdo->query("
 
 include __DIR__ . '/../includes/head.php';
 ?>
-<!DOCTYPE html>
-<html class="light" lang="en">
 <body class="bg-background text-on-surface font-body-md min-h-screen">
 
 <?php include __DIR__ . '/../includes/sidebar.php'; ?>

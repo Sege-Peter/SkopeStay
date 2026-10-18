@@ -1,25 +1,32 @@
+<!DOCTYPE html>
+<html class="light" lang="en">
 <head>
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<title><?php echo isset($page_title) ? htmlspecialchars($page_title) : 'SkopeStay Management'; ?></title>
+<?php
+// Swap the legacy hardcoded product name in page titles for the configured brand
+$__title = isset($page_title) ? str_replace('SkopeStay', brand_short_name(), $page_title) : brand('hotel_name') . ' Management';
+?>
+<title><?= e($__title) ?></title>
+<?= brand_favicon_tags() ?>
+<?= csrf_meta() ?>
 <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet"/>
 <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
 <?php
 // Load dynamic theme settings
-$site_primary_hex = function_exists('get_setting') ? get_setting($pdo ?? null, 'primary_color', '#0B132B') : '#0B132B';
-$site_secondary_hex = function_exists('get_setting') ? get_setting($pdo ?? null, 'secondary_color', '#D4AF37') : '#D4AF37';
-$site_accent_hex = function_exists('get_setting') ? get_setting($pdo ?? null, 'accent_color', '#10B981') : '#10B981';
-
-$site_primary_rgb = function_exists('hex_to_rgb_triplet') ? hex_to_rgb_triplet($site_primary_hex) : '11 19 43';
-$site_secondary_rgb = function_exists('hex_to_rgb_triplet') ? hex_to_rgb_triplet($site_secondary_hex) : '212 175 55';
-?>
-<style>
+$__pal = brand_palette();
+$site_primary_hex = $__pal['primary'];
+$site_secondary_hex = $__pal['secondary'];
+$site_accent_hex = $__pal['accent'];
+$site_primary_rgb = hex_to_rgb_triplet($site_primary_hex);
+$site_secondary_rgb = hex_to_rgb_triplet($site_secondary_hex);
+?><style>
     /* CSS Variables for Light & Dark Mode */
     :root {
         --color-primary: <?= $site_primary_rgb ?>;
@@ -73,19 +80,19 @@ $site_secondary_rgb = function_exists('hex_to_rgb_triplet') ? hex_to_rgb_triplet
     }
 
     .dark {
-        --color-primary: 59 130 246;               /* Blue 500 */
+        --color-primary: <?= $site_secondary_rgb ?>; /* Brand accent reads better on dark */
         --color-primary-container: 30 58 138;      /* Blue 900 */
         --color-on-primary: 255 255 255;
         --color-on-primary-container: 219 234 254; /* Blue 100 */
         --color-on-primary-fixed: 219 234 254;
-        --color-on-primary-fixed-variant: 59 130 246;
+        --color-on-primary-fixed-variant: <?= $site_secondary_rgb ?>;
 
-        --color-secondary: 249 115 22;             /* Orange 500 */
+        --color-secondary: <?= $site_secondary_rgb ?>;
         --color-secondary-container: 124 45 18;    /* Orange 900 */
         --color-on-secondary: 255 255 255;
         --color-on-secondary-container: 255 237 213; /* Orange 100 */
         --color-on-secondary-fixed: 255 237 213;
-        --color-on-secondary-fixed-variant: 249 115 22;
+        --color-on-secondary-fixed-variant: <?= $site_secondary_rgb ?>;
         --color-secondary-fixed: 124 45 18;
         --color-secondary-fixed-dim: 194 65 12;
 
@@ -153,15 +160,22 @@ $site_secondary_rgb = function_exists('hex_to_rgb_triplet') ? hex_to_rgb_triplet
     .custom-scrollbar::-webkit-scrollbar-thumb { background: rgb(var(--color-outline-variant)); border-radius: 10px; }
     
     /* Dynamic Brand Utilities Across All Pages */
+    <?= brand_css_vars() ?>
     .bg-navy { background-color: var(--theme-primary) !important; }
     .text-navy { color: var(--theme-primary) !important; }
     .border-navy { border-color: var(--theme-primary) !important; }
     .bg-gold { background-color: var(--theme-secondary) !important; }
     .text-gold { color: var(--theme-secondary) !important; }
     .border-gold { border-color: var(--theme-secondary) !important; }
+    .accent-navy { accent-color: var(--theme-primary); }
     .gold-gradient-bg {
-        background: linear-gradient(135deg, var(--theme-secondary) 0%, var(--theme-secondary)CC 50%, var(--theme-secondary)99 100%) !important;
+        background: linear-gradient(135deg, var(--theme-secondary-light) 0%, var(--theme-secondary) 55%, var(--theme-secondary-dark) 100%) !important;
+        color: var(--theme-on-secondary);
     }
+    .font-luxury { font-family: 'Playfair Display', serif; }
+    .dark .text-navy { color: var(--theme-secondary) !important; }
+    .gold-gradient-bg.text-navy, .dark .gold-gradient-bg.text-navy, .bg-gold.text-navy { color: var(--theme-on-secondary) !important; }
+    .swal2-styled.swal2-confirm { background-color: var(--theme-primary) !important; }
 </style>
 
 <script id="tailwind-config">
@@ -238,4 +252,5 @@ $site_secondary_rgb = function_exists('hex_to_rgb_triplet') ? hex_to_rgb_triplet
         document.documentElement.classList.remove('dark')
     }
 </script>
+<?= brand_js() ?>
 </head>

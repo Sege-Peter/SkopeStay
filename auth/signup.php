@@ -1,6 +1,13 @@
-<!DOCTYPE html>
-
-<html class="light" lang="en"><?php $page_title = "Sign Up | SkopeStay"; include '../includes/head.php'; ?>
+<?php
+require_once __DIR__ . '/../includes/config.php';
+// Self-registration is controlled from Settings > Security & Access
+if (get_setting($pdo, 'allow_public_signup', '0') !== '1') {
+    header('Location: login.php');
+    exit;
+}
+$page_title = "Sign Up | SkopeStay";
+include '../includes/head.php';
+?>
 <body class="bg-background text-on-background font-body-md min-h-screen flex items-center justify-center overflow-hidden">
 <main class="w-full h-screen flex flex-col md:flex-row">
 <!-- Left Side: Image Slider -->
@@ -11,7 +18,7 @@
 <!-- Branding Overlay -->
 <div class="absolute inset-0 bg-gradient-to-t from-primary-container/80 via-transparent to-transparent z-10"></div>
 <div class="absolute bottom-12 left-12 z-20 max-w-md">
-<h2 class="font-display-lg text-display-lg text-white mb-4">Join SkopeStay.</h2>
+<h2 class="font-display-lg text-display-lg text-white mb-4">Join <?= e(brand_short_name()) ?>.</h2>
 <p class="font-body-lg text-body-lg text-primary-fixed-dim">Experience seamless hospitality and facility management at your fingertips.</p>
 </div>
 </section>
@@ -26,9 +33,9 @@
 <!-- Logo & Heading -->
 <div class="flex flex-col items-start space-y-4">
 <div class="flex items-center gap-3">
-<img src="../assets/images/SkopeStay logo.png" alt="SkopeStay Logo"
+<img src="<?= e(brand_logo_url()) ?>" alt="<?= e(brand('hotel_name')) ?> logo"
      style="width:40px; height:40px; border-radius:50px; object-fit:cover;">
-<span class="font-headline-md text-headline-md font-bold text-primary">SkopeStay</span>
+<span class="font-headline-md text-headline-md font-bold text-primary"><?= brand_wordmark() ?></span>
 </div>
 <div class="space-y-1">
 <h1 class="font-title-lg text-title-lg text-on-surface">Create an Account</h1>
@@ -93,7 +100,7 @@
 <a class="font-caption text-caption hover:text-primary transition-colors" href="../terms.php">Terms of Service</a>
 </div>
 <div class="font-caption text-caption text-outline">
-                        SkopeStay v2.1.0
+                        <?= e(brand_short_name()) ?> v2.6.0
                     </div>
 </div>
 </div>

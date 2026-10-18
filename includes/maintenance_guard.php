@@ -1,14 +1,9 @@
 <?php
 // Luxury 5-Star Maintenance Screen Template
-$hotel_name = $m_hotel ?? 'SkopeStay Resort & Suites';
-$logo_path = 'assets/images/SkopeStay logo.png';
-if (file_exists(__DIR__ . '/../' . $logo_path)) {
-    $logo_url = (strpos($_SERVER['REQUEST_URI'] ?? '', '/modules/') !== false || strpos($_SERVER['REQUEST_URI'] ?? '', '/auth/') !== false) 
-        ? '../' . $logo_path : $logo_path;
-} else {
-    $logo_url = '';
-}
-$login_url = (strpos($_SERVER['REQUEST_URI'] ?? '', '/modules/') !== false) ? '../auth/login.php' : 'auth/login.php';
+$hotel_name = $m_hotel ?? brand('hotel_name');
+$logo_url = brand_logo_url();
+$pal = brand_palette();
+$login_url = base_prefix() . 'auth/login.php';
 ?>
 <!DOCTYPE html>
 <html lang="en" class="h-full">
@@ -16,6 +11,7 @@ $login_url = (strpos($_SERVER['REQUEST_URI'] ?? '', '/modules/') !== false) ? '.
     <meta charset="utf-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <title>Scheduled Maintenance | <?= htmlspecialchars($hotel_name) ?></title>
+    <?= brand_favicon_tags() ?>
 
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -29,8 +25,8 @@ $login_url = (strpos($_SERVER['REQUEST_URI'] ?? '', '/modules/') !== false) ? '.
             theme: {
                 extend: {
                     colors: {
-                        navy: '#0B132B',
-                        gold: '#D4AF37'
+                        navy: '<?= $pal['primary'] ?>',
+                        gold: '<?= $pal['secondary'] ?>'
                     },
                     fontFamily: {
                         display: ['Playfair Display', 'serif'],
@@ -42,14 +38,15 @@ $login_url = (strpos($_SERVER['REQUEST_URI'] ?? '', '/modules/') !== false) ? '.
         }
     </script>
     <style>
-        body { font-family: 'Inter', sans-serif; background-color: #0B132B; }
+        <?= brand_css_vars() ?>
+        body { font-family: 'Inter', sans-serif; background-color: var(--theme-primary); }
         .gold-gradient-text {
-            background: linear-gradient(135deg, #F5E6AB 0%, #D4AF37 50%, #A6821C 100%);
+            background: linear-gradient(135deg, var(--theme-secondary-light) 0%, var(--theme-secondary) 50%, var(--theme-secondary-dark) 100%);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
         }
         .gold-gradient-btn {
-            background: linear-gradient(135deg, #D4AF37 0%, #C49826 60%, #B0851A 100%);
+            background: linear-gradient(135deg, var(--theme-secondary) 0%, var(--theme-secondary-dark) 100%);
         }
     </style>
 </head>
@@ -57,7 +54,7 @@ $login_url = (strpos($_SERVER['REQUEST_URI'] ?? '', '/modules/') !== false) ? '.
 
     <!-- Background Cinematic Image with Luxury Vignette -->
     <div class="absolute inset-0 z-0">
-        <img src="https://images.unsplash.com/photo-1542314831-c53cd3816002?q=80&w=2070&auto=format&fit=crop" 
+        <img src="https://images.unsplash.com/photo-1566073771259-6a8506099945?q=80&w=2070&auto=format&fit=crop" 
              class="w-full h-full object-cover opacity-25" alt="Resort Background">
         <div class="absolute inset-0 bg-gradient-to-t from-navy via-navy/90 to-navy/70"></div>
     </div>
@@ -108,7 +105,7 @@ $login_url = (strpos($_SERVER['REQUEST_URI'] ?? '', '/modules/') !== false) ? '.
             </a>
 
             <a href="<?= htmlspecialchars($login_url) ?>" 
-               class="w-full sm:w-auto px-6 py-3 rounded-xl gold-gradient-btn text-navy font-bold text-xs sm:text-sm hover:scale-[1.02] transition-all shadow-md flex items-center justify-center gap-2">
+               style="color:var(--theme-on-secondary)" class="w-full sm:w-auto px-6 py-3 rounded-xl gold-gradient-btn font-bold text-xs sm:text-sm hover:scale-[1.02] transition-all shadow-md flex items-center justify-center gap-2">
                 <span class="material-symbols-outlined text-[18px]">admin_panel_settings</span>
                 <span>Staff Portal Access</span>
             </a>

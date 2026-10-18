@@ -10,8 +10,6 @@ $in_stock = count(array_filter($items, fn($i) => $i['status'] === 'In Stock'));
 
 include '../includes/head.php';
 ?>
-<!DOCTYPE html>
-<html class="light" lang="en">
 <body class="bg-background text-on-surface font-body-md min-h-screen">
 
 <?php include '../includes/sidebar.php'; ?>
@@ -30,7 +28,7 @@ include '../includes/head.php';
                 <span class="text-primary font-bold" id="breadcrumb-label">Inventory</span>
             </nav>
             <h1 class="font-bold text-2xl md:text-3xl text-on-surface" id="page-heading">Stock Repository</h1>
-            <p class="text-on-surface-variant text-sm mt-1">Track and manage assets across all SkopeStay departments.</p>
+            <p class="text-on-surface-variant text-sm mt-1">Track and manage assets across all <?= e(brand_short_name()) ?> departments.</p>
         </div>
         <div class="flex gap-2 items-center">
             <!-- Tab Switcher -->

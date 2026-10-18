@@ -97,8 +97,6 @@ try {
 
 include __DIR__ . '/../includes/head.php';
 ?>
-<!DOCTYPE html>
-<html class="light" lang="en">
 <head>
     <!-- Enhanced Luxury Styling Fonts & Theme Tokens -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -177,7 +175,7 @@ include __DIR__ . '/../includes/head.php';
                         ERP Operations Live
                     </span>
                     <span class="text-xs text-gray-500 dark:text-gray-400 font-medium">
-                        Property: <strong class="text-gray-700 dark:text-gray-200">Flagship Beachfront Resort & Suites</strong>
+                        Property: <strong class="text-gray-700 dark:text-gray-200"><?= e(brand('hotel_name')) ?></strong>
                     </span>
                 </div>
                 
@@ -745,7 +743,7 @@ include __DIR__ . '/../includes/head.php';
                 </div>
                 <div>
                     <h3 class="font-luxury font-bold text-gray-900 dark:text-white text-lg">Create New Reservation</h3>
-                    <p class="text-xs text-gray-500">SkopeStay 5-Star Guest Folio System</p>
+                    <p class="text-xs text-gray-500"><?= e(brand_short_name()) ?> Guest Folio System</p>
                 </div>
             </div>
             <button onclick="closeModal('booking-modal')" class="w-8 h-8 rounded-full bg-gray-100 dark:bg-gray-800 text-gray-500 hover:text-gray-900 dark:hover:text-white flex items-center justify-center transition-colors">
@@ -1123,7 +1121,7 @@ function exportExecutiveReport() {
         if(r.isConfirmed) {
             const dateStr = new Date().toISOString().split('T')[0];
             const csvRows = [
-                ['SkopeStay Luxury Resort - Daily Executive Brief', dateStr],
+                [window.BRAND.name + " - Daily Executive Brief", dateStr],
                 [],
                 ['METRIC', 'VALUE'],
                 ['Total Suites & Rooms', '<?= $total_rooms ?>'],
@@ -1143,7 +1141,7 @@ function exportExecutiveReport() {
             const encodedUri = encodeURI(csvContent);
             const link = document.createElement("a");
             link.setAttribute("href", encodedUri);
-            link.setAttribute("download", `SkopeStay_Executive_Brief_${dateStr}.csv`);
+            link.setAttribute("download", `${window.BRAND.short}_Executive_Brief_${dateStr}.csv`);
             document.body.appendChild(link);
             link.click();
             document.body.removeChild(link);

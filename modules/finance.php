@@ -11,8 +11,6 @@ $budget_pct = min(100, round(($monthly_total / $budget) * 100));
 
 include '../includes/head.php';
 ?>
-<!DOCTYPE html>
-<html class="light" lang="en">
 <body class="bg-background text-on-surface font-body-md min-h-screen">
 <?php include '../includes/sidebar.php'; ?>
 <div class="md:ml-64 flex flex-col min-h-screen">
@@ -127,7 +125,7 @@ include '../includes/head.php';
                             <span class="px-2.5 py-1 rounded-full border text-[11px] font-bold <?= $sb ?>"><?= $exp['status'] ?></span>
                         </td>
                         <td class="px-5 py-4 text-right opacity-0 group-hover:opacity-100 transition-opacity">
-                            <button onclick="deleteExpense(<?= $exp['id'] ?>, '<?= addslashes($exp['title']) ?>')" class="p-1.5 text-on-surface-variant hover:text-error transition-colors">
+                            <button onclick="deleteExpense(<?= $exp['id'] ?>, <?= e(json_encode($exp['title'])) ?>)" class="p-1.5 text-on-surface-variant hover:text-error transition-colors">
                                 <span class="material-symbols-outlined text-[18px]">delete</span>
                             </button>
                         </td>
@@ -218,7 +216,7 @@ document.getElementById('expense-quick-form').addEventListener('submit', async f
 });
 
 function deleteExpense(id, title) {
-    Swal.fire({title: `Delete "${title}"?`, text:'This record will be permanently removed.', icon:'warning',
+    Swal.fire({titleText: `Delete "${title}"?`, text:'This record will be permanently removed.', icon:'warning',
         showCancelButton:true, confirmButtonColor:'rgb(239,68,68)', confirmButtonText:'Delete'})
     .then(async r => {
         if (!r.isConfirmed) return;

@@ -19,8 +19,6 @@ $customers = $pdo->query("SELECT id, full_name, phone FROM customers ORDER BY fu
 
 include '../includes/head.php';
 ?>
-<!DOCTYPE html>
-<html class="light" lang="en">
 <body class="bg-background text-on-surface font-body-md min-h-screen">
 <?php include '../includes/sidebar.php'; ?>
 

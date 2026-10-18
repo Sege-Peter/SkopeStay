@@ -23,6 +23,7 @@ if (session_status() === PHP_SESSION_NONE) {
 }
 
 require_once __DIR__ . '/rbac.php';
+require_once __DIR__ . '/branding.php';
 
 // System Settings Helper Functions
 function get_all_settings($pdo) {
@@ -45,6 +46,14 @@ function get_all_settings($pdo) {
 function get_setting($pdo, $key, $default = '') {
     $settings = get_all_settings($pdo);
     return $settings[$key] ?? $default;
+}
+
+// Apply schema upgrades once per version, then honour the configured timezone
+require_once __DIR__ . '/migrations.php';
+run_migrations($pdo);
+$tz = get_setting($pdo, 'timezone', 'Africa/Nairobi');
+if (in_array($tz, timezone_identifiers_list(), true)) {
+    date_default_timezone_set($tz);
 }
 
 function hex_to_rgb_triplet($hex) {
@@ -85,4 +94,5 @@ if ($maintenance_active) {
         exit;
     }
 }
-?>
+
+require_once __DIR__ . '/auth_guard.php';

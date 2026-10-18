@@ -18,6 +18,7 @@ $erp_sections = [
         ['href' => 'kitchen.php', 'icon' => 'kitchen', 'label' => 'Kitchen KDS', 'perm' => 'restaurant_manage'],
         ['href' => 'pool.php', 'icon' => 'pool', 'label' => 'Pool & Leisure', 'perm' => 'pool_manage'],
         ['href' => 'customers.php', 'icon' => 'group', 'label' => 'Guest CRM', 'perm' => 'bookings_manage'],
+        ['href' => 'inquiries.php', 'icon' => 'forum', 'label' => 'Guest Inquiries', 'perm' => 'inquiries_manage', 'badge' => 'inquiries'],
     ],
     'Human Capital (HRMS)' => [
         ['href' => 'hrms.php', 'icon' => 'badge', 'label' => 'HRMS & Staff Master', 'perm' => 'users_manage'],
@@ -41,6 +42,12 @@ $erp_sections = [
     ]
 ];
 
+// Live counters for nav badges
+$nav_badges = [];
+try {
+    $nav_badges['inquiries'] = (int)$pdo->query("SELECT COUNT(*) FROM inquiries WHERE status = 'Unread'")->fetchColumn();
+} catch (Exception $e) {}
+
 $role_badge_colors = [
     'Super Admin'       => 'background:rgba(239,68,68,0.2); color:rgb(252,165,165);',
     'Hotel Manager'     => 'background:rgba(249,115,22,0.2); color:rgb(253,186,116);',
@@ -60,25 +67,31 @@ $role_style = $role_badge_colors[$current_role] ?? 'background:rgba(255,255,255,
 
 <!-- Sidebar — SkopeStay Hospitality ERP -->
 <aside id="sidebar"
-       style="background: linear-gradient(180deg, #091224 0%, #0e1a38 60%, #14234b 100%);"
+       style="background: linear-gradient(180deg, var(--theme-sidebar) 0%, var(--theme-primary) 55%, var(--theme-sidebar-end) 100%);"
        class="flex flex-col h-screen fixed left-0 top-0 w-64 z-50 shadow-2xl
               transition-transform duration-300 -translate-x-full md:translate-x-0">
 
     <!-- Logo & Brand Header -->
-    <div class="flex items-center gap-3 px-5 py-4 border-b border-white/10 flex-shrink-0">
+    <a href="dashboard.php" class="flex items-center gap-3 px-5 py-4 border-b border-white/10 flex-shrink-0">
+        <?php if (brand('logo_display') === 'icon'): ?>
         <div class="w-10 h-10 rounded-xl bg-gold/15 text-gold flex items-center justify-center border border-gold/30 shrink-0">
-            <span class="material-symbols-outlined text-2xl">apartment</span>
+            <span class="material-symbols-outlined text-2xl"><?= e(brand('brand_icon')) ?></span>
         </div>
-        <div>
-            <p class="font-extrabold text-white text-base leading-none tracking-tight">Skope<span style="color:#D4AF37">Stay</span></p>
-            <p class="text-[9px] uppercase tracking-[0.2em] mt-1 font-bold" style="color:rgba(255,255,255,0.45)">Hospitality ERP</p>
+        <?php else: ?>
+        <div class="w-10 h-10 rounded-xl bg-white flex items-center justify-center border border-gold/30 shrink-0 overflow-hidden p-1">
+            <img src="<?= e(brand_logo_url()) ?>" alt="<?= e(brand('hotel_name')) ?> logo" class="w-full h-full object-contain">
         </div>
-    </div>
+        <?php endif; ?>
+        <div class="min-w-0">
+            <p class="font-extrabold text-white text-base leading-none tracking-tight truncate"><?= brand_wordmark('text-gold') ?></p>
+            <p class="text-[9px] uppercase tracking-[0.2em] mt-1 font-bold truncate" style="color:rgba(255,255,255,0.45)"><?= e(brand('erp_subtitle')) ?></p>
+        </div>
+    </a>
 
     <!-- Active User & Session Role -->
     <div class="mx-3 mt-3 mb-2 p-2.5 rounded-xl border border-white/10 flex items-center gap-2.5 flex-shrink-0" style="background:rgba(255,255,255,0.04)">
         <div class="w-8 h-8 rounded-full flex items-center justify-center flex-shrink-0 font-bold text-xs"
-             style="background:rgba(212,175,55,0.25); color:#F5E6AB;">
+             style="background:rgba(var(--theme-secondary-rgb),0.25); color:var(--theme-secondary-light);">
             <?= strtoupper(substr($current_username, 0, 1)) ?>
         </div>
         <div class="min-w-0 flex-1">
@@ -101,19 +114,19 @@ $role_style = $role_badge_colors[$current_role] ?? 'background:rgba(255,255,255,
             if (empty($visible_items)) continue;
         ?>
         <div>
-            <p class="text-[10px] font-bold uppercase tracking-[0.15em] px-3 mb-1" style="color:rgba(212,175,55,0.7)"><?= htmlspecialchars($sec_title) ?></p>
+            <p class="text-[10px] font-bold uppercase tracking-[0.15em] px-3 mb-1" style="color:rgba(var(--theme-secondary-rgb),0.75)"><?= htmlspecialchars($sec_title) ?></p>
             <div class="space-y-0.5">
                 <?php foreach ($visible_items as $item):
                     $active = ($current_page === $item['href']);
                 ?>
                 <a href="<?= htmlspecialchars($item['href']) ?>"
-                   class="flex items-center gap-3 px-3 py-2 rounded-xl text-xs font-semibold transition-all duration-150 group"
-                   style="<?= $active
-                       ? 'background:rgba(212,175,55,0.18); border-left:3px solid #D4AF37; color:#F5E6AB; padding-left:11px;'
-                       : 'color:rgba(255,255,255,0.65);' ?>">
-                    <span class="material-symbols-outlined text-[18px] flex-shrink-0 transition-transform group-hover:scale-110"
-                          style="<?= $active ? 'color:#D4AF37;' : '' ?>"><?= htmlspecialchars($item['icon']) ?></span>
-                    <span class="truncate"><?= htmlspecialchars($item['label']) ?></span>
+                   class="nav-link flex items-center gap-3 px-3 py-2 rounded-xl text-xs font-semibold transition-all duration-150 group <?= $active ? 'is-active' : '' ?>"
+                   <?= $active ? 'aria-current="page"' : '' ?>>
+                    <span class="material-symbols-outlined text-[18px] flex-shrink-0 transition-transform group-hover:scale-110"><?= htmlspecialchars($item['icon']) ?></span>
+                    <span class="truncate flex-1"><?= htmlspecialchars($item['label']) ?></span>
+                    <?php if (!empty($item['badge']) && !empty($nav_badges[$item['badge']])): ?>
+                    <span class="min-w-[20px] h-5 px-1.5 rounded-full bg-gold text-[10px] font-extrabold flex items-center justify-center" style="color:var(--theme-on-secondary)"><?= $nav_badges[$item['badge']] ?></span>
+                    <?php endif; ?>
                 </a>
                 <?php endforeach; ?>
             </div>
@@ -133,6 +146,12 @@ $role_style = $role_badge_colors[$current_role] ?? 'background:rgba(255,255,255,
 
     <!-- Bottom Actions: Back to Website & Logout -->
     <div class="px-3 py-2.5 border-t border-white/10 flex-shrink-0 space-y-1 bg-black/20">
+        <a href="profile.php"
+           class="flex items-center gap-2.5 px-3 py-2 rounded-xl text-xs font-semibold transition-all hover:bg-white/10"
+           style="color:rgba(255,255,255,0.7)">
+            <span class="material-symbols-outlined text-[18px]">account_circle</span>
+            <span>My Profile & Password</span>
+        </a>
         <a href="../index.php"
            class="flex items-center gap-2.5 px-3 py-2 rounded-xl text-xs font-semibold transition-all hover:bg-white/10"
            style="color:rgba(255,255,255,0.7)">
@@ -148,10 +167,15 @@ $role_style = $role_badge_colors[$current_role] ?? 'background:rgba(255,255,255,
 </aside>
 
 <style>
-#sidebar nav a:not([style*="#D4AF37"]):hover {
-    background: rgba(255,255,255,0.08);
-    color: rgba(255,255,255,0.95);
+#sidebar .nav-link { color: rgba(255,255,255,0.65); }
+#sidebar .nav-link:hover { background: rgba(255,255,255,0.08); color: rgba(255,255,255,0.95); }
+#sidebar .nav-link.is-active {
+    background: rgba(var(--theme-secondary-rgb),0.18);
+    border-left: 3px solid var(--theme-secondary);
+    color: var(--theme-secondary-light);
+    padding-left: 11px;
 }
+#sidebar .nav-link.is-active .material-symbols-outlined { color: var(--theme-secondary); }
 .scrollbar-hide::-webkit-scrollbar { display:none; }
 .scrollbar-hide { -ms-overflow-style:none; scrollbar-width:none; }
 </style>

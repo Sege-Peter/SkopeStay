@@ -44,13 +44,13 @@ $room_imagery = [
 $hall_imagery = [
     'https://images.unsplash.com/photo-1519167758481-83f550bb49b3?q=80&w=1600&auto=format&fit=crop',
     'https://images.unsplash.com/photo-1497366216548-37526070297c?q=80&w=1200&auto=format&fit=crop',
-    'https://images.unsplash.com/photo-1530103862676-de8892795cfa?q=80&w=1200&auto=format&fit=crop'
+    'https://images.unsplash.com/photo-1556761223-4c4282c73f77?q=80&w=1200&auto=format&fit=crop'
 ];
 ?>
 <!DOCTYPE html>
 <html lang="en" class="scroll-smooth overflow-x-hidden w-full">
 <head>
-    <title>SkopeStay | Luxury Resort, Suites & Smart Bookings</title>
+    <title><?= e(brand('hotel_name')) ?> | Luxury Resort, Suites & Smart Bookings</title>
 <?php include 'includes/public_head.php'; ?>
 </head>
 <body class="text-navy relative flex flex-col min-h-screen">
@@ -62,9 +62,9 @@ $hall_imagery = [
     <section class="relative min-h-[92vh] lg:min-h-screen w-full overflow-hidden flex items-center justify-center bg-navy pt-24 pb-20 lg:pt-32 lg:pb-24">
         <!-- Parallax Background Layer -->
         <div class="absolute inset-0 z-0">
-            <img src="https://images.unsplash.com/photo-1542314831-c53cd3816002?q=80&w=2070&auto=format&fit=crop" 
+            <img src="https://images.unsplash.com/photo-1566073771259-6a8506099945?q=80&w=2070&auto=format&fit=crop" 
                  class="w-full h-full object-cover animate-slow-zoom opacity-70" 
-                 alt="SkopeStay Luxury Resort Exterior">
+                 alt="<?= e(brand('hotel_name')) ?> Exterior">
             <!-- Multi-Stage Vignette Gradients for Perfect Text Legibility -->
             <div class="absolute inset-0 bg-gradient-to-t from-navy via-navy/60 to-navy/40"></div>
             <div class="absolute inset-0 bg-[radial-gradient(circle_at_center,transparent_0%,rgba(11,19,43,0.7)_100%)]"></div>
@@ -474,7 +474,7 @@ $hall_imagery = [
             <img src="https://images.unsplash.com/photo-1576013551627-0cc20b96c2a7?q=80&w=2070&auto=format&fit=crop" 
                  class="w-full h-full object-cover opacity-50" 
                  loading="lazy" 
-                 alt="SkopeStay Heated Infinity Pool">
+                 alt="<?= e(brand_short_name()) ?> Heated Infinity Pool">
             <div class="absolute inset-0 pool-overlay"></div>
             <!-- Ripple element -->
             <div class="absolute top-1/2 left-1/3 w-[600px] h-[600px] -mt-[300px] -ml-[300px] rounded-full border border-white/10 animate-ripple pointer-events-none"></div>
@@ -625,9 +625,9 @@ $hall_imagery = [
                 <span class="material-symbols-outlined text-lg">table_restaurant</span>
                 <span>Reserve a Dining Table</span>
             </button>
-            <a href="tel:+254742380183" class="px-6 py-4 rounded-xl border border-gray-300 hover:border-gold text-navy font-ui font-semibold text-sm transition-colors flex items-center gap-2">
+            <a href="tel:<?= e(preg_replace('/[^0-9+]/', '', get_setting($pdo, 'contact_phone', '+254742380183'))) ?>" class="px-6 py-4 rounded-xl border border-gray-300 hover:border-gold text-navy font-ui font-semibold text-sm transition-colors flex items-center gap-2">
                 <span class="material-symbols-outlined text-gold text-lg">call</span>
-                <span>Chef Tasting Inquiries: +254 742 380 183</span>
+                <span>Chef Tasting Inquiries: <?= e(get_setting($pdo, 'contact_phone', '+254 742 380 183')) ?></span>
             </a>
         </div>
     </section>
@@ -834,15 +834,15 @@ $hall_imagery = [
                     <div class="space-y-3 pt-2 text-sm text-gray-300 font-ui">
                         <div class="flex items-center gap-3">
                             <span class="material-symbols-outlined text-gold">location_on</span>
-                            <span>SkopeStay International Luxury Resort, Kenya</span>
+                            <span><?= e(brand('hotel_name')) ?>, Kenya</span>
                         </div>
                         <div class="flex items-center gap-3">
                             <span class="material-symbols-outlined text-gold">call</span>
-                            <span>Direct Line: +254 742 380 183</span>
+                            <span>Direct Line: <?= e(get_setting($pdo, 'contact_phone', '+254 742 380 183')) ?></span>
                         </div>
                         <div class="flex items-center gap-3">
                             <span class="material-symbols-outlined text-gold">mail</span>
-                            <span>concierge@skopestay.com</span>
+                            <span><?= e(get_setting($pdo, 'contact_email', 'admin@skopestay.com')) ?></span>
                         </div>
                     </div>
                 </div>
@@ -1045,6 +1045,8 @@ $hall_imagery = [
 
     <!-- Interactive Scripts & Logic -->
     <script>
+        // Escape any text before it is placed into innerHTML / SweetAlert html
+        function escHtml(s) { return String(s ?? "").replace(/[&<>"']/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;","'":"&#39;"}[c])); }
         // Swiper Testimonials Slider
         document.addEventListener('DOMContentLoaded', function() {
             if (typeof Swiper !== 'undefined') {
@@ -1159,18 +1161,18 @@ $hall_imagery = [
                         icon: 'success',
                         title: 'Inquiry Received',
                         text: 'Thank you, ' + name + '! Our head concierge will contact you shortly.',
-                        confirmButtonColor: '#0B132B'
+                        confirmButtonColor: window.BRAND.primary
                     });
                     document.getElementById('inq-name').value = '';
                     document.getElementById('inq-phone').value = '';
                     document.getElementById('inq-email').value = '';
                     document.getElementById('inq-msg').value = '';
                 } else {
-                    Swal.fire({ icon: 'error', title: 'Error', text: data.message, confirmButtonColor: '#0B132B' });
+                    Swal.fire({ icon: 'error', title: 'Error', text: data.message, confirmButtonColor: window.BRAND.primary });
                 }
             })
             .catch(() => {
-                Swal.fire({ icon: 'error', title: 'Transmission Error', text: 'Could not send message. Please reach us via WhatsApp directly.', confirmButtonColor: '#0B132B' });
+                Swal.fire({ icon: 'error', title: 'Transmission Error', text: 'Could not send message. Please reach us via WhatsApp directly.', confirmButtonColor: window.BRAND.primary });
             })
             .finally(() => {
                 btn.disabled = false;
@@ -1281,12 +1283,12 @@ $hall_imagery = [
                                 <div class="flex items-center gap-4">
                                     <input type="radio" name="target_option" value="${opt.id}" data-total="${opt.total_price}" class="w-5 h-5 text-gold focus:ring-gold" ${checked}>
                                     <div>
-                                        <span class="font-display font-bold text-base block text-navy">${opt.name}</span>
-                                        <span class="text-xs text-gray-500">${opt.description || ''}</span>
+                                        <span class="font-display font-bold text-base block text-navy">${escHtml(opt.name)}</span>
+                                        <span class="text-xs text-gray-500">${escHtml(opt.description || '')}</span>
                                     </div>
                                 </div>
                                 <div class="text-right">
-                                    <span class="font-ui font-bold text-gold text-lg block">KSh ${Number(opt.total_price).toLocaleString()}</span>
+                                    <span class="font-ui font-bold text-gold text-lg block">${escHtml(window.BRAND.currency)} ${Number(opt.total_price).toLocaleString()}</span>
                                     <span class="text-[10px] uppercase font-brand text-gray-400">Total Rate</span>
                                 </div>
                             </label>`;
@@ -1328,7 +1330,7 @@ $hall_imagery = [
                 const phone = document.getElementById('wiz-phone')?.value.trim() || '';
 
                 if (!firstName || !email || !phone) {
-                    Swal.fire({ icon: 'warning', title: 'Details Required', text: 'Please provide your name, email, and telephone number.', confirmButtonColor: '#0B132B' });
+                    Swal.fire({ icon: 'warning', title: 'Details Required', text: 'Please provide your name, email, and telephone number.', confirmButtonColor: window.BRAND.primary });
                     return;
                 }
 
@@ -1354,30 +1356,24 @@ $hall_imagery = [
                         closeBookingWizard();
                         Swal.fire({
                             icon: 'success',
-                            title: 'Reservation Confirmed!',
-                            html: `<p style="color:#6b7280">Thank you, <strong>${firstName}</strong>! Your luxury reservation is confirmed.</p>
+                            title: 'Booking Request Received!',
+                            html: `<p style="color:#6b7280">Thank you, <strong>${escHtml(firstName)}</strong>! We have received your reservation request.</p>
                                    <div style="margin-top:14px;background:#f8fafc;border:1px solid #e2e8f0;border-radius:14px;padding:14px;text-align:left;font-size:14px">
-                                     <p><strong>Booking Ref:</strong> <span style="color:#0B132B;font-weight:700">${json.ref}</span></p>
-                                     <p><strong>Service:</strong> ${service}</p>
-                                     ${json.total > 0 ? `<p><strong>Amount:</strong> KSh ${Number(json.total).toLocaleString()}</p>` : ''}
+                                     <p><strong>Booking Ref:</strong> <span style="color:${window.BRAND.primary};font-weight:700">${escHtml(json.ref)}</span></p>
+                                     <p><strong>Service:</strong> ${escHtml(service)}</p>
+                                     ${json.total > 0 ? `<p><strong>Estimated total:</strong> ${escHtml(window.BRAND.currency)} ${Number(json.total).toLocaleString()}</p>` : ''}
                                    </div>
-                                   <p style="font-size:12px;color:#9ca3af;margin-top:12px">An electronic confirmation has been dispatched to ${email}</p>`,
-                            showCancelButton: true,
-                            confirmButtonColor: '#0B132B',
-                            confirmButtonText: 'Download Reservation Folio',
-                            cancelButtonText: 'Close',
+                                   <p style="font-size:12px;color:#9ca3af;margin-top:12px">Please keep your reference. Our front desk will contact you at ${escHtml(email)} to confirm.</p>`,
+                            confirmButtonColor: window.BRAND.primary,
+                            confirmButtonText: 'Done',
                             customClass: { popup: 'font-ui' }
-                        }).then((result) => {
-                            if (result.isConfirmed && json.booking_id) {
-                                window.open(`modules/print_receipt.php?type=booking&id=${json.booking_id}`, '_blank');
-                            }
                         });
                     } else {
-                        Swal.fire({ icon: 'error', title: 'Booking Issue', text: json.message, confirmButtonColor: '#0B132B' });
+                        Swal.fire({ icon: 'error', title: 'Booking Issue', text: json.message, confirmButtonColor: window.BRAND.primary });
                     }
                 })
                 .catch(() => {
-                    Swal.fire({ icon: 'error', title: 'Connection Error', text: 'Unable to reach the server. Please try again.', confirmButtonColor: '#0B132B' });
+                    Swal.fire({ icon: 'error', title: 'Connection Error', text: 'Unable to reach the server. Please try again.', confirmButtonColor: window.BRAND.primary });
                 })
                 .finally(() => {
                     nextBtn.innerHTML = 'Confirm Reservation';

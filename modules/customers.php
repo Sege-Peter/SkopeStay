@@ -17,8 +17,6 @@ function getInitials($name) {
 
 include '../includes/head.php';
 ?>
-<!DOCTYPE html>
-<html class="light" lang="en">
 <body class="bg-background text-on-surface font-body-md min-h-screen">
 <?php include '../includes/sidebar.php'; ?>
 
@@ -112,7 +110,7 @@ include '../includes/head.php';
                         <td class="px-5 py-4 text-right">
                             <div class="flex items-center justify-end gap-1 opacity-0 group-hover:opacity-100 transition-opacity">
                                 <button onclick="viewCustomer(<?= $c['id'] ?>)" class="p-1.5 text-on-surface-variant hover:text-primary transition-colors" title="View Profile"><span class="material-symbols-outlined text-[18px]">visibility</span></button>
-                                <button onclick="deleteCustomer(<?= $c['id'] ?>,'<?= addslashes($c['full_name']) ?>')" class="p-1.5 text-on-surface-variant hover:text-error transition-colors" title="Delete"><span class="material-symbols-outlined text-[18px]">delete</span></button>
+                                <button onclick="deleteCustomer(<?= $c['id'] ?>,<?= e(json_encode($c['full_name'])) ?>)" class="p-1.5 text-on-surface-variant hover:text-error transition-colors" title="Delete"><span class="material-symbols-outlined text-[18px]">delete</span></button>
                             </div>
                         </td>
                     </tr>
@@ -254,7 +252,7 @@ async function viewCustomer(id) {
 }
 
 function deleteCustomer(id, name) {
-    Swal.fire({title:`Delete ${name}?`, text:"This will permanently remove this customer profile.", icon:"warning", showCancelButton:true, confirmButtonColor:"#ef4444", confirmButtonText:"Delete"})
+    Swal.fire({titleText: `Delete ${name}?`, text:"This will permanently remove this customer profile.", icon:"warning", showCancelButton:true, confirmButtonColor:"#ef4444", confirmButtonText:"Delete"})
     .then(async (res) => {
         if(res.isConfirmed) {
             const r = await fetch(`../api/customers.php?id=${id}`, {method:'DELETE'});

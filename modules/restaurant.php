@@ -26,8 +26,6 @@ $is_logged_in = isset($_SESSION['user_id']) || isset($_SESSION['pos_logged_in'])
 if (!$is_logged_in) {
     include '../includes/head.php';
     ?>
-    <!DOCTYPE html>
-    <html lang="en">
     <body class="bg-gray-900 text-white min-h-screen flex items-center justify-center font-sans-ui">
         <div class="max-w-sm w-full px-6">
             <div class="text-center mb-8">
@@ -107,8 +105,6 @@ try {
 
 include '../includes/head.php';
 ?>
-<!DOCTYPE html>
-<html class="light" lang="en">
 <body class="bg-gray-50 text-on-surface font-body-md min-h-screen">
 <?php include '../includes/sidebar.php'; ?>
 
@@ -196,7 +192,7 @@ include '../includes/head.php';
           </div>
 
           <!-- Hover Add Button (floating) -->
-          <button onclick="addToOrder('<?= addslashes($item['name']) ?>', <?= $item['price'] ?>)"
+          <button onclick="addToOrder(<?= e(json_encode($item['name'])) ?>, <?= $item['price'] ?>)"
             class="absolute bottom-3 right-3 w-11 h-11 bg-white/90 backdrop-blur rounded-full flex items-center justify-center text-gray-800 shadow-lg
                    hover:bg-amber-400 hover:text-white transition-all duration-300 
                    translate-y-10 opacity-0 group-hover:translate-y-0 group-hover:opacity-100">
@@ -210,7 +206,7 @@ include '../includes/head.php';
           <p class="text-[11px] text-gray-400 mb-3 leading-relaxed line-clamp-2"><?= htmlspecialchars($item['desc'] ?? 'Gourmet selection') ?></p>
           <div class="flex justify-between items-center">
             <span class="font-extrabold text-amber-500 text-base">KSh <?= number_format($item['price']) ?></span>
-            <button onclick="addToOrder('<?= addslashes($item['name']) ?>', <?= $item['price'] ?>)"
+            <button onclick="addToOrder(<?= e(json_encode($item['name'])) ?>, <?= $item['price'] ?>)"
               class="py-1.5 px-3 bg-gray-900 text-white rounded-xl text-[11px] font-bold hover:bg-amber-500 active:scale-95 transition-all flex items-center gap-1 shadow-sm">
               <span class="material-symbols-outlined text-[14px]">add</span> Add
             </button>

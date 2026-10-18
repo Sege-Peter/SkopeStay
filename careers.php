@@ -4,7 +4,7 @@ require_once 'includes/config.php';
 <!DOCTYPE html>
 <html lang="en" class="scroll-smooth overflow-x-hidden w-full">
 <head>
-    <title>Careers | SkopeStay Technology</title>
+    <title>Careers | <?= e(brand('hotel_name')) ?></title>
 <?php include 'includes/public_head.php'; ?>
 </head>
 <body class="bg-[#F8FAFC] text-navy relative overflow-x-hidden flex flex-col min-h-screen">
@@ -13,7 +13,7 @@ require_once 'includes/config.php';
     <!-- Cinematic Hero Section -->
     <section class="relative h-[60vh] w-full overflow-hidden flex items-center justify-center bg-navy mt-16 lg:mt-0">
         <div class="absolute inset-0 z-0">
-            <img src="https://images.unsplash.com/photo-1600880292203-757bb62b4baf?q=80&w=2070&auto=format&fit=crop" class="w-full h-full object-cover animate-slow-zoom opacity-50" alt="Join SkopeStay Team">
+            <img src="https://images.unsplash.com/photo-1600880292203-757bb62b4baf?q=80&w=2070&auto=format&fit=crop" class="w-full h-full object-cover animate-slow-zoom opacity-50" alt="Join <?= e(brand_short_name()) ?> Team">
             <div class="absolute inset-0 bg-gradient-to-t from-navy via-navy/50 to-transparent"></div>
         </div>
         <div class="relative z-10 text-center px-6 max-w-4xl mx-auto" data-aos="fade-up" data-aos-duration="1500">
@@ -76,7 +76,7 @@ require_once 'includes/config.php';
                     <img src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?q=80&w=2070&auto=format&fit=crop" alt="Culture" class="w-full h-full object-cover">
                     <div class="absolute inset-0 bg-navy/60 backdrop-blur-[2px] flex items-center p-8">
                         <div class="glass p-6 rounded-2xl max-w-md border border-white/20">
-                            <p class="font-inter italic text-white mb-4">"SkopeStay isn't just a workplace; it's an incubator for excellence. The support for innovation here is unparalleled."</p>
+                            <p class="font-inter italic text-white mb-4">"<?= e(brand_short_name()) ?> isn't just a workplace; it's an incubator for excellence. The support for innovation here is unparalleled."</p>
                             <p class="font-bold text-gold">— Sarah Chen, Senior Product Lead</p>
                         </div>
                     </div>

@@ -4,7 +4,7 @@ require_once 'includes/config.php';
 <!DOCTYPE html>
 <html lang="en" class="scroll-smooth overflow-x-hidden w-full">
 <head>
-    <title>Privacy Policy | SkopeStay</title>
+    <title>Privacy Policy | <?= e(brand('hotel_name')) ?></title>
 <?php include 'includes/public_head.php'; ?>
 <style>
     .policy-section:target {
@@ -63,7 +63,7 @@ require_once 'includes/config.php';
             <section class="policy-section bg-white p-10 rounded-3xl border border-gray-100 shadow-xl hover-lift" id="intro" data-aos="fade-up">
                 <h2 class="font-poppins text-3xl font-bold text-navy mb-6">1. Introduction</h2>
                 <p class="font-inter text-gray-600 leading-relaxed text-lg">
-                    At SkopeStay Luxury Hospitality, we value your privacy and are committed to protecting your personal information. This Privacy Policy outlines how we collect, use, and safeguard the data you provide when using our facilities, booking platforms, and digital services. By engaging with SkopeStay, you agree to the practices described herein.
+                    At <?= e(brand('hotel_name')) ?>, we value your privacy and are committed to protecting your personal information. This Privacy Policy outlines how we collect, use, and safeguard the data you provide when using our facilities, booking platforms, and digital services. By engaging with <?= e(brand_short_name()) ?>, you agree to the practices described herein.
                 </p>
             </section>
 
@@ -89,7 +89,7 @@ require_once 'includes/config.php';
             <section class="policy-section bg-white p-10 rounded-3xl border border-gray-100 shadow-xl hover-lift" id="share" data-aos="fade-up">
                 <h2 class="font-poppins text-3xl font-bold text-navy mb-6">4. Sharing Your Information</h2>
                 <p class="font-inter text-gray-600 leading-relaxed text-lg">
-                    We do not sell your personal data to third parties. We may share information with trusted service providers who assist us in operations, such as payment processors, IT support, and facility management consultants. Disclosure may also occur if required by law or to protect the safety and rights of SkopeStay and its guests.
+                    We do not sell your personal data to third parties. We may share information with trusted service providers who assist us in operations, such as payment processors, IT support, and facility management consultants. Disclosure may also occur if required by law or to protect the safety and rights of <?= e(brand_short_name()) ?> and its guests.
                 </p>
             </section>
 
@@ -163,14 +163,14 @@ require_once 'includes/config.php';
                         <span class="material-symbols-outlined text-gold text-4xl">support_agent</span>
                         <div>
                             <p class="font-montserrat text-xs text-gray-400 uppercase tracking-widest mb-1">Support</p>
-                            <a class="font-poppins font-bold text-lg text-white hover:text-gold transition-colors" href="mailto:support@skopestay.com">support@skopestay.com</a>
+                            <a class="font-poppins font-bold text-lg text-white hover:text-gold transition-colors" href="mailto:<?= e(get_setting($pdo, 'support_email', 'support@skopestay.com')) ?>"><?= e(get_setting($pdo, 'support_email', 'support@skopestay.com')) ?></a>
                         </div>
                     </div>
                     <div class="bg-white/5 p-6 rounded-2xl border border-white/10 flex items-center gap-6">
                         <span class="material-symbols-outlined text-gold text-4xl">policy</span>
                         <div>
                             <p class="font-montserrat text-xs text-gray-400 uppercase tracking-widest mb-1">Privacy Officer</p>
-                            <a class="font-poppins font-bold text-lg text-white hover:text-gold transition-colors" href="mailto:privacy@skopestay.com">privacy@skopestay.com</a>
+                            <a class="font-poppins font-bold text-lg text-white hover:text-gold transition-colors" href="mailto:<?= e(get_setting($pdo, 'contact_email', 'admin@skopestay.com')) ?>"><?= e(get_setting($pdo, 'contact_email', 'admin@skopestay.com')) ?></a>
                         </div>
                     </div>
                 </div>

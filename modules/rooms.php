@@ -10,8 +10,6 @@ $cleaning = count(array_filter($rooms, fn($r) => $r['status'] === 'Cleaning'));
 
 include '../includes/head.php';
 ?>
-<!DOCTYPE html>
-<html class="light" lang="en">
 <body class="bg-background text-on-surface font-body-md min-h-screen">
 
 <?php include '../includes/sidebar.php'; ?>

@@ -4,7 +4,7 @@ require_once 'includes/config.php';
 <!DOCTYPE html>
 <html lang="en" class="scroll-smooth overflow-x-hidden w-full">
 <head>
-    <title>Apply | SkopeStay Careers</title>
+    <title>Apply | <?= e(brand('hotel_name')) ?></title>
 <?php include 'includes/public_head.php'; ?>
 <style>
     .form-input-focus {
@@ -240,7 +240,7 @@ require_once 'includes/config.php';
                     </label>
                     <label class="flex items-start gap-4 cursor-pointer hover:bg-gray-50 p-2 rounded-lg transition-colors">
                         <input class="mt-1 w-5 h-5 rounded border-gray-300 text-gold focus:ring-gold" type="checkbox"/>
-                        <span class="text-sm">I consent to being contacted by SkopeStay's recruitment team via email or phone for interview purposes.</span>
+                        <span class="text-sm">I consent to being contacted by <?= e(brand_short_name()) ?>'s recruitment team via email or phone for interview purposes.</span>
                     </label>
                 </div>
                 

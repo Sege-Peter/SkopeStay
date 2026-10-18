@@ -1,9 +1,10 @@
+<?php require_once 'includes/config.php'; ?>
 <!DOCTYPE html>
 
 <html class="light scroll-smooth" lang="en"><head>
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<title>Application Submitted | SkopeStay</title>
+<title>Application Submitted | <?= e(brand('hotel_name')) ?></title>
 <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Geist:wght@400;500&family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
 <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
@@ -143,12 +144,12 @@
 <!-- TopNavBar -->
 <nav class="bg-surface-container-lowest top-0 shadow-sm transition-all duration-200 ease-in-out z-50 sticky">
 <div class="flex justify-between items-center h-20 px-margin-desktop w-full max-w-7xl mx-auto">
-<a href="index.php" class="font-headline-md text-headline-md font-bold text-on-surface dark:text-surface-bright">SkopeStay</a>
+<a href="index.php" class="font-headline-md text-headline-md font-bold text-on-surface dark:text-surface-bright"><?= e(brand_short_name()) ?></a>
 <div class="hidden md:flex items-center gap-xl">
 <a class="font-body-md text-body-md text-on-surface-variant hover:text-primary transition-colors" href="index.php">Explore</a>
 <a class="font-body-md text-body-md text-on-surface-variant hover:text-primary transition-colors" href="index.php#halls">Business</a>
 <a class="font-body-md text-body-md text-on-surface-variant hover:text-primary transition-colors" href="about.php">About</a>
-<a class="font-body-md text-body-md text-on-surface-variant hover:text-primary transition-colors" href="mailto:support@skopestay.com">Support</a>
+<a class="font-body-md text-body-md text-on-surface-variant hover:text-primary transition-colors" href="mailto:<?= e(get_setting($pdo, 'support_email', 'support@skopestay.com')) ?>">Support</a>
 </div>
 <div class="flex items-center gap-md">
 <a href="auth/login.php" class="font-body-md text-body-md text-on-surface-variant hover:text-primary transition-colors px-4 py-2">Login</a>
@@ -165,7 +166,7 @@
 </div>
 <h1 class="font-display-lg text-display-lg mb-md text-on-surface">Application Submitted!</h1>
 <p class="font-body-lg text-body-lg text-on-surface-variant max-w-2xl mx-auto">
-    Thank you for your interest in joining SkopeStay. We have received your application and our talent acquisition team will review your profile shortly.
+    Thank you for your interest in joining <?= e(brand_short_name()) ?>. We have received your application and our talent acquisition team will review your profile shortly.
 </p>
 </section>
 
@@ -235,7 +236,7 @@
 <!-- Contact/Support Card -->
 <div class="md:col-span-1 bento-card p-xl rounded-xl bg-on-surface text-surface-bright border-none shadow-xl">
 <h3 class="font-title-lg text-title-lg mb-lg">Need Assistance?</h3>
-<p class="font-body-md text-body-md opacity-80 mb-xl">Our recruitment team is here to help if you have any questions regarding your application or the SkopeStay hiring process.</p>
+<p class="font-body-md text-body-md opacity-80 mb-xl">Our recruitment team is here to help if you have any questions regarding your application or the <?= e(brand_short_name()) ?> hiring process.</p>
 <div class="space-y-lg">
 <div class="flex items-start gap-md">
 <div class="w-10 h-10 rounded-lg bg-white/10 flex items-center justify-center flex-shrink-0">
@@ -243,7 +244,7 @@
 </div>
 <div>
 <p class="font-label-md text-label-md opacity-60">Email Support</p>
-<a href="mailto:careers@skopestay.com" class="font-body-md text-body-md font-bold text-secondary-container hover:underline">careers@skopestay.com</a>
+<a href="mailto:<?= e(get_setting($pdo, 'contact_email', 'admin@skopestay.com')) ?>" class="font-body-md text-body-md font-bold text-secondary-container hover:underline"><?= e(get_setting($pdo, 'contact_email', 'admin@skopestay.com')) ?></a>
 </div>
 </div>
 <div class="flex items-start gap-md">
@@ -287,7 +288,7 @@
 <footer class="bg-on-surface text-surface-bright">
 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-gutter px-margin-desktop py-xl w-full max-w-7xl mx-auto">
 <div class="flex flex-col gap-md">
-<div class="font-title-lg text-title-lg font-bold text-surface-bright">SkopeStay</div>
+<div class="font-title-lg text-title-lg font-bold text-surface-bright"><?= e(brand_short_name()) ?></div>
 <p class="font-caption text-caption opacity-70 text-surface-variant">Empowering global facility management with precision and luxury.</p>
 </div>
 <div class="flex flex-col gap-sm">
@@ -298,9 +299,9 @@
 </div>
 <div class="flex flex-col gap-sm">
 <h4 class="font-body-md font-bold mb-xs">Contact</h4>
-<a class="font-caption text-caption text-surface-variant opacity-80 hover:opacity-100 hover:text-secondary-container transition-all" href="mailto:support@skopestay.com">Contact Us</a>
-<a class="font-caption text-caption text-surface-variant opacity-80 hover:opacity-100 hover:text-secondary-container transition-all" href="mailto:support@skopestay.com">Global Offices</a>
-<a class="font-caption text-caption text-surface-variant opacity-80 hover:opacity-100 hover:text-secondary-container transition-all" href="mailto:support@skopestay.com">Accessibility</a>
+<a class="font-caption text-caption text-surface-variant opacity-80 hover:opacity-100 hover:text-secondary-container transition-all" href="mailto:<?= e(get_setting($pdo, 'support_email', 'support@skopestay.com')) ?>">Contact Us</a>
+<a class="font-caption text-caption text-surface-variant opacity-80 hover:opacity-100 hover:text-secondary-container transition-all" href="mailto:<?= e(get_setting($pdo, 'support_email', 'support@skopestay.com')) ?>">Global Offices</a>
+<a class="font-caption text-caption text-surface-variant opacity-80 hover:opacity-100 hover:text-secondary-container transition-all" href="mailto:<?= e(get_setting($pdo, 'support_email', 'support@skopestay.com')) ?>">Accessibility</a>
 </div>
 <div class="flex flex-col gap-md">
 <h4 class="font-body-md font-bold mb-xs">Follow Us</h4>
@@ -312,7 +313,7 @@
 </div>
 </div>
 <div class="w-full border-t border-surface-variant/10 py-md px-margin-desktop max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center opacity-60">
-<p class="font-caption text-caption">© 2024 SkopeStay Technology. All rights reserved.</p>
+<p class="font-caption text-caption">© <?= date('Y') ?> <?= e(brand('hotel_name')) ?>. All rights reserved.</p>
 <p class="font-caption text-caption">Precision • Reliability • Excellence</p>
 </div>
 </footer>

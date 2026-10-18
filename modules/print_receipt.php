@@ -7,6 +7,7 @@ $id   = (int)($_GET['id'] ?? 0);
 $items      = [];
 $subtotal   = 0;
 $tax        = 0;
+$tax_pct    = (float)get_setting($pdo, 'tax_rate', '16');
 $total      = 0;
 $date       = date('d/m/Y');
 $time       = date('H:i');
@@ -26,7 +27,7 @@ if ($type === 'restaurant' && $id > 0) {
     if ($order_data) {
         $room_table = 'Table ' . ($order_data['table_number'] ?? '—');
         $total    = (float)$order_data['total_amount'];
-        $subtotal = $total / 1.16;
+        $subtotal = $total / (1 + $tax_pct / 100);
         $tax      = $total - $subtotal;
         $date     = date('d/m/Y', strtotime($order_data['created_at']));
         $time     = date('H:i',   strtotime($order_data['created_at']));
@@ -54,7 +55,7 @@ if ($type === 'restaurant' && $id > 0) {
             if ($diff > 0) $nights = (int)$diff;
         }
         $total      = (float)$bk_data['total_amount'];
-        $subtotal   = $total / 1.16;
+        $subtotal   = $total / (1 + $tax_pct / 100);
         $tax        = $total - $subtotal;
         $date       = date('d/m/Y', strtotime($bk_data['created_at']));
         $time       = date('H:i',   strtotime($bk_data['created_at']));
@@ -88,7 +89,7 @@ if ($type === 'restaurant' && $id > 0) {
     if ($pass_data) {
         $room_table = 'Pool Access';
         $total      = (float)$pass_data['amount'];
-        $subtotal   = $total / 1.16;
+        $subtotal   = $total / (1 + $tax_pct / 100);
         $tax        = $total - $subtotal;
         $date       = date('d/m/Y', strtotime($pass_data['created_at']));
         $time       = date('H:i',   strtotime($pass_data['created_at']));
@@ -106,7 +107,8 @@ if ($type === 'restaurant' && $id > 0) {
 <head>
 <meta charset="utf-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>Receipt <?= $receipt_no ?></title>
+<title>Receipt <?= e($receipt_no) ?> | <?= e(brand('hotel_name')) ?></title>
+<?= brand_favicon_tags() ?>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
 <style>
@@ -206,7 +208,7 @@ if ($type === 'restaurant' && $id > 0) {
 <body>
 
 <div class="action-bar no-print">
-    <span class="logo font-bold">SKOPESTAY EPOS</span>
+    <span class="logo font-bold"><?= e(strtoupper(brand_short_name())) ?> EPOS</span>
     <div class="btns">
         <button onclick="window.close()">Close</button>
         <button onclick="window.print()">Print</button>
@@ -216,10 +218,11 @@ if ($type === 'restaurant' && $id > 0) {
 
 <div class="epos-receipt" id="receipt-canvas">
     <div class="header text-center">
-        <img src="../assets/images/SkopeStay logo.png" alt="SkopeStay Logo" style="max-width: 140px; margin-bottom: 8px; filter: grayscale(100%) contrast(120%);">
-        <p>Kisumu, Kenya</p>
-        <p>Tel: +254 742 380 183</p>
-        <p>VAT No: P000000000X</p>
+        <img src="<?= e(brand_logo_url()) ?>" alt="<?= e(brand('hotel_name')) ?> logo" style="max-width: 140px; max-height: 90px; object-fit: contain; margin-bottom: 8px; filter: grayscale(100%) contrast(120%);">
+        <p style="font-weight:bold"><?= e(brand('hotel_name')) ?></p>
+        <p><?= e(get_setting($pdo, 'contact_address', '')) ?></p>
+        <p>Tel: <?= e(get_setting($pdo, 'contact_phone', '')) ?></p>
+        <?php if (get_setting($pdo, 'tax_pin', '') !== ''): ?><p>VAT/PIN: <?= e(get_setting($pdo, 'tax_pin', '')) ?></p><?php endif; ?>
         <p style="margin-top:5px; font-weight:bold;"><?= $module_label ?></p>
     </div>
     
@@ -258,11 +261,11 @@ if ($type === 'restaurant' && $id > 0) {
     
     <div class="totals-grid">
         <div class="label">Subtotal:</div> <div><?= number_format($subtotal, 2) ?></div>
-        <div class="label">Tax (16%):</div> <div><?= number_format($tax, 2) ?></div>
+        <div class="label">Tax (<?= e(rtrim(rtrim(number_format($tax_pct, 2), '0'), '.')) ?>%):</div> <div><?= number_format($tax, 2) ?></div>
     </div>
     
     <div class="totals-grid total-row">
-        <div class="label">TOTAL KES:</div> <div><?= number_format($total, 2) ?></div>
+        <div class="label">TOTAL <?= e(get_setting($pdo, 'currency_code', 'KES')) ?>:</div> <div><?= number_format($total, 2) ?></div>
     </div>
     
     <div class="totals-grid">
@@ -274,9 +277,8 @@ if ($type === 'restaurant' && $id > 0) {
     <div class="qr-container" id="qrcode"></div>
     
     <div class="footer">
-        <p>Thank you for your visit!</p>
+        <p><?= e(get_setting($pdo, 'receipt_footer', 'Thank you for your visit!')) ?></p>
         <p>Please keep this receipt for your records.</p>
-        <p style="margin-top:8px">Powered by SkopeStay</p>
     </div>
 </div>
 

@@ -9,7 +9,8 @@ require_once '../includes/config.php';
 <head>
     <meta charset="utf-8"/>
     <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-    <title>SkopeStay KDS | Professional Kitchen Display System</title>
+    <title><?= e(brand_short_name()) ?> KDS | Kitchen Display System</title>
+    <?= brand_favicon_tags() ?>
     <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Geist:wght@400;500;600&display=swap" rel="stylesheet"/>
     <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
@@ -42,10 +43,10 @@ require_once '../includes/config.php';
                         "primary-fixed-dim": "#bec6e0", "error-container": "#ffdad6", "surface-bright": "#f8f9ff",
                         "on-tertiary": "#ffffff", "tertiary-fixed": "#d8e2ff", "surface-container": "#e5eeff",
                         "secondary-fixed-dim": "#ffb95f", "outline-variant": "#c6c6cd", "inverse-primary": "#bec6e0",
-                        "error": "#ba1a1a", "on-secondary": "#ffffff", "primary-container": "#131b2e",
-                        "secondary-container": "#fea619", "surface-container-high": "#dce9ff", "primary": "#000000",
+                        "error": "#ba1a1a", "on-secondary": "#ffffff", "primary-container": "<?= brand_palette()['primary'] ?>",
+                        "secondary-container": "#fea619", "surface-container-high": "#dce9ff", "primary": "<?= brand_palette()['primary'] ?>",
                         "on-secondary-fixed-variant": "#653e00", "tertiary-fixed-dim": "#adc6ff", "on-tertiary-container": "#3980f4",
-                        "surface-variant": "#d3e4fe", "secondary": "#855300", "inverse-on-surface": "#eaf1ff",
+                        "surface-variant": "#d3e4fe", "secondary": "<?= brand_palette()['secondary'] ?>", "inverse-on-surface": "#eaf1ff",
                         "tertiary": "#000000", "on-primary-container": "#7c839b", "surface": "#f8f9ff",
                         "on-primary": "#ffffff", "inverse-surface": "#213145"
                     },
@@ -96,7 +97,7 @@ require_once '../includes/config.php';
     <!-- TopNavBar -->
     <header class="flex justify-between items-center w-full px-margin-desktop py-md max-w-full shadow-md bg-surface dark:bg-inverse-surface sticky top-0 z-30">
         <div class="flex items-center gap-xl">
-            <span class="text-title-lg font-title-lg font-black text-secondary dark:text-secondary-fixed">SkopeStay KDS</span>
+            <span class="text-title-lg font-title-lg font-black text-secondary dark:text-secondary-fixed"><?= e(brand_short_name()) ?> KDS</span>
             <nav class="hidden md:flex gap-lg">
                 <a class="text-primary dark:text-inverse-primary border-b-2 border-secondary dark:border-secondary-fixed font-bold pb-1 transition-colors filter-btn" href="#" data-filter="All">All Orders</a>
                 <a class="text-on-surface-variant dark:text-outline-variant font-medium hover:text-secondary dark:hover:text-secondary-fixed transition-colors filter-btn" href="#" data-filter="Dine-In">Dining Room</a>
@@ -157,7 +158,7 @@ require_once '../includes/config.php';
     <!-- Footer -->
     <footer class="fixed bottom-0 w-full flex justify-between items-center px-margin-desktop py-sm z-30 bg-surface-container-high dark:bg-surface-container-lowest border-t border-outline-variant dark:border-outline text-on-surface ml-0">
         <div class="flex items-center gap-xl ml-64">
-            <p class="text-caption font-caption opacity-70">© 2026 SkopeStay Hospitality Systems - Kitchen Performance: 94%</p>
+            <p class="text-caption font-caption opacity-70">© <?= date('Y') ?> <?= e(brand('hotel_name')) ?> - Kitchen Performance: 94%</p>
         </div>
         <div class="flex items-center gap-md">
             <div class="flex items-center gap-xs">

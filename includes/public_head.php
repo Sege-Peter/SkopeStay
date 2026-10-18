@@ -1,6 +1,10 @@
     <!-- Meta & SEO Essentials -->
     <meta charset="utf-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0"/>
+    <meta name="description" content="<?= e(get_setting($pdo, 'meta_description', '')) ?>">
+    <meta property="og:site_name" content="<?= e(brand('hotel_name')) ?>">
+    <meta property="og:image" content="<?= e(brand_logo_url()) ?>">
+    <?= brand_favicon_tags() ?>
     
     <!-- Premium Google Fonts: Playfair Display, Montserrat, Poppins, Inter -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -20,8 +24,9 @@
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     
     <?php
-    $pub_primary = function_exists('get_setting') ? get_setting($pdo ?? null, 'primary_color', '#0B132B') : '#0B132B';
-    $pub_secondary = function_exists('get_setting') ? get_setting($pdo ?? null, 'secondary_color', '#D4AF37') : '#D4AF37';
+    $pub_pal = brand_palette();
+    $pub_primary = $pub_pal['primary'];
+    $pub_secondary = $pub_pal['secondary'];
     ?>
     <!-- Tailwind CSS (CDN) -->
     <script src="https://cdn.tailwindcss.com"></script>
@@ -32,20 +37,20 @@
                     colors: {
                         navy: {
                             DEFAULT: '<?= $pub_primary ?>',
-                            dark: '#050A18',
-                            light: '#1C2541',
-                            subtle: '#243257'
+                            dark: '<?= $pub_pal['primary_dark'] ?>',
+                            light: '<?= $pub_pal['primary_light'] ?>',
+                            subtle: '<?= $pub_pal['primary_subtle'] ?>'
                         },
                         gold: {
                             DEFAULT: '<?= $pub_secondary ?>',
-                            light: '#F5E6AB',
-                            dark: '#A6821C',
+                            light: '<?= $pub_pal['secondary_light'] ?>',
+                            dark: '<?= $pub_pal['secondary_dark'] ?>',
                             accent: '#F59E0B'
                         },
                         cream: '#FDFBF7',
                         lightgray: '#F8FAFC',
                         surface: 'rgba(255, 255, 255, 0.07)',
-                        'surface-dark': 'rgba(11, 19, 43, 0.88)'
+                        'surface-dark': 'rgba(<?= implode(', ', hex_rgb_array($pub_primary)) ?>, 0.88)'
                     },
                     fontFamily: {
                         display: ['Playfair Display', 'serif'],
@@ -55,9 +60,9 @@
                         montserrat: ['Montserrat', 'sans-serif']
                     },
                     boxShadow: {
-                        'luxury': '0 20px 40px -15px rgba(11, 19, 43, 0.15)',
-                        'gold-glow': '0 0 25px rgba(212, 175, 55, 0.35)',
-                        'gold-sm': '0 4px 14px rgba(212, 175, 55, 0.25)',
+                        'luxury': '0 20px 40px -15px rgba(var(--theme-primary-rgb), 0.15)',
+                        'gold-glow': '0 0 25px rgba(var(--theme-secondary-rgb), 0.35)',
+                        'gold-sm': '0 4px 14px rgba(var(--theme-secondary-rgb), 0.25)',
                         'glass': '0 8px 32px 0 rgba(0, 0, 0, 0.15)'
                     },
                     animation: {
@@ -105,7 +110,7 @@
         body { 
             font-family: 'Inter', sans-serif; 
             background-color: #F8FAFC; 
-            color: #0B132B;
+            color: var(--theme-primary);
             overflow-x: hidden;
             width: 100%;
             padding-bottom: 74px; /* Space for mobile bottom bar */
@@ -127,10 +132,10 @@
             backdrop-filter: blur(24px);
             -webkit-backdrop-filter: blur(24px);
             border: 1px solid rgba(255, 255, 255, 0.4);
-            box-shadow: 0 10px 30px -10px rgba(11, 19, 43, 0.15);
+            box-shadow: 0 10px 30px -10px rgba(var(--theme-primary-rgb), 0.15);
         }
         .glass-dark-luxury {
-            background: rgba(11, 19, 43, 0.85);
+            background: rgba(var(--theme-primary-rgb), 0.85);
             backdrop-filter: blur(18px);
             -webkit-backdrop-filter: blur(18px);
             border: 1px solid rgba(255, 255, 255, 0.12);
@@ -138,10 +143,7 @@
         }
 
         /* Dynamic Brand Overrides from Database Settings */
-        :root {
-            --theme-primary: <?= $pub_primary ?>;
-            --theme-secondary: <?= $pub_secondary ?>;
-        }
+        <?= brand_css_vars() ?>
         .bg-navy { background-color: var(--theme-primary) !important; }
         .text-navy { color: var(--theme-primary) !important; }
         .border-navy { border-color: var(--theme-primary) !important; }
@@ -151,13 +153,15 @@
 
         /* Gold Gradient Text */
         .gold-gradient-text {
-            background: linear-gradient(135deg, #F5E6AB 0%, var(--theme-secondary) 50%, #A6821C 100%);
+            background: linear-gradient(135deg, var(--theme-secondary-light) 0%, var(--theme-secondary) 50%, var(--theme-secondary-dark) 100%);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
         }
         .gold-gradient-bg {
-            background: linear-gradient(135deg, #F3E5AB 0%, var(--theme-secondary) 60%, #B89025 100%);
+            background: linear-gradient(135deg, var(--theme-secondary-light) 0%, var(--theme-secondary) 60%, var(--theme-secondary-dark) 100%);
         }
+        .swal2-styled.swal2-confirm { background-color: var(--theme-primary) !important; }
+        :focus-visible { outline: 2px solid var(--theme-secondary); outline-offset: 2px; }
 
         /* 3D Dynamic Hover Lift */
         .hover-lift {
@@ -165,7 +169,7 @@
         }
         .hover-lift:hover {
             transform: translateY(-6px);
-            box-shadow: 0 20px 35px -10px rgba(11, 19, 43, 0.18);
+            box-shadow: 0 20px 35px -10px rgba(var(--theme-primary-rgb), 0.18);
         }
 
         /* Smooth Image Zoom */
@@ -217,7 +221,7 @@
 
         /* Responsive Mobile Bottom Dock */
         .mobile-bottom-dock {
-            background: rgba(11, 19, 43, 0.94);
+            background: rgba(var(--theme-primary-rgb), 0.94);
             backdrop-filter: blur(20px);
             -webkit-backdrop-filter: blur(20px);
             border-top: 1px solid rgba(255, 255, 255, 0.12);
@@ -226,6 +230,7 @@
 
         /* Pool Parallax Overlay */
         .pool-overlay {
-            background: radial-gradient(circle at 60% 50%, transparent 20%, rgba(11, 19, 43, 0.85) 90%);
+            background: radial-gradient(circle at 60% 50%, transparent 20%, rgba(var(--theme-primary-rgb), 0.85) 90%);
         }
     </style>
+    <?= brand_js() ?>
